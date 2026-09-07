@@ -1,7 +1,10 @@
-import { Navbar } from "./ui/nav/navbar";
-
+import { Navbar } from "../ui/nav/navbar"
 
 const navLinks = [
+  {
+    name: "Home",
+    href: "/"
+  },
   {
     name: "Menu",
     href: "/menu"
@@ -9,20 +12,16 @@ const navLinks = [
   {
     name: "Order Now",
     href: "/order-now"
-  },
-  {
-    name: "Login",
-    href: "/login"
   }
 ]
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <>
       <main>
         <Navbar navLink={navLinks} />
-        <h1>Home Page</h1>
+        <h1>Login Page</h1>
       </main>
     </>
-  );
+  )
 }

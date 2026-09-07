@@ -8,6 +8,10 @@ const navLinks = [
   {
     name: "Order Now",
     href: "order-now"
+  },
+  {
+    name: "Login",
+    href: "/login"
   }
 ]
 

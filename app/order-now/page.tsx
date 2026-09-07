@@ -9,6 +9,10 @@ const navLinks = [
   {
     name: "Menu",
     href: "/menu"
+  },
+  {
+    name: "Login",
+    href: "/login"
   }
 ]
 
