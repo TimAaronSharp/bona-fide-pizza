@@ -1,4 +1,6 @@
 import { Navbar } from "./ui/nav/navbar";
+import { Hero } from "./ui/home/hero";
+import { heroImage } from "./lib/placeholder-data";
 
 
 const navLinks = [
@@ -22,6 +24,7 @@ export default function Home() {
       <main>
         <Navbar navLink={navLinks} />
         <h1>Home Page</h1>
+        <Hero heroImage={heroImage} />
       </main>
     </>
   );
