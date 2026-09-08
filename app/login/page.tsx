@@ -1,4 +1,9 @@
+import { Metadata } from "next"
 import { Navbar } from "../ui/nav/navbar"
+
+export const metadata: Metadata = {
+  title: 'Login'
+};
 
 const navLinks = [
   {
