@@ -5,26 +5,11 @@ export const metadata: Metadata = {
   title: 'Login'
 };
 
-const navLinks = [
-  {
-    name: "Home",
-    href: "/"
-  },
-  {
-    name: "Menu",
-    href: "/menu"
-  },
-  {
-    name: "Order Now",
-    href: "/order-now"
-  }
-]
-
 export default function LoginPage() {
   return (
     <>
       <main>
-        <Navbar navLink={navLinks} />
+        <Navbar />
         <h1>Login Page</h1>
       </main>
     </>

@@ -7,26 +7,11 @@ export const metadata: Metadata = {
   title: 'Home | Bona Fide Pizza'
 };
 
-const navLinks = [
-  {
-    name: "Menu",
-    href: "/menu"
-  },
-  {
-    name: "Order Now",
-    href: "/order-now"
-  },
-  {
-    name: "Login",
-    href: "/login"
-  }
-]
-
 export default function Home() {
   return (
     <>
       <main>
-        <Navbar navLink={navLinks} />
+        <Navbar />
         <h1>Home Page</h1>
         <Hero heroImage={heroImage} />
       </main>
