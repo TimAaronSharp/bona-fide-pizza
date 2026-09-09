@@ -8,7 +8,6 @@ export const metadata: Metadata = {
 export default function DealsPage() {
   return (
     <main>
-      <Navbar />
       <h1>Deals Page</h1>
     </main>
   )

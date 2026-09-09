@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
       <main>
-        <Navbar />
         <h1>Home Page</h1>
         <Hero heroImage={heroImage} />
       </main>

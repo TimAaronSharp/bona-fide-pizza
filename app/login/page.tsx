@@ -9,7 +9,6 @@ export default function LoginPage() {
   return (
     <>
       <main>
-        <Navbar />
         <h1>Login Page</h1>
       </main>
     </>

@@ -9,7 +9,6 @@ export default function MenuPage() {
   return (
     <>
       <main>
-        <Navbar />
         <h1>Menu Page</h1>
       </main>
     </>
