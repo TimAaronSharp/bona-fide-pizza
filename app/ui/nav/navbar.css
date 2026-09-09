@@ -1,11 +1,7 @@
 @import "tailwindcss";
 
-.nav-section {
-    width: 45%;
-}
-
-.nav-align-center {
-    align-items: center;
+nav {
+    background-color: orangered;
 }
 
 .nav-padding {
@@ -15,9 +11,4 @@
 
 .logo {
     width: 50px;
-    height: 200px;
-}
-
-.nav-menu-padding {
-    padding-left: 50px;
 }
