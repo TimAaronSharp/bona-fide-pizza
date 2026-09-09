@@ -20,21 +20,18 @@ export function Navbar() {
     }
   ];
 
-  /* TODO Look into React Router's <NavLink> component to potentially replace <Link>.
-  Looks like it is a specialized version of <Link> that knows if it's the active link,
-  making it ideal for navbars and menus for adding active styling / classes.*/
-
-
   return (
-    <div className="flex justify-between">
-      <div className="flex justify-between ms-40 mt-5">
+    <div className="flex mt-5">
+      <div className="flex ms-40 ">
         {navLinks.map((link) => {
           return (
-            <Link key={link.name} href={link.href} className="ms-10 text-2xl">{link.name}</Link>
+            <Link key={link.name} href={link.href} className={`ms-10 text-2xl ${pathname === link.href ? 'text-blue-600 font-bold' : 'text-white'}`}>{link.name}</Link>
           )
         })}
       </div>
-      <Link key='Login' href='login'>Login</Link>
+      <div className="flex">
+        <Link key='Login' href='login' className={`me-10 text-2xl ${pathname === '/login' ? 'text-blue-600 font-bold' : 'text-white'}`}>Login</Link>
+      </div>
     </div>
   )
 }
