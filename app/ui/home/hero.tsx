@@ -10,6 +10,7 @@ export function Hero({ heroImage }: { heroImage: ImageType }) {
         alt={heroImage.alt}
         width={heroImage.width}
         height={heroImage.height}
+        loading="eager"
       />
     </>
   )
