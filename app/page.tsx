@@ -12,7 +12,9 @@ export default function Home() {
     <>
       <main>
         <h1>Home Page</h1>
-        <Hero heroImage={heroImage} />
+        <section className="flex justify-center">
+          <Hero heroImage={heroImage} />
+        </section>
       </main>
     </>
   );

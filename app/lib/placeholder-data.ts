@@ -1,6 +1,6 @@
 
 const heroImage = {
-  src: '/samuel_l_jackson_stare.jpg',
+  src: '/assets/home/images/hero/samuel_hero.jpg',
   alt: 'Image of Samuel L. Jackson staring intensely.',
   width: 363,
   height: 313

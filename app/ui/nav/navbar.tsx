@@ -45,7 +45,7 @@ export function Navbar() {
       </div>
       <div className="flex w-1/10 items-center justify-center">
         <Link key='Home Logo' href="/">
-          <Image src='/pizza-logo.png' alt='Bona Fide Pizza Logo' width={900} height={500} className="logo" />
+          <Image src='/assets/ui/nav/images/pizza-logo.png' alt='Bona Fide Pizza Logo' width={900} height={500} className="logo" />
         </Link>
       </div>
       <div className="flex w-45/100 items-center justify-end pr-[50px]">
