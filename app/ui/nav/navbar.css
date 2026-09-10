@@ -2,6 +2,8 @@
 
 nav {
     background-color: orangered;
+    position: sticky;
+    top: 0;
 }
 
 .nav-padding {
