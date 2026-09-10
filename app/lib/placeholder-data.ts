@@ -1,9 +1,9 @@
 
 const heroImage = {
-  src: '/assets/home/images/hero/samuel_hero.jpg',
-  alt: 'Image of Samuel L. Jackson staring intensely.',
-  width: 363,
-  height: 313
+  src: '/assets/home/images/hero/pizza_hero.jpg',
+  alt: 'Giant Pizza.',
+  width: 1300,
+  height: 956
 }
 
 export { heroImage };
