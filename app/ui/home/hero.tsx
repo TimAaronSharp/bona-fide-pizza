@@ -7,13 +7,7 @@ export function Hero({ heroImage }: { heroImage: ImageType }) {
     <>
       {/* NOTE Research if it would be better/are there reasons to include "w-9/10 justify-center" in this div. */}
       <div className="flex">
-        <Image
-          src={heroImage.src}
-          alt={heroImage.alt}
-          width={heroImage.width}
-          height={heroImage.height}
-          loading="eager"
-          className="object-center object-cover"
+        <Image {...heroImage} loading="eager" className="object-center object-cover"
         />
       </div>
     </>
