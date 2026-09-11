@@ -24,7 +24,7 @@ export function Navbar() {
 
   return (
     <header>
-      <nav className="flex w-full gap-5 nav-padding">
+      <nav className="flex w-full gap-5 py-[5px]">
         <div className="flex w-45/100 items-center justify-start pl-[50px]">
           {/*Defensive flex alignment "items-center" in case icons are added to links.*/}
           <ul className="flex gap-5 items-center">
@@ -46,7 +46,7 @@ export function Navbar() {
         </div>
         <div className="flex w-1/10 items-center justify-center">
           <Link key='Home Logo' href="/">
-            <Image src='/assets/ui/nav/images/pizza-logo.png' alt='Bona Fide Pizza Logo' width={900} height={500} className="logo" />
+            <Image src='/assets/ui/nav/images/bona-fide-pizza-logo.jpg' alt='Bona Fide Pizza Logo' width={900} height={500} />
           </Link>
         </div>
         <div className="flex w-45/100 items-center justify-end pr-[50px]">
