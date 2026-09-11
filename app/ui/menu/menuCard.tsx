@@ -1,16 +1,15 @@
-import { ImageType } from "@/app/lib/definitions";
+import { LinkObject } from "@/app/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
 
 
-export function MenuCard({ menuCategoryImage }: { menuCategoryImage: ImageType }) {
+
+export function MenuCard({ menuCategoryObject }: { menuCategoryObject: LinkObject }) {
+  const { image, link } = menuCategoryObject;
+
   return (
-    <>
-      {/* <Link key={menuCategoryImage.src } href={ }> */}
-      <div className="card-dimensions">
-        <Image {...menuCategoryImage} />
-      </div>
-      {/* </Link> */}
-    </>
+    <Link key={link.name} href={link.href} className="card-dimensions">
+      <Image {...image} />
+    </Link>
   )
 }

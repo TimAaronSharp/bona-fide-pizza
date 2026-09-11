@@ -1,4 +1,4 @@
-import { ImageType } from "./definitions";
+import { ImageType, LinkObject } from "./definitions";
 
 const heroImage = {
   src: '/assets/home/images/hero/pizza_hero.jpg',
@@ -7,25 +7,31 @@ const heroImage = {
   height: 956
 }
 
-const menuCategoryImages: ImageType[] = []
+const menuCategoryObjects: LinkObject[] = []
 
-function generateImagePropObject(src: string, alt: string, width: number, height: number): ImageType {
+function generateLinkObjectProp(name: string, href: string, src: string, alt: string, width: number, height: number): LinkObject {
   return {
-    src: src,
-    alt: alt,
-    width: width,
-    height: height
+    link: {
+      name: name,
+      href: href
+    },
+    image: {
+      src: src,
+      alt: alt,
+      width: width,
+      height: height
+    }
   };
 }
 
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/pizza.jpg', 'Pizza Menu Category', 700, 700));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/breadsticks.jpg', 'Breadsticks Menu Category', 1200, 1200));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/chicken-wings.jpg', 'Chicken Wings Menu Category', 735, 735));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/pasta.jpg', 'Pasta Menu Category', 1200, 1200));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/sandwich.jpg', 'Sandwich Menu Category', 1200, 1200));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/salad.jpg', 'Salad Menu Category', 500, 500));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/dessert.jpg', 'Dessert Menu Category', 1200, 800));
-menuCategoryImages.push(generateImagePropObject('/assets/menu/categories/drinks.jpg', 'Drinks Menu Category', 533, 533));
+menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/categories/pizza.jpg', 'Pizza Menu Category', 700, 700));
+menuCategoryObjects.push(generateLinkObjectProp('Breadsticks', '/menu/breadsticks', '/assets/menu/categories/breadsticks.jpg', 'Breadsticks Menu Category', 1200, 1200));
+menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken-wings', '/assets/menu/categories/chicken-wings.jpg', 'Chicken Wings Menu Category', 735, 735));
+menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/categories/pasta.jpg', 'Pasta Menu Category', 1200, 1200));
+menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/categories/sandwich.jpg', 'Sandwich Menu Category', 1200, 1200));
+menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/categories/salad.jpg', 'Salad Menu Category', 500, 500));
+menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/categories/dessert.jpg', 'Dessert Menu Category', 1200, 800));
+menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/categories/drinks.jpg', 'Drinks Menu Category', 533, 533));
 
 
-export { heroImage, menuCategoryImages };
+export { heroImage, menuCategoryObjects };

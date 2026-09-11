@@ -5,3 +5,13 @@ export type ImageType = {
   width: number;
   height: number;
 }
+
+export type LinkInfo = {
+  name: string;
+  href: string;
+}
+
+export type LinkObject = {
+  link: LinkInfo;
+  image: ImageType;
+}

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import './menu.css';
-import { menuCategoryImages } from "../lib/placeholder-data";
+import { menuCategoryObjects } from "../lib/placeholder-data";
 import { MenuCard } from "../ui/menu/menuCard";
 
 export const metadata: Metadata = {
@@ -12,8 +12,8 @@ export default function MenuPage() {
     <>
       <main>
         <section className="flex justify-center menu-page">
-          {menuCategoryImages.map((menuCategoryImage) => (
-            <MenuCard key={menuCategoryImage.src} menuCategoryImage={menuCategoryImage} />
+          {menuCategoryObjects.map((menuCategoryObject) => (
+            <MenuCard key={menuCategoryObject.image.src} menuCategoryObject={menuCategoryObject} />
           ))}
           <h1>Menu Page</h1>
 
