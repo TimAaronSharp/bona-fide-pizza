@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import './menu.css';
 import { menuCategoryObjects } from "../lib/placeholder-data";
-import { MenuCard } from "../ui/menu/menuCard";
+import { ProductCard } from "../ui/product-card/productCard";
 
 export const metadata: Metadata = {
   title: 'Menu'
@@ -12,11 +12,11 @@ export default function MenuPage() {
     <>
       <main>
         <section className="flex justify-center menu-page">
-          {menuCategoryObjects.map((menuCategoryObject) => (
-            <MenuCard key={menuCategoryObject.image.src} menuCategoryObject={menuCategoryObject} />
-          ))}
-          <h1>Menu Page</h1>
-
+          <div className="grid grid-cols-6 gap-4 p-4">
+            {menuCategoryObjects.map((menuCategoryObject) => (
+              <ProductCard key={menuCategoryObject.image.src} productProp={menuCategoryObject} />
+            ))}
+          </div>
         </section>
       </main>
     </>

@@ -9,10 +9,10 @@ const heroImage = {
 
 const menuCategoryObjects: LinkObject[] = []
 
-function generateLinkObjectProp(name: string, href: string, src: string, alt: string, width: number, height: number): LinkObject {
+function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
     link: {
-      name: name,
+      name: linkName,
       href: href
     },
     image: {
@@ -20,18 +20,22 @@ function generateLinkObjectProp(name: string, href: string, src: string, alt: st
       alt: alt,
       width: width,
       height: height
+    },
+    product: {
+      name: productName,
+      description: description
     }
   };
 }
 
-menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/categories/pizza.jpg', 'Pizza Menu Category', 700, 700));
-menuCategoryObjects.push(generateLinkObjectProp('Breadsticks', '/menu/breadsticks', '/assets/menu/categories/breadsticks.jpg', 'Breadsticks Menu Category', 1200, 1200));
-menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken-wings', '/assets/menu/categories/chicken-wings.jpg', 'Chicken Wings Menu Category', 735, 735));
-menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/categories/pasta.jpg', 'Pasta Menu Category', 1200, 1200));
-menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/categories/sandwich.jpg', 'Sandwich Menu Category', 1200, 1200));
-menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/categories/salad.jpg', 'Salad Menu Category', 500, 500));
-menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/categories/dessert.jpg', 'Dessert Menu Category', 1200, 800));
-menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/categories/drinks.jpg', 'Drinks Menu Category', 533, 533));
+menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/categories/pizza.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas'));
+menuCategoryObjects.push(generateLinkObjectProp('Breadsticks', '/menu/breadsticks', '/assets/menu/categories/breadsticks.jpg', 'Breadsticks Menu Category', 1200, 1200, 'Breads'));
+menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken-wings', '/assets/menu/categories/chicken-wings.jpg', 'Chicken Wings Menu Category', 735, 735, 'Chicken'));
+menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/categories/pasta.jpg', 'Pasta Menu Category', 1200, 1200, 'Pasta'));
+menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/categories/sandwich.jpg', 'Sandwich Menu Category', 1200, 1200, 'Sandwiches'));
+menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/categories/salad.jpg', 'Salad Menu Category', 500, 500, 'Salads'));
+menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/categories/dessert.jpg', 'Dessert Menu Category', 1200, 800, 'Desserts'));
+menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/categories/drinks.jpg', 'Drinks Menu Category', 533, 533, 'Drinks'));
 
 
 export { heroImage, menuCategoryObjects };

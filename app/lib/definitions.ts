@@ -14,4 +14,10 @@ export type LinkInfo = {
 export type LinkObject = {
   link: LinkInfo;
   image: ImageType;
+  product?: ProductInfo
+}
+
+export type ProductInfo = {
+  name: string;
+  description?: string;
 }
