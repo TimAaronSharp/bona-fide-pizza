@@ -46,7 +46,7 @@ export function Navbar() {
         </div>
         <div className="flex w-1/10 items-center justify-center">
           <Link key='Home Logo' href="/">
-            <Image src='/assets/ui/nav/images/bona-fide-pizza-logo.jpg' alt='Bona Fide Pizza Logo' width={900} height={500} />
+            <Image src='/assets/ui/nav/images/bona-fide-pizza-logo.jpg' alt='Bona Fide Pizza Logo' width={900} height={500} loading='eager' />
           </Link>
         </div>
         <div className="flex w-45/100 items-center justify-end pr-[50px]">
