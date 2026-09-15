@@ -14,6 +14,7 @@ const chickenItems: LinkObject[] = [];
 const pastaItems: LinkObject[] = [];
 const sandwichItems: LinkObject[] = [];
 const saladItems: LinkObject[] = [];
+const dessertItems: LinkObject[] = [];
 
 function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
@@ -94,4 +95,10 @@ sandwichItems.push(generateLinkObjectProp('Sandwich Choice', '/temp', '/assets/m
 saladItems.push(generateLinkObjectProp('Salad Choice', '/temp', '/assets/menu/categories/salad.jpg', 'Classic Garden Salad', 800, 800, 'Classic Garden'));
 saladItems.push(generateLinkObjectProp('Salad Choice', '/temp', '/assets/menu/categories/salad.jpg', 'Chicken Caesar Salad', 800, 800, 'Chicken Caesar'));
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems, pastaItems, sandwichItems, saladItems };
+// Desserts
+
+dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/menu/categories/dessert.jpg', 'Chocolate Lava Cake', 800, 800, 'Chocolate Lava Cake'));
+dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/menu/categories/dessert.jpg', 'Chocolate Cookie Brownies', 800, 800, 'Chocolate Cookie Brownies'));
+dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/menu/categories/dessert.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems, pastaItems, sandwichItems, saladItems, dessertItems };
