@@ -10,6 +10,7 @@ const heroImage = {
 const menuCategoryObjects: LinkObject[] = [];
 const pizzaItems: LinkObject[] = [];
 const breadItems: LinkObject[] = [];
+const chickenItems: LinkObject[] = [];
 
 function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
@@ -60,4 +61,14 @@ breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/ca
 breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Bread Bites', 800, 800, 'Bread Bites'));
 breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadItems };
+// Chicken
+
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Plain Wings', 800, 800, 'Plain Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Hot Wings', 800, 800, 'Hot Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'BBQ Wings', 800, 800, 'BBQ Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Buffalo Wings', 800, 800, 'Buffalo Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Garlic Parmesan Wings', 800, 800, 'Garlic Parmesan Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Boneless Wings', 800, 800, 'Boneless Wings'));
+chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Zesty Asian Wings', 800, 800, 'Zesty Asian Wings'));
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems };
