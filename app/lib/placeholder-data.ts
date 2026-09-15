@@ -15,6 +15,7 @@ const pastaItems: LinkObject[] = [];
 const sandwichItems: LinkObject[] = [];
 const saladItems: LinkObject[] = [];
 const dessertItems: LinkObject[] = [];
+const drinkItems: LinkObject[] = [];
 
 function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
@@ -101,4 +102,13 @@ dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/men
 dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/menu/categories/dessert.jpg', 'Chocolate Cookie Brownies', 800, 800, 'Chocolate Cookie Brownies'));
 dessertItems.push(generateLinkObjectProp('Dessert Choice', '/temp', '/assets/menu/categories/dessert.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems, pastaItems, sandwichItems, saladItems, dessertItems };
+// Drinks
+
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Pepsi 2-Liter', 800, 800, 'Pepsi'));
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Mountain Dew 2-Liter', 800, 800, 'Mountain Dew'));
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Mug Root Beer 2-Liter', 800, 800, 'Mug Root Beer'));
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Dr Pepper 2-Liter', 800, 800, 'Dr Pepper'));
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Cherry Pepsi 2-Liter', 800, 800, 'Cherry Pepsi'));
+drinkItems.push(generateLinkObjectProp('Drink Choice', '/temp', '/assets/menu/categories/drinks.jpg', 'Orange Crush 2-Liter', 800, 800, 'Orange Crush'));
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems, pastaItems, sandwichItems, saladItems, dessertItems, drinkItems };
