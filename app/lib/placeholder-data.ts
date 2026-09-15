@@ -11,6 +11,7 @@ const menuCategoryObjects: LinkObject[] = [];
 const pizzaItems: LinkObject[] = [];
 const breadItems: LinkObject[] = [];
 const chickenItems: LinkObject[] = [];
+const pastaItems: LinkObject[] = [];
 
 function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
@@ -49,7 +50,7 @@ menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/asse
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Pepperoni Pizza', 800, 800, 'Pepperoni'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Supreme Pizza', 800, 800, 'Supreme'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Meat Lovers Pizza', 800, 800, 'Meat Lovers'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', '6 Cheese Pizza', 800, 800, '6 Cheese'));
+pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', '6-Cheese Pizza', 800, 800, '6-Cheese'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Veggie Pizza', 800, 800, 'Veggie'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'BBQ Chicken Pizza', 800, 800, 'BBQ Chicken'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 'Chicken Bacon Ranch'));
@@ -71,4 +72,11 @@ chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/men
 chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Boneless Wings', 800, 800, 'Boneless Wings'));
 chickenItems.push(generateLinkObjectProp('Chicken Choice', '/temp', '/assets/menu/categories/chicken-wings.jpg', 'Zesty Asian Wings', 800, 800, 'Zesty Asian Wings'));
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems };
+// Pasta
+
+pastaItems.push(generateLinkObjectProp('Pasta Choice', '/temp', '/assets/menu/categories/pasta.jpg', 'Chicken Alfredo', 800, 800, 'Chicken Alfredo'));
+pastaItems.push(generateLinkObjectProp('Pasta Choice', '/temp', '/assets/menu/categories/pasta.jpg', '5-Cheese Mac & Cheese', 800, 800, '5-Cheese Mac & Cheese'));
+pastaItems.push(generateLinkObjectProp('Pasta Choice', '/temp', '/assets/menu/categories/pasta.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800, 'Spicy Buffalo 5-Cheese Mac & Cheese'));
+pastaItems.push(generateLinkObjectProp('Pasta Choice', '/temp', '/assets/menu/categories/pasta.jpg', 'Spaghetti & Meatballs', 800, 800, 'Spaghetti & Meatballs'));
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadItems, chickenItems, pastaItems };
