@@ -9,6 +9,7 @@ const heroImage = {
 
 const menuCategoryObjects: LinkObject[] = [];
 const pizzaItems: LinkObject[] = [];
+const breadItems: LinkObject[] = [];
 
 function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
   return {
@@ -32,7 +33,7 @@ function generateLinkObjectProp(linkName: string, href: string, src: string, alt
 // Menu Categories for menu page. 
 
 menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/categories/pizza.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas'));
-menuCategoryObjects.push(generateLinkObjectProp('Breadsticks', '/menu/breadsticks', '/assets/menu/categories/breadsticks.jpg', 'Breadsticks Menu Category', 1200, 1200, 'Breads'));
+menuCategoryObjects.push(generateLinkObjectProp('Breads', '/menu/breads', '/assets/menu/categories/breadsticks.jpg', 'Breads Menu Category', 1200, 1200, 'Breads'));
 menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken-wings', '/assets/menu/categories/chicken-wings.jpg', 'Chicken Wings Menu Category', 735, 735, 'Chicken'));
 menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/categories/pasta.jpg', 'Pasta Menu Category', 1200, 1200, 'Pasta'));
 menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/categories/sandwich.jpg', 'Sandwich Menu Category', 1200, 1200, 'Sandwiches'));
@@ -52,5 +53,11 @@ pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/ca
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'BBQ Chicken Pizza', 800, 800, 'BBQ Chicken'));
 pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 'Chicken Bacon Ranch'));
 
+// Bread
 
-export { heroImage, menuCategoryObjects, pizzaItems };
+breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Breadsticks', 800, 800, 'Breadsticks'));
+breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Cheesy Bread', 800, 800, 'Cheesy Bread'));
+breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Bread Bites', 800, 800, 'Bread Bites'));
+breadItems.push(generateLinkObjectProp('Bread Choice', '/temp', '/assets/menu/categories/breadsticks.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadItems };
