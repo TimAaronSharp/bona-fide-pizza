@@ -2,7 +2,7 @@ import { chickenItems } from "@/app/lib/placeholder-data";
 import '@/app/menu/menu.css';
 import { ProductCard } from "@/app/ui/product-card/productCard";
 
-export default function ChickenWingsMenuPage() {
+export default function ChickenMenuPage() {
   return (
     <main>
       <section className="flex justify-center menu-page">
