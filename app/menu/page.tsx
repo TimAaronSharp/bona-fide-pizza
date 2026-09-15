@@ -1,4 +1,4 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
 import './menu.css';
 import { menuCategoryObjects } from "../lib/placeholder-data";
 import { ProductCard } from "../ui/product-card/productCard";
