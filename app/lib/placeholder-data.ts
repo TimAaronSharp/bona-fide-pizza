@@ -51,13 +51,13 @@ menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/asse
 
 // Pizza
 
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Pepperoni Pizza', 800, 800, 'Pepperoni'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Supreme Pizza', 800, 800, 'Supreme'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Meat Lovers Pizza', 800, 800, 'Meat Lovers'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', '6-Cheese Pizza', 800, 800, '6-Cheese'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Veggie Pizza', 800, 800, 'Veggie'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'BBQ Chicken Pizza', 800, 800, 'BBQ Chicken'));
-pizzaItems.push(generateLinkObjectProp('Pizza Choice', '/temp', '/assets/menu/categories/pizza.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 'Chicken Bacon Ranch'));
+pizzaItems.push(generateLinkObjectProp('pepperoni', '/menu/pizza/pepperoni', '/assets/menu/categories/pizza.jpg', 'Pepperoni Pizza', 800, 800, 'Pepperoni'));
+pizzaItems.push(generateLinkObjectProp('supreme', '/menu/pizza/supreme', '/assets/menu/categories/pizza.jpg', 'Supreme Pizza', 800, 800, 'Supreme'));
+pizzaItems.push(generateLinkObjectProp('meat-lovers', '/menu/pizza/meat-lovers', '/assets/menu/categories/pizza.jpg', 'Meat Lovers Pizza', 800, 800, 'Meat Lovers'));
+pizzaItems.push(generateLinkObjectProp('6-cheese', '/menu/pizza/6-cheese', '/assets/menu/categories/pizza.jpg', '6-Cheese Pizza', 800, 800, '6-Cheese'));
+pizzaItems.push(generateLinkObjectProp('veggie-lovers', '/menu/pizza/veggie-lovers', '/assets/menu/categories/pizza.jpg', 'Veggie Lovers Pizza', 800, 800, 'Veggie'));
+pizzaItems.push(generateLinkObjectProp('bbq-chicken', '/menu/pizza/bbq-chicken', '/assets/menu/categories/pizza.jpg', 'BBQ Chicken Pizza', 800, 800, 'BBQ Chicken'));
+pizzaItems.push(generateLinkObjectProp('chicken-bacon-ranch', '/menu/pizza/chicken-bacon-ranch', '/assets/menu/categories/pizza.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 'Chicken Bacon Ranch'));
 
 // Bread
 
