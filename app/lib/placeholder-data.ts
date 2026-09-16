@@ -1,4 +1,6 @@
-import { ImageType, LinkObject } from "./definitions";
+import { LinkObject } from "./definitions";
+
+/*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 
 const heroImage = {
   src: '/assets/home/images/hero/pizza_hero.jpg',
