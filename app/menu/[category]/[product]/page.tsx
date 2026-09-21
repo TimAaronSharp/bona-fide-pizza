@@ -1,4 +1,5 @@
 import { menuDataMap } from "@/app/lib/placeholder-data";
+import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
@@ -21,6 +22,7 @@ export default async function MenuCategoryPage({ params }: { params: { category:
         <h1>{productItem[0].product?.name}</h1>
         <Image {...productItem[0].image} />
         <p>{productItem[0].product?.description}</p>
+        <Customizer />
       </section>
     </main>
   )

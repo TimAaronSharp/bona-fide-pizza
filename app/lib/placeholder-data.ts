@@ -1,4 +1,4 @@
-import { LinkObject } from "./definitions";
+import { LinkObject, Ingredient } from "./definitions";
 
 /*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 
@@ -18,6 +18,7 @@ const sandwichesItems: LinkObject[] = [];
 const saladsItems: LinkObject[] = [];
 const dessertsItems: LinkObject[] = [];
 const drinksItems: LinkObject[] = [];
+const ingredients: Ingredient[] = [];
 
 // Menu Items Dictionary
 /* NOTE Record creates an easily modifiable dictionary with defined key-value pair types.
@@ -53,8 +54,18 @@ function generateLinkObjectProp(linkName: string, href: string, src: string, alt
     }
   };
 }
+// TODO Think over whether more properties need to be added to the Ingredient type/if you need to separate anything further.
+function generateIngredient(id: number, name: string, category: Ingredient["category"], density?: Ingredient["density"]): Ingredient {
+  return {
+    id: id,
+    name: name,
+    category: category,
+    // If I remove the ? from density will it be optional in the return because I have made it optional in the parameters?
+    density: density
+  }
+}
 
-// Menu Categories for menu page. 
+//#region Menu Categories for menu page. 
 
 menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/pizza/pizza-category.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas'));
 menuCategoryObjects.push(generateLinkObjectProp('Breads', '/menu/breads', '/assets/menu/breads/breads-category.jpg', 'Breads Menu Category', 1200, 1200, 'Breads'));
@@ -64,8 +75,9 @@ menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches'
 menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/salads/salad-category.jpg', 'Salad Menu Category', 500, 500, 'Salads'));
 menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/desserts/dessert-category.jpg', 'Dessert Menu Category', 1200, 800, 'Desserts'));
 menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 533, 533, 'Drinks'));
+// #endregion
 
-// Individual menu items by category
+//#region Individual menu items by category
 
 // Pizza
 
@@ -128,5 +140,38 @@ drinksItems.push(generateLinkObjectProp('mug-root-beer', '/menu/drinks/mug-root-
 drinksItems.push(generateLinkObjectProp('dr-pepper', '/menu/drinks/dr-pepper', '/assets/menu/drinks/drinks-category.jpg', 'Dr Pepper 2-Liter', 800, 800, 'Dr Pepper'));
 drinksItems.push(generateLinkObjectProp('cherry-pepsi', '/menu/drinks/cherry-pepsi', '/assets/menu/drinks/drinks-category.jpg', 'Cherry Pepsi 2-Liter', 800, 800, 'Cherry Pepsi'));
 drinksItems.push(generateLinkObjectProp('orange-crush', '/menu/drinks/orange-crush', '/assets/menu/drinks/drinks-category.jpg', 'Orange Crush 2-Liter', 800, 800, 'Orange Crush'));
+// #endregion
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadsItems, chickenItems, pastaItems, sandwichesItems, saladsItems, dessertsItems, drinksItems, menuDataMap };
+// #region Ingredients
+
+// #region Crusts
+ingredients.push(generateIngredient(1, "hand tossed", "crust"));
+ingredients.push(generateIngredient(2, "stuffed crust", "crust"));
+ingredients.push(generateIngredient(3, "handmade pan", "crust"));
+ingredients.push(generateIngredient(4, "crunchy thin crust", "crust"));
+ingredients.push(generateIngredient(5, "new york style", "crust"));
+ingredients.push(generateIngredient(6, "gluten free", "crust"));
+
+// #endregion
+
+// #region Crust Seasoning
+
+ingredients.push(generateIngredient(7, "garlic crust seasoning", "crust seasoning"));
+ingredients.push(generateIngredient(8, "no garlic crust seasoning", "crust seasoning"));
+
+// #endregion
+
+// #region Sauce
+
+ingredients.push(generateIngredient(8, "marinara sauce", "sauce"));
+ingredients.push(generateIngredient(9, "honey bbq sauce", "sauce"));
+ingredients.push(generateIngredient(10, "garlic parmesan sauce", "sauce"));
+ingredients.push(generateIngredient(11, "alfredo sauce", "sauce"));
+ingredients.push(generateIngredient(12, "ranch", "sauce"));
+ingredients.push(generateIngredient(13, "no sauce", "sauce"));
+
+// #endregion
+
+// #endregion
+
+export { heroImage, menuCategoryObjects, pizzaItems, breadsItems, chickenItems, pastaItems, sandwichesItems, saladsItems, dessertsItems, drinksItems, ingredients, menuDataMap };

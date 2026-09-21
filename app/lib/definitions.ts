@@ -21,3 +21,10 @@ export type ProductInfo = {
   name: string;
   description?: string;
 }
+
+export type Ingredient = {
+  id: number;
+  name: string;
+  category: "quantity" | "crust" | "crust seasoning" | "sauce" | "mozzarella" | "meats" | "veggies & more" | "add-on cheeses" | "special instructions" | "dipping cups";
+  density?: "light" | "normal" | "extra"
+}
