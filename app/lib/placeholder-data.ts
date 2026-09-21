@@ -1,8 +1,8 @@
-import { LinkObject, Ingredient } from "@/app/lib/definitions";
+import { LinkObject, Ingredient, ImageType } from "@/app/lib/definitions";
 
 /*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 
-const heroImage = {
+const heroImage: ImageType = {
   src: '/assets/home/images/hero/pizza_hero.jpg',
   alt: 'Giant Pizza.',
   width: 1300,
