@@ -174,4 +174,4 @@ ingredients.push(generateIngredient(13, "no sauce", "sauce"));
 
 // #endregion
 
-export { heroImage, menuCategoryObjects, pizzaItems, breadsItems, chickenItems, pastaItems, sandwichesItems, saladsItems, dessertsItems, drinksItems, ingredients, menuDataMap };
+export { heroImage, menuCategoryObjects, ingredients, menuDataMap };
