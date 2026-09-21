@@ -1,4 +1,4 @@
-import { LinkObject, Ingredient } from "./definitions";
+import { LinkObject, Ingredient } from "@/app/lib/definitions";
 
 /*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 

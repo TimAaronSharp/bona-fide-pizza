@@ -1,6 +1,6 @@
 import { menuDataMap } from "@/app/lib/placeholder-data";
 import '@/app/menu/menu.css';
-import { ProductCard } from "@/app/ui/product-card/productCard";
+import { ProductCard } from "@/app/ui/components/productCard";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
 inside the function so that is not accessible outside).*/

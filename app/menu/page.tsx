@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import './menu.css';
-import { menuCategoryObjects } from "../lib/placeholder-data";
-import { ProductCard } from "../ui/product-card/productCard";
+import '@/app/menu/menu.css';
+import { menuCategoryObjects } from "@/app/lib/placeholder-data";
+import { ProductCard } from "@/app/ui/components/productCard";
 
 export const metadata: Metadata = {
   title: 'Menu'

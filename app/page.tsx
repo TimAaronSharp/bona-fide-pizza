@@ -1,5 +1,5 @@
 import { Hero } from "./ui/home/hero";
-import { heroImage } from "./lib/placeholder-data";
+import { heroImage } from "@/app/lib/placeholder-data";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

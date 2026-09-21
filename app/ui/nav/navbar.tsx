@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import './navbar.css';
+import '@/app/ui/nav/navbar.css';
 
 export function Navbar() {
   const pathname = usePathname();
