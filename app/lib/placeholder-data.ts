@@ -1,4 +1,4 @@
-import { LinkObject, Ingredient, ImageType } from "@/app/lib/definitions";
+import { LinkObject, Ingredient, ImageType, IngredientOptions } from "@/app/lib/definitions";
 
 /*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 
@@ -36,7 +36,7 @@ const menuDataMap: Record<string, LinkObject[]> = {
   drinks: drinksItems
 }
 
-function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string): LinkObject {
+function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string, ingredients?: IngredientOptions): LinkObject {
   return {
     link: {
       name: linkName,
@@ -50,7 +50,8 @@ function generateLinkObjectProp(linkName: string, href: string, src: string, alt
     },
     product: {
       name: productName,
-      description: description
+      description: description,
+      ingredients: ingredients
     }
   };
 }

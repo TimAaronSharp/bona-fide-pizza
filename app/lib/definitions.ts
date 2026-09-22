@@ -20,6 +20,19 @@ export type LinkObject = {
 export type ProductInfo = {
   name: string;
   description?: string;
+  ingredients?: IngredientOptions;
+}
+
+export type IngredientOptions = {
+  crusts?: Ingredient[];
+  crustSeasonings?: Ingredient[];
+  sauces?: Ingredient[];
+  mozzarella?: Ingredient[];
+  meats?: Ingredient[];
+  veggiesNMore?: Ingredient[];
+  addOnCheeses?: Ingredient[];
+  specialInstructions?: string;
+  dippingsCups?: Ingredient[];
 }
 
 export type Ingredient = {
