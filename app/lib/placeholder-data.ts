@@ -36,7 +36,7 @@ const menuDataMap: Record<string, LinkObject[]> = {
   drinks: drinksItems
 }
 
-function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productName: string, description?: string, ingredients?: IngredientOptions): LinkObject {
+function generateLinkObjectProp(linkName: string, href: string, src: string, alt: string, width: number, height: number, productId: number, productName: string, description?: string, ingredients?: IngredientOptions): LinkObject {
   return {
     link: {
       name: linkName,
@@ -49,6 +49,7 @@ function generateLinkObjectProp(linkName: string, href: string, src: string, alt
       height: height
     },
     product: {
+      id: productId,
       name: productName,
       description: description,
       ingredients: ingredients
@@ -68,79 +69,79 @@ function generateIngredient(id: number, name: string, category: Ingredient["cate
 
 //#region Menu Categories for menu page. 
 
-menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/pizza/pizza-category.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas'));
-menuCategoryObjects.push(generateLinkObjectProp('Breads', '/menu/breads', '/assets/menu/breads/breads-category.jpg', 'Breads Menu Category', 1200, 1200, 'Breads'));
-menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken', '/assets/menu/chicken/chicken-category.jpg', 'Chicken Wings Menu Category', 735, 735, 'Chicken'));
-menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/pasta/pasta-category.jpg', 'Pasta Menu Category', 1200, 1200, 'Pasta'));
-menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/sandwiches/sandwich-category.jpg', 'Sandwich Menu Category', 1200, 1200, 'Sandwiches'));
-menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/salads/salad-category.jpg', 'Salad Menu Category', 500, 500, 'Salads'));
-menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/desserts/dessert-category.jpg', 'Dessert Menu Category', 1200, 800, 'Desserts'));
-menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 533, 533, 'Drinks'));
+menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/pizza', '/assets/menu/pizza/pizza-category.jpg', 'Pizza Menu Category', 800, 800, 9991, 'Pizzas'));
+menuCategoryObjects.push(generateLinkObjectProp('Breads', '/menu/breads', '/assets/menu/breads/breads-category.jpg', 'Breads Menu Category', 1200, 1200, 9992, 'Breads'));
+menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken', '/assets/menu/chicken/chicken-category.jpg', 'Chicken Wings Menu Category', 735, 735, 9993, 'Chicken'));
+menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/pasta/pasta-category.jpg', 'Pasta Menu Category', 1200, 1200, 9994, 'Pasta'));
+menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwiches', '/assets/menu/sandwiches/sandwich-category.jpg', 'Sandwich Menu Category', 1200, 1200, 9995, 'Sandwiches'));
+menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salads', '/assets/menu/salads/salad-category.jpg', 'Salad Menu Category', 500, 500, 9996, 'Salads'));
+menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/desserts', '/assets/menu/desserts/dessert-category.jpg', 'Dessert Menu Category', 1200, 800, 9997, 'Desserts'));
+menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drinks', '/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 533, 533, 9998, 'Drinks'));
 // #endregion
 
 //#region Individual menu items by category
 
 // Pizza
 
-pizzaItems.push(generateLinkObjectProp('pepperoni', '/menu/pizza/pepperoni', '/assets/menu/pizza/pepperoni.jpg', 'Pepperoni Pizza', 800, 800, 'Pepperoni'));
-pizzaItems.push(generateLinkObjectProp('supreme', '/menu/pizza/supreme', '/assets/menu/pizza/supreme.jpg', 'Supreme Pizza', 800, 800, 'Supreme'));
-pizzaItems.push(generateLinkObjectProp('meat-lovers', '/menu/pizza/meat-lovers', '/assets/menu/pizza/meat-lovers.jpg', 'Meat Lovers Pizza', 800, 800, 'Meat Lovers'));
-pizzaItems.push(generateLinkObjectProp('6-cheese', '/menu/pizza/6-cheese', '/assets/menu/pizza/6-cheese.jpg', '6-Cheese Pizza', 800, 800, '6-Cheese'));
-pizzaItems.push(generateLinkObjectProp('veggie-lovers', '/menu/pizza/veggie-lovers', '/assets/menu/pizza/veggie-lovers.jpg', 'Veggie Lovers Pizza', 800, 800, 'Veggie Lovers'));
-pizzaItems.push(generateLinkObjectProp('bbq-chicken', '/menu/pizza/bbq-chicken', '/assets/menu/pizza/bbq-chicken.jpg', 'BBQ Chicken Pizza', 800, 800, 'BBQ Chicken'));
-pizzaItems.push(generateLinkObjectProp('chicken-bacon-ranch', '/menu/pizza/chicken-bacon-ranch', '/assets/menu/pizza/chicken-bacon-ranch.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 'Chicken Bacon Ranch'));
+pizzaItems.push(generateLinkObjectProp('pepperoni', '/menu/pizza/pepperoni', '/assets/menu/pizza/pepperoni.jpg', 'Pepperoni Pizza', 800, 800, 1, 'Pepperoni'));
+pizzaItems.push(generateLinkObjectProp('supreme', '/menu/pizza/supreme', '/assets/menu/pizza/supreme.jpg', 'Supreme Pizza', 800, 800, 2, 'Supreme'));
+pizzaItems.push(generateLinkObjectProp('meat-lovers', '/menu/pizza/meat-lovers', '/assets/menu/pizza/meat-lovers.jpg', 'Meat Lovers Pizza', 800, 800, 3, 'Meat Lovers'));
+pizzaItems.push(generateLinkObjectProp('6-cheese', '/menu/pizza/6-cheese', '/assets/menu/pizza/6-cheese.jpg', '6-Cheese Pizza', 800, 800, 4, '6-Cheese'));
+pizzaItems.push(generateLinkObjectProp('veggie-lovers', '/menu/pizza/veggie-lovers', '/assets/menu/pizza/veggie-lovers.jpg', 'Veggie Lovers Pizza', 800, 800, 5, 'Veggie Lovers'));
+pizzaItems.push(generateLinkObjectProp('bbq-chicken', '/menu/pizza/bbq-chicken', '/assets/menu/pizza/bbq-chicken.jpg', 'BBQ Chicken Pizza', 800, 800, 6, 'BBQ Chicken'));
+pizzaItems.push(generateLinkObjectProp('chicken-bacon-ranch', '/menu/pizza/chicken-bacon-ranch', '/assets/menu/pizza/chicken-bacon-ranch.jpg', 'Chicken Bacon Ranch Pizza', 800, 800, 7, 'Chicken Bacon Ranch'));
 
 // Bread
 
-breadsItems.push(generateLinkObjectProp('breadsticks', '/menu/breads/breadsticks', '/assets/menu/breads/breads-category.jpg', 'Breadsticks', 800, 800, 'Breadsticks'));
-breadsItems.push(generateLinkObjectProp('cheesy-bread', '/menu/breads/cheesy-bread', '/assets/menu/breads/breads-category.jpg', 'Cheesy Bread', 800, 800, 'Cheesy Bread'));
-breadsItems.push(generateLinkObjectProp('bread-bites', '/menu/breads/bread-bites', '/assets/menu/breads/breads-category.jpg', 'Bread Bites', 800, 800, 'Bread Bites'));
-breadsItems.push(generateLinkObjectProp('cinnamon-bread-bites', '/menu/breads/cinnamon-bread-bites', '/assets/menu/breads/breads-category.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
+breadsItems.push(generateLinkObjectProp('breadsticks', '/menu/breads/breadsticks', '/assets/menu/breads/breads-category.jpg', 'Breadsticks', 800, 800, 8, 'Breadsticks'));
+breadsItems.push(generateLinkObjectProp('cheesy-bread', '/menu/breads/cheesy-bread', '/assets/menu/breads/breads-category.jpg', 'Cheesy Bread', 800, 800, 9, 'Cheesy Bread'));
+breadsItems.push(generateLinkObjectProp('bread-bites', '/menu/breads/bread-bites', '/assets/menu/breads/breads-category.jpg', 'Bread Bites', 800, 800, 10, 'Bread Bites'));
+breadsItems.push(generateLinkObjectProp('cinnamon-bread-bites', '/menu/breads/cinnamon-bread-bites', '/assets/menu/breads/breads-category.jpg', 'Cinnamon Bread Bites', 800, 800, 11, 'Cinnamon Bread Bites'));
 
 // Chicken
 
-chickenItems.push(generateLinkObjectProp('plain-wings', '/menu/chicken/plain-wings', '/assets/menu/chicken/chicken-category.jpg', 'Plain Wings', 800, 800, 'Plain Wings'));
-chickenItems.push(generateLinkObjectProp('hot-wings', '/menu/chicken/hot-wings', '/assets/menu/chicken/chicken-category.jpg', 'Hot Wings', 800, 800, 'Hot Wings'));
-chickenItems.push(generateLinkObjectProp('bbq-wings', '/menu/chicken/bbq-wings', '/assets/menu/chicken/chicken-category.jpg', 'BBQ Wings', 800, 800, 'BBQ Wings'));
-chickenItems.push(generateLinkObjectProp('buffalo-wings', '/menu/chicken/buffalo-wings', '/assets/menu/chicken/chicken-category.jpg', 'Buffalo Wings', 800, 800, 'Buffalo Wings'));
-chickenItems.push(generateLinkObjectProp('garlic-parmesan-wings', '/menu/chicken/garlic-parmesan-wings', '/assets/menu/chicken/chicken-category.jpg', 'Garlic Parmesan Wings', 800, 800, 'Garlic Parmesan Wings'));
-chickenItems.push(generateLinkObjectProp('boneless-wings', '/menu/chicken/boneless-wings', '/assets/menu/chicken/chicken-category.jpg', 'Boneless Wings', 800, 800, 'Boneless Wings'));
-chickenItems.push(generateLinkObjectProp('zesty-asian-wings', '/menu/chicken/zesty-asian-wings', '/assets/menu/chicken/chicken-category.jpg', 'Zesty Asian Wings', 800, 800, 'Zesty Asian Wings'));
+chickenItems.push(generateLinkObjectProp('plain-wings', '/menu/chicken/plain-wings', '/assets/menu/chicken/chicken-category.jpg', 'Plain Wings', 800, 800, 12, 'Plain Wings'));
+chickenItems.push(generateLinkObjectProp('hot-wings', '/menu/chicken/hot-wings', '/assets/menu/chicken/chicken-category.jpg', 'Hot Wings', 800, 800, 13, 'Hot Wings'));
+chickenItems.push(generateLinkObjectProp('bbq-wings', '/menu/chicken/bbq-wings', '/assets/menu/chicken/chicken-category.jpg', 'BBQ Wings', 800, 800, 14, 'BBQ Wings'));
+chickenItems.push(generateLinkObjectProp('buffalo-wings', '/menu/chicken/buffalo-wings', '/assets/menu/chicken/chicken-category.jpg', 'Buffalo Wings', 800, 800, 15, 'Buffalo Wings'));
+chickenItems.push(generateLinkObjectProp('garlic-parmesan-wings', '/menu/chicken/garlic-parmesan-wings', '/assets/menu/chicken/chicken-category.jpg', 'Garlic Parmesan Wings', 800, 800, 16, 'Garlic Parmesan Wings'));
+chickenItems.push(generateLinkObjectProp('boneless-wings', '/menu/chicken/boneless-wings', '/assets/menu/chicken/chicken-category.jpg', 'Boneless Wings', 800, 800, 17, 'Boneless Wings'));
+chickenItems.push(generateLinkObjectProp('zesty-asian-wings', '/menu/chicken/zesty-asian-wings', '/assets/menu/chicken/chicken-category.jpg', 'Zesty Asian Wings', 800, 800, 18, 'Zesty Asian Wings'));
 
 // Pasta
 
-pastaItems.push(generateLinkObjectProp('chicken-alfredo', '/menu/pasta/chicken-alfredo', '/assets/menu/pasta/pasta-category.jpg', 'Chicken Alfredo', 800, 800, 'Chicken Alfredo'));
-pastaItems.push(generateLinkObjectProp('5-cheese-mac-n-cheese', '/menu/pasta/5-cheese-mac-n-cheese', '/assets/menu/pasta/pasta-category.jpg', '5-Cheese Mac & Cheese', 800, 800, '5-Cheese Mac & Cheese'));
-pastaItems.push(generateLinkObjectProp('spicy-buffalo-5-cheese-mac-n-cheese', '/menu/pasta/spicy-buffalo-5-cheese-mac-n-cheese', '/assets/menu/pasta/pasta-category.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800, 'Spicy Buffalo 5-Cheese Mac & Cheese'));
-pastaItems.push(generateLinkObjectProp('spaghetti-n-meatballs', '/menu/pasta/spaghetti-n-meatballs', '/assets/menu/pasta/pasta-category.jpg', 'Spaghetti & Meatballs', 800, 800, 'Spaghetti & Meatballs'));
+pastaItems.push(generateLinkObjectProp('chicken-alfredo', '/menu/pasta/chicken-alfredo', '/assets/menu/pasta/pasta-category.jpg', 'Chicken Alfredo', 800, 800, 19, 'Chicken Alfredo'));
+pastaItems.push(generateLinkObjectProp('5-cheese-mac-n-cheese', '/menu/pasta/5-cheese-mac-n-cheese', '/assets/menu/pasta/pasta-category.jpg', '5-Cheese Mac & Cheese', 800, 800, 20, '5-Cheese Mac & Cheese'));
+pastaItems.push(generateLinkObjectProp('spicy-buffalo-5-cheese-mac-n-cheese', '/menu/pasta/spicy-buffalo-5-cheese-mac-n-cheese', '/assets/menu/pasta/pasta-category.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800, 21, 'Spicy Buffalo 5-Cheese Mac & Cheese'));
+pastaItems.push(generateLinkObjectProp('spaghetti-n-meatballs', '/menu/pasta/spaghetti-n-meatballs', '/assets/menu/pasta/pasta-category.jpg', 'Spaghetti & Meatballs', 800, 800, 22, 'Spaghetti & Meatballs'));
 
 // Sandwiches
 
-sandwichesItems.push(generateLinkObjectProp('chicken-parm', '/menu/sandwiches/chicken-parm', '/assets/menu/sandwiches/sandwich-category.jpg', 'Chicken Parm Sandwich', 800, 800, 'Chicken Parm'));
-sandwichesItems.push(generateLinkObjectProp('chicken-bacon-ranch', '/menu/sandwiches/chicken-bacon-ranch', '/assets/menu/sandwiches/sandwich-category.jpg', 'Chicken Bacon Ranch Sandwich', 800, 800, 'Chicken Bacon Ranch'));
-sandwichesItems.push(generateLinkObjectProp('italian', '/menu/sandwiches/italian', '/assets/menu/sandwiches/sandwich-category.jpg', 'Italian Sandwich', 800, 800, 'Italian'));
-sandwichesItems.push(generateLinkObjectProp('buffalo-chicken', '/menu/sandwiches/buffalo-chicken', '/assets/menu/sandwiches/sandwich-category.jpg', 'Buffalo Chicken Sandwich', 800, 800, 'Buffalo Chicken'));
-sandwichesItems.push(generateLinkObjectProp('philly-cheesesteak', '/menu/sandwiches/philly-cheesesteak', '/assets/menu/sandwiches/sandwich-category.jpg', 'Philly Cheesesteak Sandwich', 800, 800, 'Philly Cheesesteak'));
+sandwichesItems.push(generateLinkObjectProp('chicken-parm', '/menu/sandwiches/chicken-parm', '/assets/menu/sandwiches/sandwich-category.jpg', 'Chicken Parm Sandwich', 800, 800, 23, 'Chicken Parm'));
+sandwichesItems.push(generateLinkObjectProp('chicken-bacon-ranch', '/menu/sandwiches/chicken-bacon-ranch', '/assets/menu/sandwiches/sandwich-category.jpg', 'Chicken Bacon Ranch Sandwich', 800, 800, 24, 'Chicken Bacon Ranch'));
+sandwichesItems.push(generateLinkObjectProp('italian', '/menu/sandwiches/italian', '/assets/menu/sandwiches/sandwich-category.jpg', 'Italian Sandwich', 800, 800, 25, 'Italian'));
+sandwichesItems.push(generateLinkObjectProp('buffalo-chicken', '/menu/sandwiches/buffalo-chicken', '/assets/menu/sandwiches/sandwich-category.jpg', 'Buffalo Chicken Sandwich', 800, 800, 26, 'Buffalo Chicken'));
+sandwichesItems.push(generateLinkObjectProp('philly-cheesesteak', '/menu/sandwiches/philly-cheesesteak', '/assets/menu/sandwiches/sandwich-category.jpg', 'Philly Cheesesteak Sandwich', 800, 800, 27, 'Philly Cheesesteak'));
 
 // Salads
 
-saladsItems.push(generateLinkObjectProp('classic-garden', '/menu/salads/classic-garden', '/assets/menu/salads/salad-category.jpg', 'Classic Garden Salad', 800, 800, 'Classic Garden'));
-saladsItems.push(generateLinkObjectProp('chicken-caesar', '/menu/salads/chicken-caesar', '/assets/menu/salads/salad-category.jpg', 'Chicken Caesar Salad', 800, 800, 'Chicken Caesar'));
+saladsItems.push(generateLinkObjectProp('classic-garden', '/menu/salads/classic-garden', '/assets/menu/salads/salad-category.jpg', 'Classic Garden Salad', 800, 800, 28, 'Classic Garden'));
+saladsItems.push(generateLinkObjectProp('chicken-caesar', '/menu/salads/chicken-caesar', '/assets/menu/salads/salad-category.jpg', 'Chicken Caesar Salad', 800, 800, 29, 'Chicken Caesar'));
 
 // Desserts
 
-dessertsItems.push(generateLinkObjectProp('chocolate-lava-cake', '/menu/desserts/chocolate-lava-cake', '/assets/menu/desserts/dessert-category.jpg', 'Chocolate Lava Cake', 800, 800, 'Chocolate Lava Cake'));
-dessertsItems.push(generateLinkObjectProp('chocolate-cookie-brownies', '/menu/desserts/chocolate-cookie-brownies', '/assets/menu/desserts/dessert-category.jpg', 'Chocolate Cookie Brownies', 800, 800, 'Chocolate Cookie Brownies'));
-dessertsItems.push(generateLinkObjectProp('cinnamon-bread-bites', '/menu/desserts/cinnamon-bread-bites', '/assets/menu/desserts/dessert-category.jpg', 'Cinnamon Bread Bites', 800, 800, 'Cinnamon Bread Bites'));
+dessertsItems.push(generateLinkObjectProp('chocolate-lava-cake', '/menu/desserts/chocolate-lava-cake', '/assets/menu/desserts/dessert-category.jpg', 'Chocolate Lava Cake', 800, 800, 30, 'Chocolate Lava Cake'));
+dessertsItems.push(generateLinkObjectProp('chocolate-cookie-brownies', '/menu/desserts/chocolate-cookie-brownies', '/assets/menu/desserts/dessert-category.jpg', 'Chocolate Cookie Brownies', 800, 800, 31, 'Chocolate Cookie Brownies'));
+dessertsItems.push(generateLinkObjectProp('cinnamon-bread-bites', '/menu/desserts/cinnamon-bread-bites', '/assets/menu/desserts/dessert-category.jpg', 'Cinnamon Bread Bites', 800, 800, 32, 'Cinnamon Bread Bites'));
 
 // Drinks
 
-drinksItems.push(generateLinkObjectProp('pepsi', '/menu/drinks/pepsi', '/assets/menu/drinks/drinks-category.jpg', 'Pepsi 2-Liter', 800, 800, 'Pepsi'));
-drinksItems.push(generateLinkObjectProp('mountain-dew', '/menu/drinks/mountain-dew', '/assets/menu/drinks/drinks-category.jpg', 'Mountain Dew 2-Liter', 800, 800, 'Mountain Dew'));
-drinksItems.push(generateLinkObjectProp('mug-root-beer', '/menu/drinks/mug-root-beer', '/assets/menu/drinks/drinks-category.jpg', 'Mug Root Beer 2-Liter', 800, 800, 'Mug Root Beer'));
-drinksItems.push(generateLinkObjectProp('dr-pepper', '/menu/drinks/dr-pepper', '/assets/menu/drinks/drinks-category.jpg', 'Dr Pepper 2-Liter', 800, 800, 'Dr Pepper'));
-drinksItems.push(generateLinkObjectProp('cherry-pepsi', '/menu/drinks/cherry-pepsi', '/assets/menu/drinks/drinks-category.jpg', 'Cherry Pepsi 2-Liter', 800, 800, 'Cherry Pepsi'));
-drinksItems.push(generateLinkObjectProp('orange-crush', '/menu/drinks/orange-crush', '/assets/menu/drinks/drinks-category.jpg', 'Orange Crush 2-Liter', 800, 800, 'Orange Crush'));
+drinksItems.push(generateLinkObjectProp('pepsi', '/menu/drinks/pepsi', '/assets/menu/drinks/drinks-category.jpg', 'Pepsi 2-Liter', 800, 800, 33, 'Pepsi'));
+drinksItems.push(generateLinkObjectProp('mountain-dew', '/menu/drinks/mountain-dew', '/assets/menu/drinks/drinks-category.jpg', 'Mountain Dew 2-Liter', 800, 800, 34, 'Mountain Dew'));
+drinksItems.push(generateLinkObjectProp('mug-root-beer', '/menu/drinks/mug-root-beer', '/assets/menu/drinks/drinks-category.jpg', 'Mug Root Beer 2-Liter', 800, 800, 35, 'Mug Root Beer'));
+drinksItems.push(generateLinkObjectProp('dr-pepper', '/menu/drinks/dr-pepper', '/assets/menu/drinks/drinks-category.jpg', 'Dr Pepper 2-Liter', 800, 800, 36, 'Dr Pepper'));
+drinksItems.push(generateLinkObjectProp('cherry-pepsi', '/menu/drinks/cherry-pepsi', '/assets/menu/drinks/drinks-category.jpg', 'Cherry Pepsi 2-Liter', 800, 800, 37, 'Cherry Pepsi'));
+drinksItems.push(generateLinkObjectProp('orange-crush', '/menu/drinks/orange-crush', '/assets/menu/drinks/drinks-category.jpg', 'Orange Crush 2-Liter', 800, 800, 38, 'Orange Crush'));
 // #endregion
 
 // #region Ingredients
