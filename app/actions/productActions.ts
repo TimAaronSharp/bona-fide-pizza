@@ -3,15 +3,15 @@
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/app/db/drizzle";
-import { specialtyPizza } from "@/app/db/schema";
+import { specialty_pizza } from "@/app/db/schema";
 
 export const getProducts = async () => {
-  const data = await db.select().from(specialtyPizza);
+  const data = await db.select().from(specialty_pizza);
   return data;
 };
 
 export const addProduct = async (name: string, description: string, img: string) => {
-  await db.insert(specialtyPizza).values({
+  await db.insert(specialty_pizza).values({
     name: name,
     description: description,
     img: img
@@ -20,15 +20,15 @@ export const addProduct = async (name: string, description: string, img: string)
 };
 
 export const deleteProduct = async (id: number) => {
-  await db.delete(specialtyPizza).where(eq(specialtyPizza.id, id));
+  await db.delete(specialty_pizza).where(eq(specialty_pizza.id, id));
   // revalidatePath("/");
 };
 
 export const editProduct = async (id: number, name: string, description: string) => {
   await db
-    .update(specialtyPizza)
+    .update(specialty_pizza)
     .set({ name: name, description: description })
-    .where(eq(specialtyPizza.id, id));
+    .where(eq(specialty_pizza.id, id));
 
   // revalidatePath("/");
 };

@@ -37,7 +37,7 @@ export const pasta = pgTable("pasta", {
   img: text("img").notNull()
 });
 
-export const specialtyPizza = pgTable("specialty_pizza", {
+export const specialty_pizza = pgTable("specialty_pizza", {
   id: serial().primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
