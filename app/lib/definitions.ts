@@ -18,10 +18,8 @@ export type LinkObject = {
 }
 
 export type ProductInfo = {
-  id: number;
   name: string;
   description: string;
-  ingredients?: IngredientOptions;
 }
 
 export type IngredientOptions = {
