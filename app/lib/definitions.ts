@@ -14,13 +14,13 @@ export type LinkInfo = {
 export type LinkObject = {
   link: LinkInfo;
   image: ImageType;
-  product?: ProductInfo
+  product: ProductInfo
 }
 
 export type ProductInfo = {
   id: number;
   name: string;
-  description?: string;
+  description: string;
   ingredients?: IngredientOptions;
 }
 

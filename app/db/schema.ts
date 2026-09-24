@@ -1,7 +1,8 @@
-import { integer, text, pgTable, serial } from "drizzle-orm/pg-core";
+import { text, pgTable, serial } from "drizzle-orm/pg-core";
 
-export const product = pgTable("product", {
+export const pizza = pgTable("pizza", {
   id: serial().primaryKey(),
   name: text("name").notNull(),
-  description: text("description").notNull()
+  description: text("description").notNull(),
+  img: text("img").notNull()
 });

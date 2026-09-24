@@ -1,11 +1,11 @@
 {
-  "id": "4ecf4dcf-0383-4d9d-a3d1-22685bde399a",
+  "id": "32eae222-b39e-4d77-b652-e0d551c741f9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.product": {
-      "name": "product",
+    "public.pizza": {
+      "name": "pizza",
       "schema": "",
       "columns": {
         "id": {
@@ -22,6 +22,12 @@
         },
         "description": {
           "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img": {
+          "name": "img",
           "type": "text",
           "primaryKey": false,
           "notNull": true
