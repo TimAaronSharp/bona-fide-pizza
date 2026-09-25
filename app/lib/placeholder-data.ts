@@ -26,7 +26,7 @@ Here, the key must always be a string, and its value must always be a LinkObject
 Exported at the bottom of file with other data.
 ***See "app/menu/[category]/page.tsx for how it was used after export.*** */
 
-// NOTE "specialty_pizza" is named like this so that it matches the database table name and new route.
+// NOTE "specialty_pizza" is named like this so that it matches the database table name for seeding and new route
 const menuDataMap: Record<string, LinkObject[]> = {
   specialty_pizza: pizzaItems,
   bread: breadItems,
