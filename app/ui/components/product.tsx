@@ -23,7 +23,7 @@ export function Product() {
   }
 
   function handleAdd() {
-    addProduct(name, description);
+    // addProduct(name, description);
     setName("");
     setDescription("");
   }

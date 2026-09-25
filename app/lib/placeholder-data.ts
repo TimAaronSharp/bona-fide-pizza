@@ -9,7 +9,7 @@ const heroImage: ImageType = {
   height: 956
 }
 
-const menuCategoryObjects: LinkObject[] = [];
+const menuCategoryItems: LinkObject[] = [];
 const pizzaItems: LinkObject[] = [];
 const breadItems: LinkObject[] = [];
 const chickenItems: LinkObject[] = [];
@@ -28,6 +28,7 @@ Exported at the bottom of file with other data.
 
 // NOTE "specialty_pizza" is named like this so that it matches the database table name for seeding and new route
 const menuDataMap: Record<string, LinkObject[]> = {
+  menu: menuCategoryItems,
   specialty_pizza: pizzaItems,
   bread: breadItems,
   chicken: chickenItems,
@@ -75,15 +76,15 @@ function generateIngredient(id: number, name: string, category: Ingredient["cate
 }
 
 //#region Menu Categories for menu page. 
-// menuCategoryObjects.push(generateLinkObjectProp('Build Your Own Pizza', '/menu/build_your_own_pizza', '/assets/menu/pizza/pizza-category.jpg', 'Build Your Own Pizza Menu Category', 800, 800, 9990, 'Build Your Own'));
-menuCategoryObjects.push(generateLinkObjectProp('Pizza', '/menu/specialty_pizza', '/assets/menu/pizza/pizza-category.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas', 'Pizza Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Breads', '/menu/bread', '/assets/menu/breads/breads-category.jpg', 'Breads Menu Category', 1200, 1200, 'Breads', 'Breads Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken', '/assets/menu/chicken/chicken-category.jpg', 'Chicken Wings Menu Category', 735, 735, 'Chicken', 'Chicken Wings Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/pasta/pasta-category.jpg', 'Pasta Menu Category', 1200, 1200, 'Pasta', 'Pasta Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Sandwiches', '/menu/sandwich', '/assets/menu/sandwiches/sandwich-category.jpg', 'Sandwich Menu Category', 1200, 1200, 'Sandwiches', 'Sandwich Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Salads', '/menu/salad', '/assets/menu/salads/salad-category.jpg', 'Salad Menu Category', 500, 500, 'Salads', 'Salad Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Desserts', '/menu/dessert', '/assets/menu/desserts/dessert-category.jpg', 'Dessert Menu Category', 1200, 800, 'Desserts', 'Dessert Menu Category'));
-menuCategoryObjects.push(generateLinkObjectProp('Drinks', '/menu/drink', '/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 533, 533, 'Drinks', 'Drinks Menu Category'));
+// menuCategoryItems.push(generateLinkObjectProp('Build Your Own Pizza', '/menu/build_your_own_pizza', '/assets/menu/pizza/pizza-category.jpg', 'Build Your Own Pizza Menu Category', 800, 800, 9990, 'Build Your Own'));
+menuCategoryItems.push(generateLinkObjectProp('Pizza', '/menu/specialty_pizza', '/assets/menu/pizza/pizza-category.jpg', 'Pizza Menu Category', 800, 800, 'Pizzas', 'Pizza Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Breads', '/menu/bread', '/assets/menu/breads/breads-category.jpg', 'Breads Menu Category', 1200, 1200, 'Breads', 'Breads Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Chicken Wings', '/menu/chicken', '/assets/menu/chicken/chicken-category.jpg', 'Chicken Wings Menu Category', 735, 735, 'Chicken', 'Chicken Wings Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Pasta', '/menu/pasta', '/assets/menu/pasta/pasta-category.jpg', 'Pasta Menu Category', 1200, 1200, 'Pasta', 'Pasta Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Sandwiches', '/menu/sandwich', '/assets/menu/sandwiches/sandwich-category.jpg', 'Sandwich Menu Category', 1200, 1200, 'Sandwiches', 'Sandwich Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Salads', '/menu/salad', '/assets/menu/salads/salad-category.jpg', 'Salad Menu Category', 500, 500, 'Salads', 'Salad Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Desserts', '/menu/dessert', '/assets/menu/desserts/dessert-category.jpg', 'Dessert Menu Category', 1200, 800, 'Desserts', 'Dessert Menu Category'));
+menuCategoryItems.push(generateLinkObjectProp('Drinks', '/menu/drink', '/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 533, 533, 'Drinks', 'Drinks Menu Category'));
 // #endregion
 
 //#region Individual menu items by category
@@ -183,4 +184,4 @@ ingredients.push(generateIngredient(13, "no sauce", "sauce"));
 
 // #endregion
 
-export { heroImage, menuCategoryObjects, ingredients, menuDataMap };
+export { heroImage, menuCategoryItems, ingredients, menuDataMap };

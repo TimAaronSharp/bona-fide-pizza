@@ -1,5 +1,5 @@
 {
-  "id": "7edcfc28-7ed2-4241-8213-c05c4f9cf29a",
+  "id": "f7170ef8-88d9-4b9f-a498-0b5ab7b1134e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -26,11 +26,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -63,11 +107,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -100,11 +188,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -137,11 +269,136 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.menu": {
+      "name": "menu",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link_name": {
+          "name": "link_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -174,11 +431,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -211,11 +512,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -248,11 +593,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -285,11 +674,55 @@
           "primaryKey": false,
           "notNull": true
         },
-        "img": {
-          "name": "img",
+        "link_name": {
+          "name": "link_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_src": {
+          "name": "img_src",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_alt": {
+          "name": "img_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_width": {
+          "name": "img_width",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "img_height": {
+          "name": "img_height",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},

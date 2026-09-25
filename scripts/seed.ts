@@ -5,6 +5,7 @@ config({ path: ".env.local" });
 
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema";
+import * as schemaTypes from "@/app/db/types";
 import { menuDataMap } from "@/app/lib/placeholder-data";
 
 /* Seeds all database product tables by looping over "menuDataMap" (dictionary of product arrays), maps over each
@@ -32,15 +33,24 @@ const seedProducts = async () => {
       ("bread" | "chicken" | "dessert" | "drink" | "pasta" | "specialtyPizza" | "salad" | "sandwich").
       Otherwise it gives a type error saying that schemas[key] could be 'any' or a generic 'string'.*/
 
-      const schemaKey = key as keyof typeof schemas;
+      const schemaKey = key as keyof typeof schemaTypes;
+      // console.log("schemaKey is ", schemaKey);
 
       const dataToInsert = value.map((items) => {
+        const { product, image, link } = items
         return {
-          name: items.product.name,
-          description: items.product.description,
-          img: items.image.src
+          name: product.name,
+          description: product.description,
+          linkName: link.name,
+          href: link.href,
+          imgSrc: image.src,
+          imgAlt: image.alt,
+          imgWidth: image.width,
+          imgHeight: image.height,
         }
       })
+      // console.log("dataToInsert is ", dataToInsert);
+      // console.log("schemaTypes is ", schemas[schemaKey]);
       await db.insert(schemas[schemaKey]).values(dataToInsert);
     }
 
