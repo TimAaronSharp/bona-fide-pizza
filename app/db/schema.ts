@@ -1,129 +1,41 @@
-import { text, pgTable, serial, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable } from "drizzle-orm/pg-core";
+import { getProductColumns } from "./utility";
 
 // Database schemas
-
+/* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
+drizzle-kit generation/migration. */
 export const menu = pgTable("menu", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const bread = pgTable("bread", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const chicken = pgTable("chicken", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const dessert = pgTable("dessert", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const drink = pgTable("drink", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const pasta = pgTable("pasta", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const specialty_pizza = pgTable("specialty_pizza", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const salad = pgTable("salad", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });
 
 export const sandwich = pgTable("sandwich", {
-  id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
-  href: text("href").notNull(),
-  imgSrc: text("img_src").notNull(),
-  imgAlt: text("img_alt").notNull(),
-  imgWidth: integer("img_width").notNull(),
-  imgHeight: integer("img_height").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  ...getProductColumns()
 });

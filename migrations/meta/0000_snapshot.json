@@ -1,5 +1,5 @@
 {
-  "id": "f7170ef8-88d9-4b9f-a498-0b5ab7b1134e",
+  "id": "8fa53eee-8ade-47df-a0f4-f8fd5fe658fa",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -52,13 +52,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -133,13 +133,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -214,13 +214,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -295,13 +295,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -376,13 +376,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -457,13 +457,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -538,13 +538,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -619,13 +619,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -700,13 +700,13 @@
         },
         "img_width": {
           "name": "img_width",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "img_height": {
           "name": "img_height",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },

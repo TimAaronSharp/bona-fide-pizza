@@ -6,8 +6,8 @@ CREATE TABLE "bread" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -20,8 +20,8 @@ CREATE TABLE "chicken" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -34,8 +34,8 @@ CREATE TABLE "dessert" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -48,8 +48,8 @@ CREATE TABLE "drink" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -62,8 +62,8 @@ CREATE TABLE "menu" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -76,8 +76,8 @@ CREATE TABLE "pasta" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -90,8 +90,8 @@ CREATE TABLE "salad" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -104,8 +104,8 @@ CREATE TABLE "sandwich" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -118,8 +118,8 @@ CREATE TABLE "specialty_pizza" (
 	"href" text NOT NULL,
 	"img_src" text NOT NULL,
 	"img_alt" text NOT NULL,
-	"img_width" text NOT NULL,
-	"img_height" text NOT NULL,
+	"img_width" integer NOT NULL,
+	"img_height" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
