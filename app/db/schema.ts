@@ -1,4 +1,4 @@
-import { text, pgTable, serial, timestamp } from "drizzle-orm/pg-core";
+import { text, pgTable, serial, timestamp, integer } from "drizzle-orm/pg-core";
 
 // Database schemas
 
@@ -10,8 +10,8 @@ export const menu = pgTable("menu", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -24,8 +24,8 @@ export const bread = pgTable("bread", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -38,8 +38,8 @@ export const chicken = pgTable("chicken", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -52,8 +52,8 @@ export const dessert = pgTable("dessert", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -66,8 +66,8 @@ export const drink = pgTable("drink", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -80,8 +80,8 @@ export const pasta = pgTable("pasta", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -94,8 +94,8 @@ export const specialty_pizza = pgTable("specialty_pizza", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -108,8 +108,8 @@ export const salad = pgTable("salad", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -122,8 +122,8 @@ export const sandwich = pgTable("sandwich", {
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
-  imgWidth: text("img_width").notNull(),
-  imgHeight: text("img_height").notNull(),
+  imgWidth: integer("img_width").notNull(),
+  imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });

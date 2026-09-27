@@ -10,14 +10,14 @@ export const getProducts = async () => {
   return data;
 };
 
-export const addProduct = async (name: string, description: string, img: string) => {
-  await db.insert(specialty_pizza).values({
-    name: name,
-    description: description,
-    img: img
-  });
-  // revalidatePath("/");
-};
+// export const addProduct = async (name: string, description: string, img: string) => {
+//   await db.insert(specialty_pizza).values({
+//     name: name,
+//     description: description,
+//     img: img
+//   });
+//   // revalidatePath("/");
+// };
 
 export const deleteProduct = async (id: number) => {
   await db.delete(specialty_pizza).where(eq(specialty_pizza.id, id));
