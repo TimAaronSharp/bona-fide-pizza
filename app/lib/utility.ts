@@ -1,8 +1,8 @@
-import { Menu } from "@/app/menu/page";
+import { menu } from "@/app/db/types";
 import { LinkObject } from "./definitions";
 
 
-export function generateLinkObject(menuCategoryItem: Menu): LinkObject {
+export function generateLinkObject(menuCategoryItem: menu): LinkObject {
   return {
     link: {
       name: menuCategoryItem.linkName,

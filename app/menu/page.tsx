@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   title: 'Menu'
 };
 
-export type Menu = typeof menu.$inferSelect;
-
 export default async function MenuPage() {
   const menuCategoryItems = await db.select().from(menu);
 
@@ -24,7 +22,7 @@ export default async function MenuPage() {
           <div className="grid grid-cols-6 gap-4 p-4 drop-shadow-sm drop-shadow-white">
             {menuCategoryItems.map((menuCategoryItem) => {
               const menuCategoryProp = generateLinkObject(menuCategoryItem);
-              console.log("menuCategoryProp is ", menuCategoryProp);
+
               return <ProductCard key={menuCategoryItem.imgSrc} productProp={menuCategoryProp} />
             })}
           </div>
