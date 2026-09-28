@@ -1,22 +1,32 @@
 import { Metadata } from "next";
 import '@/app/menu/menu.css';
-import { menuCategoryItems } from "@/app/lib/placeholder-data";
+// import { menuCategoryItems } from "@/app/lib/placeholder-data";
+import { menu } from "../db/schema";
 import { ProductCard } from "@/app/ui/components/productCard";
+import { db } from "../db/drizzle";
+import { generateLinkObject } from "../lib/utility";
 
 export const metadata: Metadata = {
   title: 'Menu'
 };
 
-export default function MenuPage() {
+export type Menu = typeof menu.$inferSelect;
+
+export default async function MenuPage() {
+  const menuCategoryItems = await db.select().from(menu);
+
+  console.log("menuCategoryItems is ", menuCategoryItems)
   return (
     <>
       <main>
         <section className="flex justify-center menu-page">
           {/* NOTE Play around with drop-shadow */}
           <div className="grid grid-cols-6 gap-4 p-4 drop-shadow-sm drop-shadow-white">
-            {menuCategoryItems.map((menuCategoryObject) => (
-              <ProductCard key={menuCategoryObject.image.src} productProp={menuCategoryObject} />
-            ))}
+            {menuCategoryItems.map((menuCategoryItem) => {
+              const menuCategoryProp = generateLinkObject(menuCategoryItem);
+              console.log("menuCategoryProp is ", menuCategoryProp);
+              return <ProductCard key={menuCategoryItem.imgSrc} productProp={menuCategoryProp} />
+            })}
           </div>
         </section>
       </main>

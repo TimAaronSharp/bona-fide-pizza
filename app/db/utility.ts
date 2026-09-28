@@ -1,4 +1,4 @@
-import { text, pgTable, serial, timestamp, integer } from "drizzle-orm/pg-core";
+import { text, serial, timestamp, integer } from "drizzle-orm/pg-core";
 
 // Helper function to generate table columns
 

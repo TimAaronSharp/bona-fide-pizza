@@ -14,7 +14,7 @@ export default function Home() {
         <h1>Home Page</h1>
         <section className="flex justify-center">
           <Hero heroImage={heroImage} />
-          <Product />
+          {/* <Product /> */}
         </section>
       </main>
     </>
