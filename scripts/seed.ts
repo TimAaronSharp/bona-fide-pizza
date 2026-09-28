@@ -5,7 +5,6 @@ config({ path: ".env.local" });
 
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema";
-import * as schemaTypes from "@/app/db/types";
 import { menuDataMap } from "@/app/lib/placeholder-data";
 
 /* Seeds all database product tables by looping over "menuDataMap" (dictionary of product arrays), maps over each

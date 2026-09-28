@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 export default async function MenuPage() {
   const menuCategoryItems = await db.select().from(menu);
 
-  console.log("menuCategoryItems is ", menuCategoryItems)
   return (
     <>
       <main>
