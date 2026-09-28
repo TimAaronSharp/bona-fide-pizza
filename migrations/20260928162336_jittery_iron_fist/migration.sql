@@ -1,5 +1,5 @@
 CREATE TABLE "bread" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE "bread" (
 );
 --> statement-breakpoint
 CREATE TABLE "chicken" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "chicken" (
 );
 --> statement-breakpoint
 CREATE TABLE "dessert" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE "dessert" (
 );
 --> statement-breakpoint
 CREATE TABLE "drink" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE "drink" (
 );
 --> statement-breakpoint
 CREATE TABLE "menu" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE "menu" (
 );
 --> statement-breakpoint
 CREATE TABLE "pasta" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE "pasta" (
 );
 --> statement-breakpoint
 CREATE TABLE "salad" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE "salad" (
 );
 --> statement-breakpoint
 CREATE TABLE "sandwich" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE "sandwich" (
 );
 --> statement-breakpoint
 CREATE TABLE "specialty_pizza" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"link_name" text NOT NULL,

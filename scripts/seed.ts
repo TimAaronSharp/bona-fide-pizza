@@ -33,7 +33,7 @@ const seedProducts = async () => {
       ("bread" | "chicken" | "dessert" | "drink" | "pasta" | "specialtyPizza" | "salad" | "sandwich").
       Otherwise it gives a type error saying that schemas[key] could be 'any' or a generic 'string'.*/
 
-      const schemaKey = key as keyof typeof schemaTypes;
+      const schemaKey = key as keyof typeof schemas;
       // console.log("schemaKey is ", schemaKey);
 
       const dataToInsert = value.map((items) => {
