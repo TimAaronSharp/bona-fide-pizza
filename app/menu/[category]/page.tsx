@@ -1,4 +1,3 @@
-import { menuDataMap } from "@/app/lib/placeholder-data";
 import '@/app/menu/menu.css';
 import { ProductCard } from "@/app/ui/components/productCard";
 import * as schemas from "@/app/db/schema";

@@ -1,8 +1,10 @@
-import { menu } from "@/app/db/types";
+import { menu } from "@/app/db/schema";
 import { LinkObject } from "./definitions";
 
+// Menu and all product tables share the same schema, so I'm just using menu to infer the type for Schema.
+type Schema = typeof menu.$inferSelect;
 
-export function generateLinkObject(menuCategoryItem: menu): LinkObject {
+export function generateLinkObject(menuCategoryItem: Schema): LinkObject {
   return {
     link: {
       name: menuCategoryItem.linkName,
@@ -15,6 +17,7 @@ export function generateLinkObject(menuCategoryItem: menu): LinkObject {
       height: menuCategoryItem.imgHeight
     },
     product: {
+      id: menuCategoryItem.id,
       name: menuCategoryItem.name,
       description: menuCategoryItem.description
     }

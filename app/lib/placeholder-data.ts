@@ -59,6 +59,7 @@ function generateLinkObjectProp(linkName: string,
       height: height
     },
     product: {
+      id: 0, //This is placeholder now that I've added "id:" to the "ProductInfo" type so that there is a property for it when it pulls a product from the db.
       name: productName,
       description: description
     }
