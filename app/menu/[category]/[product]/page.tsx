@@ -1,6 +1,5 @@
 import { db } from "@/app/db/drizzle";
 import { eq } from "drizzle-orm";
-import { menuDataMap } from "@/app/lib/placeholder-data";
 import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema";

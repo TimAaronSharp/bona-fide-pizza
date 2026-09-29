@@ -38,7 +38,11 @@ const seedProducts = async () => {
 
       const dataToInsert = value.map((items, index) => {
         const { product, image, link } = items
-        ProductSchema.parse(value[index]);
+
+        const productSchemaIsValid = ProductSchema.safeParse(value[index]);
+        if (!productSchemaIsValid.success) {
+          console.error(productSchemaIsValid.error);
+        }
         // console.log("schemaKey: ", schemaKey + ` - value[${index}] is `, ProductSchema.safeParse(value[index]));
         return {
           name: product.name,
