@@ -8,9 +8,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "db:generate:auth": "pnpm dlx auth@latest generate --config ./app/lib/auth.ts --output ./app/db/auth-schema.db.ts --yes",
+    "db:generate:all": "pnpm drizzle-kit generate",
+    "db:migrate:all": "pnpm drizzle-kit migrate"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.7.6",
     "@neondatabase/serverless": "^1.1.0",
     "better-auth": "^1.7.6",
     "dotenv": "^18.0.3",

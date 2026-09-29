@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import '@/app/menu/menu.css';
 // import { menuCategoryItems } from "@/app/lib/placeholder-data";
-import { menu } from "../db/schema";
+import { menu } from "../db/schema.db";
 import { ProductCard } from "@/app/ui/components/productCard";
 import { db } from "../db/drizzle";
 import { generateProduct } from "../lib/utility";

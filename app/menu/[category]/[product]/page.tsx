@@ -2,7 +2,7 @@ import { db } from "@/app/db/drizzle";
 import { eq } from "drizzle-orm";
 import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
-import * as schemas from "@/app/db/schema";
+import * as schemas from "@/app/db/schema.db";
 import { generateProduct } from "@/app/lib/utility";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received

@@ -3,7 +3,7 @@
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/app/db/drizzle";
-import { specialty_pizza } from "@/app/db/schema";
+import { specialty_pizza } from "@/app/db/schema.db";
 
 export const getProducts = async () => {
   const data = await db.select().from(specialty_pizza);
