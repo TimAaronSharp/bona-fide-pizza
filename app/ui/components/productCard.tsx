@@ -1,9 +1,9 @@
-import { LinkObject } from "@/app/lib/definitions";
+import { Product } from "@/app/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
 import '@/app/globals.css';
 
-export function ProductCard({ productProp }: { productProp: LinkObject }) {
+export function ProductCard({ productProp }: { productProp: Product }) {
   const { image, link, product } = productProp;
 
   return (

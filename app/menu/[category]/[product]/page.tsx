@@ -4,7 +4,7 @@ import { menuDataMap } from "@/app/lib/placeholder-data";
 import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema";
-import { generateLinkObject } from "@/app/lib/utility";
+import { generateProduct } from "@/app/lib/utility";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
 inside the function so that is not accessible outside).*/
@@ -15,7 +15,7 @@ export default async function ProductPage({ params }: { params: { category: stri
   console.log("product is ", product);
   const dbItem = await db.select().from(schemas[schemaKey]).where(eq(schemas[schemaKey].linkName, product));
   console.log("dbItem is ", dbItem);
-  const item = generateLinkObject(dbItem[0]);
+  const item = generateProduct(dbItem[0]);
 
   // TODO Add notFound() logic here.
   return (

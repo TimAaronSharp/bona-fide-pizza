@@ -1,4 +1,5 @@
 import { config } from "dotenv";
+import { ProductSchema } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -35,8 +36,10 @@ const seedProducts = async () => {
       const schemaKey = key as keyof typeof schemas;
       // console.log("schemaKey is ", schemaKey);
 
-      const dataToInsert = value.map((items) => {
+      const dataToInsert = value.map((items, index) => {
         const { product, image, link } = items
+        ProductSchema.parse(value[index]);
+        // console.log("schemaKey: ", schemaKey + ` - value[${index}] is `, ProductSchema.safeParse(value[index]));
         return {
           name: product.name,
           description: product.description,
