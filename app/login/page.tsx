@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { SignUpForm } from "../ui/components/auth/sign-up";
+import { LoginForm } from "@/app/ui/components/auth/loginForm";
 
 export const metadata: Metadata = {
   title: 'Login'
@@ -10,7 +10,7 @@ export default function LoginPage() {
     <>
       <main>
         <h1>Login Page</h1>
-        <SignUpForm />
+        <LoginForm />
       </main>
     </>
   )
