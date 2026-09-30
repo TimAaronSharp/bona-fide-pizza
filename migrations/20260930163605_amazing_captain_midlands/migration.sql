@@ -22,7 +22,8 @@ CREATE TABLE "session" (
 	"updated_at" timestamp NOT NULL,
 	"ip_address" text,
 	"user_agent" text,
-	"user_id" text NOT NULL
+	"user_id" text NOT NULL,
+	"impersonated_by" text
 );
 --> statement-breakpoint
 CREATE TABLE "user" (
@@ -32,7 +33,11 @@ CREATE TABLE "user" (
 	"email_verified" boolean DEFAULT false NOT NULL,
 	"image" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"role" text,
+	"banned" boolean DEFAULT false,
+	"ban_reason" text,
+	"ban_expires" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE "verification" (

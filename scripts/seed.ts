@@ -40,6 +40,7 @@ const seedProducts = async () => {
         const { product, image, link } = items
 
         const productSchemaIsValid = ProductSchema.safeParse(value[index]);
+
         if (!productSchemaIsValid.success) {
           console.error(productSchemaIsValid.error);
         }

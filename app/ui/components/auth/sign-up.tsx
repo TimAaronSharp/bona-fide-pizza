@@ -10,7 +10,6 @@ export function SignUpForm() {
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    // debugger
     await handleUserSignUp(email, password, name);
   }
 

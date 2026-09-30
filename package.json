@@ -11,7 +11,8 @@
     "seed": "tsx scripts/seed.ts",
     "db:generate:auth": "pnpm dlx auth@latest generate --config ./app/lib/auth/auth.ts --output ./app/db/auth-schema.db.ts --yes",
     "db:generate:all": "pnpm drizzle-kit generate",
-    "db:migrate:all": "pnpm drizzle-kit migrate"
+    "db:migrate:all": "pnpm drizzle-kit migrate",
+    "db:create:admin": "pnpm dlx auth@latest create-admin --config ./app/lib/auth/auth.ts --role admin"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.7.6",
