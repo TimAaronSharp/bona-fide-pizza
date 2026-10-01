@@ -39,4 +39,5 @@ export const handleUserLogin = async (email: string, password: string) => {
 
 export const handleUserLogout = async () => {
   await authClient.signOut();
+  console.log("User successfully logged out.");
 }

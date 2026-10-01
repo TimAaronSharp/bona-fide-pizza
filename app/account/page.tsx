@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { auth } from "@/app/lib/auth/auth";
+import { Logout } from "@/app/ui/components/auth/logout";
 
 
 // async function getHeaders() {
@@ -19,6 +20,8 @@ export default async function AccountPage() {
       <h1>Account Page</h1>
 
       <p>Hello {session?.user.name}!</p>
+
+      <Logout />
     </>
   )
 }
