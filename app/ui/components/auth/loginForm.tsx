@@ -1,15 +1,19 @@
 "use client";
 
 import { handleUserLogin } from "@/app/lib/auth/auth-helpers";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     await handleUserLogin(email, password);
+    router.push("/account");
   }
 
   return (
