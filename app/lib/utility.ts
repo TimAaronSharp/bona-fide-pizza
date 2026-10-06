@@ -1,10 +1,10 @@
-import { menu } from "@/app/db/schema.db";
-import { Product } from "./definitions";
+import { menuCategory } from "@/app/db/schema.db";
+import { ProductSchemaType } from "./definitions";
 
 // Menu and all product tables share the same schema, so I'm just using menu to infer the type for Schema.
 type Schema = typeof menu.$inferSelect;
 
-export function generateProduct(menuCategoryItem: Schema): Product {
+export function generateProduct(menuCategoryItem: Schema): ProductSchemaType {
   return {
     link: {
       name: menuCategoryItem.paramName,

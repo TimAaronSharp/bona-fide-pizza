@@ -25,7 +25,7 @@ const seedImages = async () => {
 
     // console.log("imageInsertSeed is ", imageInsertSeed);
 
-    await db.insert(schemas.image).values(imageInsertSeed);
+    await db.insert(schemas.image).values(imageInsertSeed).returning();
     console.log("✅ image table seeding complete!");
   }
   catch (error) {

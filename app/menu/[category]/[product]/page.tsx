@@ -1,6 +1,6 @@
 import { db } from "@/app/db/drizzle";
 import { eq } from "drizzle-orm";
-import { Customizer } from "@/app/ui/components/customizer";
+// import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema.db";
 import { generateProduct } from "@/app/lib/utility";
@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: { params: { category: stri
         <h1>{item.product.name}</h1>
         <p>{item.product.description}</p>
         <Image {...item.image} />
-        <Customizer />
+        {/* <Customizer /> */}
       </section>
     </main>
   )
