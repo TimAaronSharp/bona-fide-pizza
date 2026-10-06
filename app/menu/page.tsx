@@ -11,10 +11,11 @@ export const metadata: Metadata = {
 };
 
 export default async function MenuPage() {
-  const menuCategoryItems = await db.select().from(menuCategory);
-  const menuCategoryImages = await db.select().from(image).where(eq(menuCategory.imgId, image.id));
+  const menuCategoryItems = await db.select().from(image).innerJoin(menuCategory, eq(image.id, menuCategory.imgId));
 
-  console.log("menuCategoryImages is ")
+
+  // console.log("menuCategoryItems is ", menuCategoryItems);
+  console.log("menuCategoryItems is ", menuCategoryItems);
 
   return (
     <>
@@ -25,7 +26,7 @@ export default async function MenuPage() {
             {menuCategoryItems.map((menuCategoryItem) => {
               const menuCategoryProp = generateProduct(menuCategoryItem);
 
-              return <ProductCard key={menuCategoryItem.category} productProp={menuCategoryProp} />
+              return <ProductCard key={menuCategoryItem.menu_category.category} productProp={menuCategoryProp} />
             })}
           </div>
         </section>
