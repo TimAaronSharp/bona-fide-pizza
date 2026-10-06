@@ -12,7 +12,7 @@ export default async function ProductPage({ params }: { params: { category: stri
   const { category, product } = await params;
   const schemaKey = category as keyof typeof schemas;
   console.log("product is ", product);
-  const dbItem = await db.select().from(schemas[schemaKey]).where(eq(schemas[schemaKey].linkName, product));
+  const dbItem = await db.select().from(schemas[schemaKey]).where(eq(schemas[schemaKey].paramName, product));
   console.log("dbItem is ", dbItem);
   const item = generateProduct(dbItem[0]);
 

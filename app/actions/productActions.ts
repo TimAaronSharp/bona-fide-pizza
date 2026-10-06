@@ -18,7 +18,7 @@ export const getProducts = async () => {
 //   })
 // }
 
-export const addProduct = async (name: string, description: string, linkName: string, href: string, imgSrc: string, imgAlt: string, imgWidth: number, imgHeight: number) => {
+export const addProduct = async (name: string, description: string, paramName: string, href: string, imgSrc: string, imgAlt: string, imgWidth: number, imgHeight: number) => {
 
   const session = await auth.api.getSession({
     headers: await headers()
@@ -45,7 +45,7 @@ export const addProduct = async (name: string, description: string, linkName: st
   await db.insert(specialty_pizza).values({
     name,
     description,
-    linkName,
+    paramName,
     href,
     imgSrc,
     imgAlt,

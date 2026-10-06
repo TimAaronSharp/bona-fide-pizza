@@ -13,7 +13,7 @@ import { ChangeEvent, FC, useState } from "react";
 export function Product() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [linkName, setLinkName] = useState("");
+  const [paramName, setparamName] = useState("");
   const [href, setHref] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [imgAlt, setImgAlt] = useState("");
@@ -28,8 +28,8 @@ export function Product() {
     setDescription(e.target.value);
   }
 
-  const handleLinkName = (e: ChangeEvent<HTMLInputElement>) => {
-    setLinkName(e.target.value);
+  const handleparamName = (e: ChangeEvent<HTMLInputElement>) => {
+    setparamName(e.target.value);
   };
 
   const handleHref = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,10 +56,10 @@ export function Product() {
 
 
   function handleAdd() {
-    addProduct(name, description, linkName, href, imgSrc, imgAlt, imgWidth, imgHeight);
+    addProduct(name, description, paramName, href, imgSrc, imgAlt, imgWidth, imgHeight);
     setName("");
     setDescription("");
-    setLinkName("");
+    setparamName("");
     setHref("");
     setImgSrc("");
     setImgAlt("");
@@ -76,7 +76,7 @@ export function Product() {
       <input type="text" id="create-product-description" onChange={handleDescription} value={description} />
 
       <label htmlFor="create-product-link-name">Link Name:</label>
-      <input type="text" id="create-product-link-name" onChange={handleLinkName} value={linkName} />
+      <input type="text" id="create-product-link-name" onChange={handleparamName} value={paramName} />
 
       <label htmlFor="create-product-href">Href:</label>
       <input type="text" id="create-product-href" onChange={handleHref} value={href} />

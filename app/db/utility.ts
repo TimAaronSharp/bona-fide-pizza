@@ -6,7 +6,7 @@ export const getProductColumns = () => ({
   id: serial().primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
-  linkName: text("link_name").notNull(),
+  paramName: text("param_name").notNull(),
   href: text("href").notNull(),
   imgSrc: text("img_src").notNull(),
   imgAlt: text("img_alt").notNull(),
@@ -14,4 +14,4 @@ export const getProductColumns = () => ({
   imgHeight: integer("img_height").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
-})
+});

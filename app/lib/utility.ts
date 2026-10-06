@@ -7,7 +7,7 @@ type Schema = typeof menu.$inferSelect;
 export function generateProduct(menuCategoryItem: Schema): Product {
   return {
     link: {
-      name: menuCategoryItem.linkName,
+      name: menuCategoryItem.paramName,
       href: menuCategoryItem.href
     },
     image: {

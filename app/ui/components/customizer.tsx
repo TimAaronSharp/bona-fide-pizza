@@ -1,5 +1,5 @@
 import { Ingredient } from "@/app/lib/definitions.js";
-import { ingredients } from "@/app/lib/placeholder-data";
+// import { ingredients } from "@/app/lib/placeholder-data";
 /*What each product type would need in a customizer:
 
 BUILD YOUR OWN PIZZA:
@@ -29,7 +29,7 @@ SPECIALTY PIZZAS:
 -Item Summary (at very bottom that shows the qty, item, and any alterations, ie. "(1) Supreme" is the qty/item, and below that "Bacon, No Pepperoni" if Bacon was added and Pepperoni was removed. If "Dipping Cup" is selected that will be a separate item entry below "Supreme" item) (Only include "Icing Dipping Cup" option on sweet items?),
 -STRETCH - Dipping Cups (make extra menu category for extras like sauce cups, side of jalapenos, etc.)?
 
-BREADS:
+BREAD:
 -Qty,
 -Size (how many pieces),
 -Other Flavors (other flavors of specific type of bread - ie. choosing Parmesan Bread Bites shows the Cinnamon and Garlic Bread Bites here?),
@@ -44,12 +44,12 @@ CHICKEN:
 -Item Summary (at very bottom that shows the qty, item, and any alterations, ie. "(1) Honey BBQ Wings" is the qty/item, and below that "Light Jalapeno" if Jalapeno density was altered. If "Dipping Cup" is selected that will be a separate item entry below "Honey BBQ Wings" item) (Only include "Icing Dipping Cup" option on sweet items?),
 -STRETCH - Dipping Cups (make extra menu category for extras like sauce cups, side of jalapenos, etc.)?
 
-DESSERTS:
+DESSERT:
 -Qty,
 -Size (how many pieces. Make static but shown so people know how many pieces are included in 1xQty?),
 -Icing Dipping Cup (For items that it makes sense for. Brownies probably won't have this available, but lava cake and cinnamon bread bites will?),
 -Item Summary (at very bottom that shows the qty, item, and any additions, ie. "(1) Cinnamon Bread Bites" is the qty/item, If "Icing Dipping Cup" is selected that will be a separate item entry below "Cinnamon Bread Bites" item) probably won't be any item alteration options?,
-***NOTE*** Cinnamon Bread Bites will be in BOTH Breads and Desserts categories.
+***NOTE*** Cinnamon Bread Bites will be in BOTH Bread and Dessert categories.
 
 PASTAS
 -Qty,
@@ -57,13 +57,13 @@ PASTAS
 -Toppings (For items that make sense, like Chicken Alfredo, you could remove/alter the density of the chicken),
 -Item Summary (at very bottom that shows the qty, item, and any alterations, ie. "(1) Chicken Alfredo" is the qty/item, and below that "Light Chicken" if Chicken density was altered.
 
-SANDWICHES:
+SANDWICH:
 -Qty,
 -Sauce (for sandwiches that have sauces, like "Ranch" for Chicken Bacon Ranch, "Ranch" and "Hot Buffalo Sauce" for Buffalo Chicken, or "marinara" for Chicken Parm),
 -Toppings (only includes a list of toppings that come on that specific sandwich to be removed or altered, complete list of toppings, or develop a list of "sandwich toppings"?),
 -Item Summary (at very bottom that shows the qty, item, and any alterations, ie. "(1) Chicken Parm" is the qty/item, and below that "Light Marinara, Light Chicken" if Marinara and Chicken density was altered.
 
-SALADS:
+SALAD:
 -Qty,
 -Sides/Dressing,
 -Item Summary (at very bottom that shows the qty, item, and any sides/dressings, ie. "(1) Classic Garden" is the qty/item. Sides/Dressings will be listed below item.
@@ -78,34 +78,34 @@ ALL:
 
 */
 
-function filterByCategory(ingredients: Ingredient[], category: Ingredient["category"]): Ingredient[] {
+// function filterByCategory(ingredients: Ingredient[], category: Ingredient["category"]): Ingredient[] {
 
-  return ingredients.filter((ingredient) => (
-    ingredient.category == category
-  ));
-};
+//   return ingredients.filter((ingredient) => (
+//     ingredient.category == category
+//   ));
+// };
 
-const crusts = filterByCategory(ingredients, "crust");
-const crustSeasonings = filterByCategory(ingredients, "crust seasoning");
-const sauces = filterByCategory(ingredients, "sauce");
+// const crusts = filterByCategory(ingredients, "crust");
+// const crustSeasonings = filterByCategory(ingredients, "crust seasoning");
+// const sauces = filterByCategory(ingredients, "sauce");
 
-export function Customizer() {
-  return (
-    <section>
-      <h2>Crusts:</h2>
-      {crusts.map((crust) => (
-        <p key={crust.name}>{crust.name}</p>
-      ))}
+// export function Customizer() {
+//   return (
+//     <section>
+//       <h2>Crusts:</h2>
+//       {crusts.map((crust) => (
+//         <p key={crust.name}>{crust.name}</p>
+//       ))}
 
-      <h2>Crust Seasoning:</h2>
-      {crustSeasonings.map((crustSeasoning) => (
-        <p key={crustSeasoning.name}>{crustSeasoning.name}</p>
-      ))}
+//       <h2>Crust Seasoning:</h2>
+//       {crustSeasonings.map((crustSeasoning) => (
+//         <p key={crustSeasoning.name}>{crustSeasoning.name}</p>
+//       ))}
 
-      <h2>Sauce:</h2>
-      {sauces.map((sauce) => (
-        <p key={sauce.name}>{sauce.name}</p>
-      ))}
-    </section>
-  )
-}
+//       <h2>Sauce:</h2>
+//       {sauces.map((sauce) => (
+//         <p key={sauce.name}>{sauce.name}</p>
+//       ))}
+//     </section>
+//   )
+// }

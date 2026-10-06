@@ -16,6 +16,18 @@ export const auth = betterAuth({
     enabled: true,
     // autoSignIn: false <- By default this is true.
   },
+  user: {
+    additionalFields: {
+      firstName: {
+        type: "string",
+        required: true
+      },
+      lastName: {
+        type: "string",
+        required: true
+      }
+    }
+  },
   plugins: [
     adminPlugin({
       ac,

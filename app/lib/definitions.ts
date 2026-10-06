@@ -1,24 +1,70 @@
 import z from "zod";
 
+// export const ProductSchema = z.object({
+//   link: z.object({
+//     paramName: z.string(),
+//     href: z.string()
+//   }),
+//   image: z.object({
+//     src: z.string(),
+//     alt: z.string(),
+//     width: z.number(),
+//     height: z.number()
+//   }),
+//   product: z.object({
+//     id: z.number(),
+//     name: z.string(),
+//     description: z.string(),
+//     category: z.string()
+//   })
+// });
+
 export const ProductSchema = z.object({
-  link: z.object({
-    name: z.string(),
-    href: z.string()
-  }),
-  image: z.object({
-    src: z.string(),
-    alt: z.string(),
-    width: z.number(),
-    height: z.number()
-  }),
-  product: z.object({
-    id: z.number(),
-    name: z.string(),
-    description: z.string()
-  })
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  category: z.string(),
+  href: z.string(),
+  paramName: z.string(),
+  imgId: z.number()
 });
 
-export type Product = z.infer<typeof ProductSchema>;
+export const MenuCategorySchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  category: z.string(),
+  href: z.string(),
+  imgId: z.number()
+});
+
+export const ImageSchema = z.object({
+  id: z.number(),
+  src: z.string(),
+  alt: z.string(),
+  width: z.number(),
+  height: z.number()
+});
+
+export const IngredientSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  category: z.string(),
+  imgId: z.number()
+})
+
+export const OrderItemSchema = z.object({
+  id: z.number(),
+  productId: z.number(),
+  qty: z.number()
+})
+
+export type ProductSchemaType = z.infer<typeof ProductSchema>;
+export type MenuCategorySchemaType = z.infer<typeof MenuCategorySchema>;
+export type ImageSchemaType = z.infer<typeof ImageSchema>;
+export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
+export type OrderItemSchemaType = z.infer<typeof OrderItemSchema>;
+
+// export type Product = z.infer<typeof ProductSchema>;
 
 export type ImageType = {
   src: string;

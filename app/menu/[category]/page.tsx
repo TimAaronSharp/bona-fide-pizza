@@ -19,7 +19,7 @@ export default async function MenuCategoryPage({ params }: { params: { category:
         <div className="grid grid-cols-6 gap-4 p-4 drop-shadow-sm drop-shadow-white">
           {items.map((item) => {
             const itemProp = generateProduct(item);
-            return <ProductCard key={itemProp.link.name} productProp={itemProp} />
+            return <ProductCard key={itemProp.link.paramName} productProp={itemProp} />
           })}
         </div>
       </section>
