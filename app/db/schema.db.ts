@@ -13,9 +13,8 @@ drizzle-kit generation/migration. */
 export const menuCategory = pgTable("menu_category", {
   id: serial().primaryKey(),
   name: text("name").notNull(),
-  category: text("category").notNull(),
   href: text("href").notNull(),
-  imgId: integer("img_id").notNull(),
+  imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used.
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -27,7 +26,7 @@ export const product = pgTable("product", {
   category: text("category").notNull(),
   paramName: text("param_name").notNull(),
   href: text("href").notNull(),
-  imgId: integer("img_id").notNull(),
+  imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used.
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -46,7 +45,7 @@ export const ingredient = pgTable("ingredient", {
   id: serial().primaryKey(),
   name: text("name").notNull(),
   category: text("category").notNull(),
-  imgId: integer("img_id").notNull(),
+  imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used.
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 })
