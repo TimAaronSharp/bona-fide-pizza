@@ -100,7 +100,7 @@ function generateIngredientDbSeedItem(name: string, category: string, imgId: num
 //#region Menu categories for db menu_category table to be used by menu page. 
 
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Build Your Own Pizza', 'build-your-own-pizza', '/menu/build_your_own_pizza', 1));
-menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Pizza', 'specialty', '/menu/specialty_pizza', 2));
+menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Specialty Pizzas', 'specialty', '/menu/specialty_pizza', 2));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Breads', 'bread', '/menu/bread', 3));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Chicken Wings', 'chicken', '/menu/chicken', 4));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Pasta', 'pasta', '/menu/pasta', 5));

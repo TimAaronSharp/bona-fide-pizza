@@ -1,10 +1,12 @@
 import { authClient } from "@/app/lib/auth/auth-client";
 
-export const handleUserRegister = async (email: string, password: string, name: string) => {
+export const handleUserRegister = async (email: string, password: string, firstName: string, lastName: string) => {
   await authClient.signUp.email({
     email,
     password,
-    name
+    name: `${firstName} ${lastName}`,
+    firstName,
+    lastName
     // callbackURL: "/"
   }, {
     onRequest: (ctx) => {

@@ -9,9 +9,10 @@ import * as schemas from "@/app/db/schema.db";
 import * as seeds from "@/app/lib/placeholder-data";
 // import { menuDataMap } from "@/app/lib/placeholder-data";
 
-/* Seeds all database product tables by looping over "menuDataMap" (dictionary of product arrays), maps over each
-product array and returns an object of just the properties to be inserted into the table, and then bulk inserts
-to the respective table with each iteration.*/
+/* TODO Refactor with a "seedWrapper()" that is basically just the try/catch/finally that contains all seed functions.
+        Create a reusable seed function that takes in relevant arguments to seed to correct db tables.
+        
+        - Fix 'implicitly has type 'any[]' and 'implicitly has type 'any[] in some locations where its type cannot be determined.' errors.*/
 
 const seedImages = async () => {
   console.log("Seeding database image table...")
@@ -23,10 +24,11 @@ const seedImages = async () => {
       imageInsertSeed.push(imageInsertData);
     });
 
-    // console.log("imageInsertSeed is ", imageInsertSeed);
-
     await db.insert(schemas.image).values(imageInsertSeed).returning();
     console.log("✅ image table seeding complete!");
+    await seedProducts();
+    await seedIngredients();
+    await seedMenuCategories();
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
@@ -50,8 +52,6 @@ const seedProducts = async () => {
 
   } catch (error) {
     console.error("❌ Error seeding database product table:", error);
-  } finally {
-    process.exit(0);
   }
 }
 
@@ -60,7 +60,7 @@ const seedIngredients = async () => {
   try {
     const ingredientInsertSeed = [];
 
-    seeds.ingredientDbSeedItems.forEach((seed) => {
+    seeds.ingredientDbSeedItems.forEach((seed, index) => {
       const { id, ...ingredientInsertData } = seed;
       ingredientInsertSeed.push(ingredientInsertData);
     });
@@ -69,8 +69,6 @@ const seedIngredients = async () => {
     console.log("✅ ingredient table seeding complete!");
   } catch (error) {
     console.error("❌ Error seeding database ingredient table:", error);
-  } finally {
-    process.exit(0);
   }
 }
 
@@ -80,7 +78,7 @@ const seedMenuCategories = async () => {
   try {
     const menuCategoryInsertSeed = [];
 
-    seeds.menuCategoryDbSeedItems.forEach((seed) => {
+    seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
       const { id, ...menuCategoryInsertData } = seed;
       menuCategoryInsertSeed.push(menuCategoryInsertData);
     });
@@ -89,8 +87,6 @@ const seedMenuCategories = async () => {
     console.log("✅ menu_category table seeding complete!");
   } catch (error) {
     console.error("❌ Error seeding database menu_category table:", error);
-  } finally {
-    process.exit(0);
   }
 }
 
@@ -152,6 +148,3 @@ const seedMenuCategories = async () => {
 // };
 
 seedImages();
-seedProducts();
-seedIngredients();
-seedMenuCategories();
