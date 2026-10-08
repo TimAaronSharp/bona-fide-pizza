@@ -66,6 +66,7 @@ CREATE TABLE "ingredient" (
 	"name" text NOT NULL,
 	"category" text NOT NULL,
 	"img_id" integer,
+	"price" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -87,6 +88,7 @@ CREATE TABLE "product" (
 	"param_name" text NOT NULL,
 	"href" text NOT NULL,
 	"img_id" integer,
+	"price" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

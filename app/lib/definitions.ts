@@ -26,7 +26,8 @@ export const ProductSchema = z.object({
   category: z.string(),
   href: z.string(),
   paramName: z.string(),
-  imgId: z.number()
+  imgId: z.number(),
+  price: z.number()
 });
 
 export const MenuCategorySchema = z.object({
@@ -49,7 +50,8 @@ export const IngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
   category: z.string(),
-  imgId: z.number()
+  imgId: z.number(),
+  price: z.number()
 })
 
 export const OrderItemSchema = z.object({

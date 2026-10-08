@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "fc341ad8-3923-437d-a0d3-0d3109fc5555",
+  "id": "e96ba65e-66d7-4469-9b4d-b2ed5db4cfbb",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -731,6 +731,19 @@
       "table": "ingredient"
     },
     {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "price",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "ingredient"
+    },
+    {
       "type": "timestamp",
       "typeSchema": null,
       "notNull": true,
@@ -921,6 +934,19 @@
       "generated": null,
       "identity": null,
       "name": "img_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "product"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "price",
       "entityType": "columns",
       "schema": "public",
       "table": "product"
