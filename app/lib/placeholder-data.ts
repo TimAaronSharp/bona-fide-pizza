@@ -1,4 +1,4 @@
-import { ImageType, ProductSchemaType, MenuCategorySchemaType, ImageSchemaType, IngredientSchemaType } from "@/app/lib/definitions";
+import { ImageType, ProductSchemaType, MenuCategorySchemaType, ImageSchemaType, IngredientSchemaType, ProductIngredientSchemaType } from "@/app/lib/definitions";
 
 /*NOTE The data in this file will eventually be stored in a database. This is temporary until I get that set up. */
 
@@ -13,6 +13,7 @@ const menuCategoryDbSeedItems: MenuCategorySchemaType[] = [];
 const productDbSeedItems: ProductSchemaType[] = [];
 const imageDbSeedItems: ImageSchemaType[] = [];
 const ingredientDbSeedItems: IngredientSchemaType[] = [];
+const productIngredientDbSeedItems: ProductIngredientSchemaType[] = [];
 
 function generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSchemaType {
   return {
@@ -54,6 +55,13 @@ function generateIngredientDbSeedItem(name: string, category: string, imgId: num
     category,
     imgId,
     price
+  }
+}
+
+function generateProductIngredientDbSeedItem(productId: number, ingredientId: number) {
+  return {
+    productId,
+    ingredientId
   }
 }
 
@@ -286,10 +294,60 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Cheddar Cheese Blend', 
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Feta Cheese', 'cheese', 3, 300));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Shredded Parmesan Asiago', 'cheese', 4, 300));
 
+// #endregion
+
+// #region Entries for product_ingredient table
+
+// #region Specialty Pizzas
+
+// Pepperoni
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 1));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 7));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 9));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 14));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 18));
+
+
+
+// Supreme
+
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 1));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 7));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 9));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 14));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 18));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 19));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 26));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 29));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 30));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 32));
 
 // #endregion
 
+// #region Sandwiches
 
+// Chicken Bacon Ranch
+
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 9)); // Add ranch dressing to ingredients and change this.
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 14));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 20));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 21));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 34));
+
+// Italian
+
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 14));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 16));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 18));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 26));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 27));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 32));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 34));
+
+
+// #endregion
+
+// #endregion
 
 
 
@@ -332,4 +390,4 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Shredded Parmesan Asiag
 
 // #endregion
 
-export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems };
+export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems, productIngredientDbSeedItems };

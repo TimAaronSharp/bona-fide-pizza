@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ProductSchema, ImageSchema, ImageSchemaType } from "@/app/lib/definitions";
+import { ProductSchema, ImageSchema, ImageSchemaType, ProductIngredientSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -29,6 +29,7 @@ const seedImages = async () => {
     await seedProducts();
     await seedIngredients();
     await seedMenuCategories();
+    await seedProductIngredient();
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
@@ -87,6 +88,16 @@ const seedMenuCategories = async () => {
     console.log("✅ menu_category table seeding complete!");
   } catch (error) {
     console.error("❌ Error seeding database menu_category table:", error);
+  }
+}
+
+const seedProductIngredient = async () => {
+  console.log("Seeding database product_ingredient table...");
+  try {
+    await db.insert(schemas.productIngredient).values(seeds.productIngredientDbSeedItems);
+    console.log("✅ product_ingredient table seeding complete!");
+  } catch (error) {
+    console.error("❌ Error seeding database product_ingredient table:", error);
   }
 }
 

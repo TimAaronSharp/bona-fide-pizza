@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "e96ba65e-66d7-4469-9b4d-b2ed5db4cfbb",
+  "id": "a05c3488-b88d-461a-952b-abc3a208ffb6",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -51,6 +51,12 @@
     {
       "isRlsEnabled": false,
       "name": "product",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "product_ingredient",
       "entityType": "tables",
       "schema": "public"
     },
@@ -978,6 +984,58 @@
       "table": "product"
     },
     {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "product_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "product_ingredient"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "ingredient_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "product_ingredient"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "product_ingredient"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "product_ingredient"
+    },
+    {
       "nameExplicit": true,
       "columns": [
         {
@@ -1124,6 +1182,17 @@
       "entityType": "fks",
       "schema": "public",
       "table": "product"
+    },
+    {
+      "columns": [
+        "product_id",
+        "ingredient_id"
+      ],
+      "nameExplicit": false,
+      "name": "product_ingredient_pkey",
+      "entityType": "pks",
+      "schema": "public",
+      "table": "product_ingredient"
     },
     {
       "columns": [

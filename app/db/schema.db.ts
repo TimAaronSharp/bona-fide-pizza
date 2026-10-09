@@ -1,5 +1,4 @@
-import { pgTable, pgSchema, serial, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { getProductColumns } from "./utility";
+import { pgTable, serial, text, integer, timestamp, primaryKey } from "drizzle-orm/pg-core";
 
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
@@ -50,40 +49,13 @@ export const ingredient = pgTable("ingredient", {
   price: integer("price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
-})
+});
 
-// export const menu = pgTable("menu", {
-//   ...getProductColumns()
-// });
-
-// export const bread = pgTable("bread", {
-//   ...getProductColumns()
-// });
-
-// export const chicken = pgTable("chicken", {
-//   ...getProductColumns()
-// });
-
-// export const dessert = pgTable("dessert", {
-//   ...getProductColumns()
-// });
-
-// export const drink = pgTable("drink", {
-//   ...getProductColumns()
-// });
-
-// export const pasta = pgTable("pasta", {
-//   ...getProductColumns()
-// });
-
-// export const specialty_pizza = pgTable("specialty_pizza", {
-//   ...getProductColumns()
-// });
-
-// export const salad = pgTable("salad", {
-//   ...getProductColumns()
-// });
-
-// export const sandwich = pgTable("sandwich", {
-//   ...getProductColumns()
-// });
+export const productIngredient = pgTable("product_ingredient", {
+  productId: integer("product_id").notNull(),
+  ingredientId: integer("ingredient_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+}, (table) => [
+  primaryKey({ columns: [table.productId, table.ingredientId] }) // Sets composite key as primary key.
+]);
