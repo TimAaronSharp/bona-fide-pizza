@@ -1,5 +1,5 @@
 import { pgTable, serial, text, integer, timestamp, primaryKey } from "drizzle-orm/pg-core";
-
+import { user } from "@/app/db/auth-schema.db";
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
 drizzle-kit generation/migration. */
@@ -52,10 +52,29 @@ export const ingredient = pgTable("ingredient", {
 });
 
 export const productIngredient = pgTable("product_ingredient", {
-  productId: integer("product_id").notNull(),
-  ingredientId: integer("ingredient_id").notNull(),
+  productId: integer("product_id").references(() => product.id).notNull(),
+  ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 }, (table) => [
   primaryKey({ columns: [table.productId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
+
+export const order = pgTable("order", {
+  id: serial().primaryKey(),
+  userId: text("user_id").references(() => user.id).notNull(),
+  orderTotal: integer("order_total").notNull(),
+  orderStatus: text("order_status").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});
+
+export const orderItem = pgTable("order_item", {
+  id: serial().primaryKey(),
+  orderId: integer("order_id").references(() => order.id).notNull(),
+  productId: integer("product_id").references(() => product.id).notNull(),
+  quantity: integer("quantity").notNull(),
+  orderItemTotal: integer("order_item_total").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+})

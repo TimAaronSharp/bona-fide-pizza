@@ -59,11 +59,28 @@ export const ProductIngredientSchema = z.object({
   ingredientId: z.number()
 });
 
+export const OrderSchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  orderTotal: z.number(),
+  orderStatus: z.string()
+});
+
+export const OrderItemSchema = z.object({
+  id: z.number(),
+  orderId: z.number(),
+  productId: z.number(),
+  quantity: z.number(),
+  orderItemTotal: z.number()
+})
+
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
 export type MenuCategorySchemaType = z.infer<typeof MenuCategorySchema>;
 export type ImageSchemaType = z.infer<typeof ImageSchema>;
 export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
 export type ProductIngredientSchemaType = z.infer<typeof ProductIngredientSchema>;
+export type OrderSchemaType = z.infer<typeof OrderSchema>;
+export type OrderItemSchemaType = z.infer<typeof OrderItemSchema>;
 
 // export type Product = z.infer<typeof ProductSchema>;
 

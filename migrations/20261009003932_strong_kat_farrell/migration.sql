@@ -80,6 +80,25 @@ CREATE TABLE "menu_category" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "order" (
+	"id" serial PRIMARY KEY,
+	"user_id" text NOT NULL,
+	"order_total" integer NOT NULL,
+	"order_status" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "order_item" (
+	"id" serial PRIMARY KEY,
+	"order_id" integer NOT NULL,
+	"product_id" integer NOT NULL,
+	"quantity" integer NOT NULL,
+	"order_item_total" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "product" (
 	"id" serial PRIMARY KEY,
 	"name" text NOT NULL,
@@ -108,4 +127,9 @@ ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fkey" FOREIGN KEY 
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "ingredient" ADD CONSTRAINT "ingredient_img_id_image_id_fkey" FOREIGN KEY ("img_id") REFERENCES "image"("id");--> statement-breakpoint
 ALTER TABLE "menu_category" ADD CONSTRAINT "menu_category_img_id_image_id_fkey" FOREIGN KEY ("img_id") REFERENCES "image"("id");--> statement-breakpoint
-ALTER TABLE "product" ADD CONSTRAINT "product_img_id_image_id_fkey" FOREIGN KEY ("img_id") REFERENCES "image"("id");
+ALTER TABLE "order" ADD CONSTRAINT "order_user_id_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id");--> statement-breakpoint
+ALTER TABLE "order_item" ADD CONSTRAINT "order_item_order_id_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "order"("id");--> statement-breakpoint
+ALTER TABLE "order_item" ADD CONSTRAINT "order_item_product_id_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id");--> statement-breakpoint
+ALTER TABLE "product" ADD CONSTRAINT "product_img_id_image_id_fkey" FOREIGN KEY ("img_id") REFERENCES "image"("id");--> statement-breakpoint
+ALTER TABLE "product_ingredient" ADD CONSTRAINT "product_ingredient_product_id_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id");--> statement-breakpoint
+ALTER TABLE "product_ingredient" ADD CONSTRAINT "product_ingredient_ingredient_id_ingredient_id_fkey" FOREIGN KEY ("ingredient_id") REFERENCES "ingredient"("id");
