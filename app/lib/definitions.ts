@@ -75,6 +75,24 @@ export const ProductIngredientSchema = z.object({
   ingredientId: z.number()
 });
 
+export const UserSchema = z.object({
+  id: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
+  name: z.string(),
+  email: z.string(),
+  emailVerified: z.boolean(),
+  image: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  role: z.string(),
+  banned: z.boolean(),
+  banReason: z.string(),
+  banExpires: z.date(),
+  firstName: z.string(),
+  lastName: z.string()
+});
+
+// TODO Make UserSeedSchema.
+
 export const OrderSchema = z.object({
   id: z.number(),
   userId: z.string(),
@@ -126,6 +144,9 @@ export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
 export type IngredientSeedSchemaType = z.infer<typeof IngredientSeedSchema>;
 
 export type ProductIngredientSchemaType = z.infer<typeof ProductIngredientSchema>;
+
+export type UserSchemaType = z.infer<typeof UserSchema>;
+
 
 export type OrderSchemaType = z.infer<typeof OrderSchema>;
 export type OrderSeedSchemaType = z.infer<typeof OrderSeedSchema>;
