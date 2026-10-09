@@ -23,12 +23,13 @@ const seedImages = async () => {
       imageInsertSeed.push(imageInsertData);
     });
 
-    await db.insert(schemas.image).values(imageInsertSeed).returning();
+    const seededImages = await db.insert(schemas.image).values(imageInsertSeed).returning({ id: schemas.image.id });
+    console.log("seededImages is ", seededImages);
     console.log("✅ image table seeding complete!");
-    await seedProducts();
-    await seedIngredients();
-    await seedMenuCategories();
-    await seedProductIngredient();
+    // await seedProducts();
+    // await seedIngredients();
+    // await seedMenuCategories();
+    // await seedProductIngredient();
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
