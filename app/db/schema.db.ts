@@ -63,6 +63,7 @@ export const productIngredient = pgTable("product_ingredient", {
 export const order = pgTable("order", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id).notNull(),
+  addressId: integer("address_id").references(() => address.id).notNull(),
   orderTotal: integer("order_total").notNull(),
   orderStatus: text("order_status").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -77,4 +78,16 @@ export const orderItem = pgTable("order_item", {
   orderItemTotal: integer("order_item_total").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
-})
+});
+
+export const address = pgTable("address", {
+  id: serial().primaryKey(),
+  line1: text("line_1").notNull(),
+  line2: text("line_2").notNull(),
+  city: text("city").notNull(),
+  state: text("state").notNull(),
+  postalCode: text("postal_code").notNull(), // made as text in case user does full 9 digit code with "-" (12345-6789).
+  userId: text("user_id").references(() => user.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});

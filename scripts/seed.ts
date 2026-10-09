@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ProductSchema, ImageSchema, ImageSchemaType, ProductIngredientSchemaType } from "@/app/lib/definitions";
+import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -7,7 +7,6 @@ config({ path: ".env.local" });
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema.db";
 import * as seeds from "@/app/lib/placeholder-data";
-// import { menuDataMap } from "@/app/lib/placeholder-data";
 
 /* TODO Refactor with a "seedWrapper()" that is basically just the try/catch/finally that contains all seed functions.
         Create a reusable seed function that takes in relevant arguments to seed to correct db tables.
@@ -17,7 +16,7 @@ import * as seeds from "@/app/lib/placeholder-data";
 const seedImages = async () => {
   console.log("Seeding database image table...")
   try {
-    const imageInsertSeed = [];
+    const imageInsertSeed: ImageSeedSchemaType[] = [];
 
     seeds.imageDbSeedItems.forEach((seed) => {
       const { id, ...imageInsertData } = seed;
@@ -41,7 +40,7 @@ const seedImages = async () => {
 const seedProducts = async () => {
   console.log("Seeding database product table...")
   try {
-    const productInsertSeed = [];
+    const productInsertSeed: ProductSeedSchemaType[] = [];
 
     seeds.productDbSeedItems.forEach((seed) => {
       const { id, ...productInsertData } = seed;
@@ -59,7 +58,7 @@ const seedProducts = async () => {
 const seedIngredients = async () => {
   console.log("Seeding database ingredient table...")
   try {
-    const ingredientInsertSeed = [];
+    const ingredientInsertSeed: IngredientSeedSchemaType[] = [];
 
     seeds.ingredientDbSeedItems.forEach((seed, index) => {
       const { id, ...ingredientInsertData } = seed;
@@ -77,7 +76,7 @@ const seedMenuCategories = async () => {
   console.log("Seeding database menu_category table...");
 
   try {
-    const menuCategoryInsertSeed = [];
+    const menuCategoryInsertSeed: MenuCategorySeedSchemaType[] = [];
 
     seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
       const { id, ...menuCategoryInsertData } = seed;
