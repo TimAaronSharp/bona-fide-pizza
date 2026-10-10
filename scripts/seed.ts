@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType } from "@/app/lib/definitions";
+import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ImageIdsSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -10,8 +10,7 @@ import * as seeds from "@/app/lib/placeholder-data";
 
 /* TODO Refactor with a "seedWrapper()" that is basically just the try/catch/finally that contains all seed functions.
         Create a reusable seed function that takes in relevant arguments to seed to correct db tables.
-        
-        - Fix 'implicitly has type 'any[]' and 'implicitly has type 'any[] in some locations where its type cannot be determined.' errors.*/
+*/
 
 const seedImages = async () => {
   console.log("Seeding database image table...")
@@ -24,12 +23,19 @@ const seedImages = async () => {
     });
 
     const seededImages = await db.insert(schemas.image).values(imageInsertSeed).returning({ id: schemas.image.id });
-    console.log("seededImages is ", seededImages);
+
+    // Pulling out the returned ids from the image table to send the the appropriate seed functions.
+
+    const menuCategoryImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(0, 9);
+    const productImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(9, 47);
+    const ingredientImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(47);
+
     console.log("✅ image table seeding complete!");
-    // await seedProducts();
-    // await seedIngredients();
-    // await seedMenuCategories();
-    // await seedProductIngredient();
+
+    await seedProducts(productImageIds);
+    await seedIngredients(ingredientImageIds);
+    await seedMenuCategories(menuCategoryImageIds);
+    await seedProductIngredient();
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
@@ -38,31 +44,36 @@ const seedImages = async () => {
   }
 }
 
-const seedProducts = async () => {
+const seedProducts = async (productImageIds: ImageIdsSeedSchemaType[]) => {
   console.log("Seeding database product table...")
   try {
     const productInsertSeed: ProductSeedSchemaType[] = [];
 
-    seeds.productDbSeedItems.forEach((seed) => {
+    seeds.productDbSeedItems.forEach((seed, index) => {
+      seed.imgId = productImageIds[index].id;
+
       const { id, ...productInsertData } = seed;
+
       productInsertSeed.push(productInsertData);
     });
 
     await db.insert(schemas.product).values(productInsertSeed);
     console.log("✅ product table seeding complete!");
-
   } catch (error) {
     console.error("❌ Error seeding database product table:", error);
   }
 }
 
-const seedIngredients = async () => {
+const seedIngredients = async (ingredientImageIds: ImageIdsSeedSchemaType[]) => {
   console.log("Seeding database ingredient table...")
   try {
     const ingredientInsertSeed: IngredientSeedSchemaType[] = [];
 
     seeds.ingredientDbSeedItems.forEach((seed, index) => {
+      seed.imgId = ingredientImageIds[index].id;
+
       const { id, ...ingredientInsertData } = seed;
+
       ingredientInsertSeed.push(ingredientInsertData);
     });
 
@@ -73,14 +84,16 @@ const seedIngredients = async () => {
   }
 }
 
-const seedMenuCategories = async () => {
+const seedMenuCategories = async (menuCategoryImageIds: ImageIdsSeedSchemaType[]) => {
   console.log("Seeding database menu_category table...");
-
   try {
     const menuCategoryInsertSeed: MenuCategorySeedSchemaType[] = [];
 
     seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
+      seed.imgId = menuCategoryImageIds[index].id;
+
       const { id, ...menuCategoryInsertData } = seed;
+
       menuCategoryInsertSeed.push(menuCategoryInsertData);
     });
 

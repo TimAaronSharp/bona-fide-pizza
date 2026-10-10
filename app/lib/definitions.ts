@@ -58,6 +58,10 @@ export const ImageSeedSchema = ImageSchema.omit({
   id: true
 });
 
+export const ImageIdsSeedSchema = z.object({
+  id: z.number()
+});
+
 export const IngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -139,6 +143,7 @@ export type MenuCategorySeedSchemaType = z.infer<typeof MenuCategorySeedSchema>;
 
 export type ImageSchemaType = z.infer<typeof ImageSchema>;
 export type ImageSeedSchemaType = z.infer<typeof ImageSeedSchema>;
+export type ImageIdsSeedSchemaType = z.infer<typeof ImageIdsSeedSchema>;
 
 export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
 export type IngredientSeedSchemaType = z.infer<typeof IngredientSeedSchema>;
