@@ -1,5 +1,5 @@
 import { Ingredient } from "@/app/lib/definitions.js";
-// import { ingredients } from "@/app/lib/placeholder-data";
+// import { ingredients } from "@/app/lib/dbDataGenerator";
 /*What each product type would need in a customizer:
 
 BUILD YOUR OWN PIZZA:

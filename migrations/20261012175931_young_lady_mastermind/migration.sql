@@ -54,7 +54,7 @@ CREATE TABLE "verification" (
 CREATE TABLE "address" (
 	"id" serial PRIMARY KEY,
 	"line_1" text NOT NULL,
-	"line_2" text NOT NULL,
+	"line_2" text,
 	"city" text NOT NULL,
 	"state" text NOT NULL,
 	"postal_code" text NOT NULL,

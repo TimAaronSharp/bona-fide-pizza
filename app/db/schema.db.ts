@@ -83,7 +83,7 @@ export const orderItem = pgTable("order_item", {
 export const address = pgTable("address", {
   id: serial().primaryKey(),
   line1: text("line_1").notNull(),
-  line2: text("line_2").notNull(),
+  line2: text("line_2"),
   city: text("city").notNull(),
   state: text("state").notNull(),
   postalCode: text("postal_code").notNull(), // made as text in case user does full 9 digit code with "-" (12345-6789).

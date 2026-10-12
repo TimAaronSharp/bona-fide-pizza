@@ -1,5 +1,5 @@
 import { Hero } from "./ui/home/hero";
-import { heroImage } from "@/app/lib/placeholder-data";
+import { heroImage } from "@/app/lib/dbDataGenerator";
 import { Metadata } from "next";
 import { Product } from "./ui/components/product";
 

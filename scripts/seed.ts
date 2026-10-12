@@ -1,19 +1,41 @@
 import { config } from "dotenv";
-import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ImageIdsSeedSchemaType } from "@/app/lib/definitions";
+import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ImageIdsSeedSchemaType, AddressSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
 
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema.db";
-import * as seeds from "@/app/lib/placeholder-data";
+import * as seeds from "@/app/lib/dbDataGenerator";
 
 /* TODO Refactor with a "seedWrapper()" that is basically just the try/catch/finally that contains all seed functions.
         Create a reusable seed function that takes in relevant arguments to seed to correct db tables.
+
+        ***Started creating seedWrapper() but decided to hold off for now. Right now the time
+        is better spent on other areas. Keeping as reference in case I decide to return to it.***
 */
 
+// const seedWrapper = async (dbSeedItems: TableSchemaTypeUnion[]) => {
+//   console.log("Seed Wrapper initiating...");
+//   try {
+//     const insertSeed: SeedSchemaTypeUnion[] = [];
+//     // const tableSchemas = keyof schemas;
+
+//     dbSeedItems.forEach((seed) => {
+//       const { id, ...insertData } = seed;
+//       insertSeed.push(insertData);
+
+//     });
+
+//   } catch (error) {
+//     console.error("❌ Error initializing seed wrapper:", error);
+//   } finally {
+//     process.exit(0);
+//   }
+// }
+
 const seedImages = async () => {
-  console.log("Seeding database image table...")
+  console.log("Seeding database image table...");
   try {
     const imageInsertSeed: ImageSeedSchemaType[] = [];
 
@@ -36,6 +58,7 @@ const seedImages = async () => {
     await seedIngredients(ingredientImageIds);
     await seedMenuCategories(menuCategoryImageIds);
     await seedProductIngredient();
+    await seedAddress();
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
@@ -114,6 +137,24 @@ const seedProductIngredient = async () => {
   }
 }
 
+const seedAddress = async () => {
+  console.log("Seeding database address table...")
+  try {
+    const addressInsertSeed: AddressSeedSchemaType[] = [];
+
+    seeds.addressDbSeedItems.forEach((seed) => {
+      const { id, ...addressInsertData } = seed;
+
+      addressInsertSeed.push(addressInsertData);
+    });
+
+    await db.insert(schemas.address).values(addressInsertSeed);
+    console.log("✅ address table seeding complete!");
+  } catch (error) {
+    console.error("❌ Error seeding database address table:", error);
+  }
+}
+
 // const seedProducts = async () => {
 //   console.log("Seeding database...");
 
@@ -172,3 +213,4 @@ const seedProductIngredient = async () => {
 // };
 
 seedImages();
+// seedWrapper(seeds.imageDbSeedItems);

@@ -125,7 +125,7 @@ export const AddressSchema = z.object({
   id: z.number(),
   userId: z.string(),
   line1: z.string(),
-  line2: z.string(),
+  line2: z.string().nullable(),
   city: z.string(),
   state: z.string(),
   postalCode: z.string()
@@ -161,6 +161,24 @@ export type OrderItemSeedSchemaType = z.infer<typeof OrderItemSeedSchema>;
 
 export type AddressSchemaType = z.infer<typeof AddressSchema>;
 export type AddressSeedSchemaType = z.infer<typeof AddressSeedSchema>;
+
+// export type TableSchemaTypeUnion = ProductSchemaType |
+//   MenuCategorySchemaType |
+//   ImageSchemaType |
+//   IngredientSchemaType |
+//   UserSchemaType |
+//   OrderSchemaType |
+//   OrderItemSchemaType |
+//   AddressSchemaType;
+
+// export type SeedSchemaTypeUnion = ProductSeedSchemaType |
+//   MenuCategorySeedSchemaType |
+//   ImageSeedSchemaType |
+//   IngredientSeedSchemaType |
+//   // UserSchemaType | UserSchemaType has an id and can't be used here yet.
+//   OrderSeedSchemaType |
+//   OrderItemSeedSchemaType |
+//   AddressSeedSchemaType;
 
 // export type Product = z.infer<typeof ProductSchema>;
 
