@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "4eed01bf-ae0d-4174-91a4-35270c3cc100",
+  "id": "93a70b2e-d106-430d-bfa0-3ea74b7031ce",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -698,6 +698,19 @@
       "generated": null,
       "identity": null,
       "name": "user_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "address"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "true",
+      "generated": null,
+      "identity": null,
+      "name": "is_active",
       "entityType": "columns",
       "schema": "public",
       "table": "address"

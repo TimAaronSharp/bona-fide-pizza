@@ -19,6 +19,8 @@ import z from "zod";
 //   })
 // });
 
+// zod schemas
+
 export const ProductSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -58,7 +60,7 @@ export const ImageSeedSchema = ImageSchema.omit({
   id: true
 });
 
-export const ImageIdsSeedSchema = z.object({
+export const IdSeedSchema = z.object({
   id: z.number()
 });
 
@@ -123,17 +125,25 @@ export const OrderItemSeedSchema = OrderItemSchema.omit({
 
 export const AddressSchema = z.object({
   id: z.number(),
-  userId: z.string(),
   line1: z.string(),
   line2: z.string().nullable(),
   city: z.string(),
   state: z.string(),
-  postalCode: z.string()
+  postalCode: z.string(),
+  userId: z.string(),
+  isActive: z.boolean()
 });
 
 export const AddressSeedSchema = AddressSchema.omit({
   id: true
 });
+
+export const AddressAndUserIdSeedSchema = z.object({
+  id: z.number(),
+  userId: z.string()
+});
+
+// Inferred types
 
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
 export type ProductSeedSchemaType = z.infer<typeof ProductSeedSchema>;
@@ -143,7 +153,8 @@ export type MenuCategorySeedSchemaType = z.infer<typeof MenuCategorySeedSchema>;
 
 export type ImageSchemaType = z.infer<typeof ImageSchema>;
 export type ImageSeedSchemaType = z.infer<typeof ImageSeedSchema>;
-export type ImageIdsSeedSchemaType = z.infer<typeof ImageIdsSeedSchema>;
+
+export type IdSeedSchemaType = z.infer<typeof IdSeedSchema>;
 
 export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
 export type IngredientSeedSchemaType = z.infer<typeof IngredientSeedSchema>;
@@ -161,6 +172,8 @@ export type OrderItemSeedSchemaType = z.infer<typeof OrderItemSeedSchema>;
 
 export type AddressSchemaType = z.infer<typeof AddressSchema>;
 export type AddressSeedSchemaType = z.infer<typeof AddressSeedSchema>;
+
+export type AddressAndUserIdSeedSchemaType = z.infer<typeof AddressAndUserIdSeedSchema>;
 
 // export type TableSchemaTypeUnion = ProductSchemaType |
 //   MenuCategorySchemaType |

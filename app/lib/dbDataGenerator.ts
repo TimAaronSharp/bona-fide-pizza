@@ -1,4 +1,4 @@
-import { ImageType, ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ProductIngredientSchemaType, AddressSeedSchemaType } from "@/app/lib/definitions";
+import { ImageType, ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ProductIngredientSchemaType, AddressSeedSchemaType, OrderSeedSchemaType } from "@/app/lib/definitions";
 
 /*NOTE This file is for generating data objects to be seeded into the database. Maybe I'll change the name now that
 the main purpose for this file has changed from creating and exporting the data locally? */
@@ -17,6 +17,7 @@ const imageDbSeedItems: ImageSeedSchemaType[] = [];
 const ingredientDbSeedItems: IngredientSeedSchemaType[] = [];
 const productIngredientDbSeedItems: ProductIngredientSchemaType[] = [];
 const addressDbSeedItems: AddressSeedSchemaType[] = [];
+const orderDbSeedItems: OrderSeedSchemaType[] = [];
 
 /*TODO Look into whether or not I actually need to create placeholder ids for dbSeedItems. I felt I did originally
 to use with my zod schemas, but I have created the schema/type with the id omitted anyway, so I don't believe
@@ -67,14 +68,24 @@ function generateProductIngredientDbSeedItem(productId: number, ingredientId: nu
   }
 }
 
-function generateAddressDbSeedItem(userId: string, line1: string, city: string, state: string, postalCode: string, line2?: string): AddressSeedSchemaType {
+function generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): AddressSeedSchemaType {
   return {
-    userId,
     line1,
     line2: line2 ? line2 : null,
     city,
     state,
-    postalCode
+    postalCode,
+    userId,
+    isActive
+  }
+}
+
+function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): OrderSeedSchemaType {
+  return {
+    userId,
+    addressId: 0, //Placeholder. Will be replaced in seed script by id from address table.
+    orderTotal,
+    orderStatus
   }
 }
 
@@ -453,11 +464,21 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 /* NOTE Currently there is no user generator for seeding, so users will need to be created
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
-// generateAddressDbSeedItem(userId: string, line1: string, city: string, state: string, postalCode: string, line2?: string)
-addressDbSeedItems.push(generateAddressDbSeedItem('uoKr75olM3dgF4chwlOxCbY0pNp67TyE', '123 Fake Street', 'Realtown', 'UT', '12345-6789', "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('DQjBO4ALSWfkp5gK4nUGTZGFC2R8bEm7', '456 Real Street', 'Not Fakington', 'UT', '98765-4321'));
+// generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): AddressSeedSchemaType
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', true, "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', true));
 
 // #endregion
 
+// #region Orders for order table
 
-export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems, productIngredientDbSeedItems, addressDbSeedItems };
+// generateOrderDbSeedItem(userId: string, addressId: number, orderTotal: number, orderStatus: string): OrderSeedSchemaType
+orderDbSeedItems.push(generateOrderDbSeedItem('iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', 3497, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', 999, 'in progress'));
+orderDbSeedItems.push(generateOrderDbSeedItem('iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', 1699, 'cancelled'));
+orderDbSeedItems.push(generateOrderDbSeedItem('INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', 1499, 'complete'));
+
+
+// #endregion
+
+export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems, productIngredientDbSeedItems, addressDbSeedItems, orderDbSeedItems };

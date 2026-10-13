@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, timestamp, primaryKey, boolean } from "drizzle-orm/pg-core";
 import { user } from "@/app/db/auth-schema.db";
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
@@ -80,6 +80,10 @@ export const orderItem = pgTable("order_item", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
+/* TODO When writing delete/update function for address, make sure to not delete/update the actual row. Instead, for
+delete have it simply change "isActive" to false, and for update have it change "isActive" to false, AND insert a new
+address in the address table. This will ensure that if someone deletes/updates their address it will not affect the
+address that is linked to an order (to be able to keep an accurate order history).*/
 export const address = pgTable("address", {
   id: serial().primaryKey(),
   line1: text("line_1").notNull(),
@@ -88,6 +92,7 @@ export const address = pgTable("address", {
   state: text("state").notNull(),
   postalCode: text("postal_code").notNull(), // made as text in case user does full 9 digit code with "-" (12345-6789).
   userId: text("user_id").references(() => user.id).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });

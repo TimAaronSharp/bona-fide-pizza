@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ImageIdsSeedSchemaType, AddressSeedSchemaType } from "@/app/lib/definitions";
+import { IdSeedSchema, IdSeedSchemaType, AddressAndUserIdSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -13,11 +13,11 @@ const seedImages = async () => {
   try {
     const seededImages = await db.insert(schemas.image).values(seeds.imageDbSeedItems).returning({ id: schemas.image.id });
 
-    // // Pulling out the returned ids from the image table to send the the appropriate seed functions.
+    // Pulling out the returned ids from the image table to send the the appropriate seed functions.
 
-    const menuCategoryImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(0, 9);
-    const productImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(9, 47);
-    const ingredientImageIds: ImageIdsSeedSchemaType[] = await seededImages.slice(47);
+    const menuCategoryImageIds: IdSeedSchemaType[] = await seededImages.slice(0, 9);
+    const productImageIds: IdSeedSchemaType[] = await seededImages.slice(9, 47);
+    const ingredientImageIds: IdSeedSchemaType[] = await seededImages.slice(47);
 
     console.log("✅ image table seeding complete!");
 
@@ -34,7 +34,7 @@ const seedImages = async () => {
   }
 }
 
-const seedMenuCategories = async (menuCategoryImageIds: ImageIdsSeedSchemaType[]) => {
+const seedMenuCategories = async (menuCategoryImageIds: IdSeedSchemaType[]) => {
   console.log("Seeding database menu_category table...");
   try {
     seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
@@ -49,7 +49,7 @@ const seedMenuCategories = async (menuCategoryImageIds: ImageIdsSeedSchemaType[]
   }
 }
 
-const seedProducts = async (productImageIds: ImageIdsSeedSchemaType[]) => {
+const seedProducts = async (productImageIds: IdSeedSchemaType[]) => {
   console.log("Seeding database product table...")
   try {
     seeds.productDbSeedItems.forEach((seed, index) => {
@@ -64,7 +64,7 @@ const seedProducts = async (productImageIds: ImageIdsSeedSchemaType[]) => {
   }
 }
 
-const seedIngredients = async (ingredientImageIds: ImageIdsSeedSchemaType[]) => {
+const seedIngredients = async (ingredientImageIds: IdSeedSchemaType[]) => {
   console.log("Seeding database ingredient table...")
   try {
     seeds.ingredientDbSeedItems.forEach((seed, index) => {
@@ -92,12 +92,39 @@ const seedProductIngredient = async () => {
 const seedAddress = async () => {
   console.log("Seeding database address table...")
   try {
-    await db.insert(schemas.address).values(seeds.addressDbSeedItems);
+    const seededAddresses = await db.insert(schemas.address).values(seeds.addressDbSeedItems).returning({ id: schemas.address.id, userId: schemas.address.userId });
+
     console.log("✅ address table seeding complete!");
+
+    await seedOrder(seededAddresses);
   } catch (error) {
     console.error("❌ Error seeding database address table:", error);
   }
 }
+
+const seedOrder = async (addressAndUserIds: AddressAndUserIdSeedSchemaType[]) => {
+  console.log("Seeding database order table...")
+  try {
+    /*TODO I don't believe this will work if a user has created more than one address, because that userId will be
+    matched more than once. This works for now with how many addresses I have but test/look into this later. */
+    addressAndUserIds.forEach((ids, index) => {
+      seeds.orderDbSeedItems.forEach((seed) => {
+        if (seed.userId == addressAndUserIds[index].userId) {
+          // .id === address.id.
+          seed.addressId = addressAndUserIds[index].id;
+        }
+      });
+    });
+
+    await db.insert(schemas.order).values(seeds.orderDbSeedItems).returning({ id: schemas.order.id });
+
+    console.log("✅ order table seeding complete!");
+  } catch (error) {
+    console.error("❌ Error seeding database order table:", error);
+  }
+}
+
+
 
 seedImages();
 // seedWrapper(seeds.imageDbSeedItems);
