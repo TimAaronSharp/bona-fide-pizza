@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import '@/app/menu/menu.css';
 import { image, menuCategory } from "@/app/db/schema.db";
-import { ProductCard } from "@/app/ui/components/productCard";
+import { MenuCategoryCard } from "@/app/ui/components/menuCategoryCard";
 import { db } from "../db/drizzle";
-import { generateProduct } from "../lib/utility";
 import { eq } from "drizzle-orm";
 
 export const metadata: Metadata = {
@@ -24,9 +23,8 @@ export default async function MenuPage() {
           {/* NOTE Play around with drop-shadow */}
           <div className="grid grid-cols-6 gap-4 p-4 drop-shadow-sm drop-shadow-white">
             {menuCategoryItems.map((menuCategoryItem) => {
-              const menuCategoryProp = generateProduct(menuCategoryItem);
 
-              return <ProductCard key={menuCategoryItem.menu_category.category} productProp={menuCategoryProp} />
+              return <MenuCategoryCard key={menuCategoryItem.menu_category.href} menuCategoryProp={menuCategoryItem} />
             })}
           </div>
         </section>
