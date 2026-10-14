@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { IdSeedSchema, IdSeedSchemaType, AddressAndUserIdSeedSchemaType } from "@/app/lib/definitions";
+import { DbIdSeedSchemaType, DbAddressAndUserIdSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
@@ -15,9 +15,9 @@ const seedImages = async () => {
 
     // Pulling out the returned ids from the image table to send the the appropriate seed functions.
 
-    const menuCategoryImageIds: IdSeedSchemaType[] = await seededImages.slice(0, 9);
-    const productImageIds: IdSeedSchemaType[] = await seededImages.slice(9, 47);
-    const ingredientImageIds: IdSeedSchemaType[] = await seededImages.slice(47);
+    const menuCategoryImageIds: DbIdSeedSchemaType[] = await seededImages.slice(0, 9);
+    const productImageIds: DbIdSeedSchemaType[] = await seededImages.slice(9, 47);
+    const ingredientImageIds: DbIdSeedSchemaType[] = await seededImages.slice(47);
 
     console.log("✅ image table seeding complete!");
 
@@ -34,7 +34,7 @@ const seedImages = async () => {
   }
 }
 
-const seedMenuCategories = async (menuCategoryImageIds: IdSeedSchemaType[]) => {
+const seedMenuCategories = async (menuCategoryImageIds: DbIdSeedSchemaType[]) => {
   console.log("Seeding database menu_category table...");
   try {
     seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
@@ -49,7 +49,7 @@ const seedMenuCategories = async (menuCategoryImageIds: IdSeedSchemaType[]) => {
   }
 }
 
-const seedProducts = async (productImageIds: IdSeedSchemaType[]) => {
+const seedProducts = async (productImageIds: DbIdSeedSchemaType[]) => {
   console.log("Seeding database product table...")
   try {
     seeds.productDbSeedItems.forEach((seed, index) => {
@@ -64,7 +64,7 @@ const seedProducts = async (productImageIds: IdSeedSchemaType[]) => {
   }
 }
 
-const seedIngredients = async (ingredientImageIds: IdSeedSchemaType[]) => {
+const seedIngredients = async (ingredientImageIds: DbIdSeedSchemaType[]) => {
   console.log("Seeding database ingredient table...")
   try {
     seeds.ingredientDbSeedItems.forEach((seed, index) => {
@@ -102,7 +102,7 @@ const seedAddress = async () => {
   }
 }
 
-const seedOrder = async (addressAndUserIds: AddressAndUserIdSeedSchemaType[]) => {
+const seedOrder = async (addressAndUserIds: DbAddressAndUserIdSeedSchemaType[]) => {
   console.log("Seeding database order table...");
   try {
     /*TODO I don't believe this will work if a user has created more than one address, because that userId will be
@@ -201,12 +201,12 @@ am keeping this old code here simply for reference for the time being.*/
 //       const dataToInsert = value.map((items, index) => {
 //         const { product, image, link } = items;
 
-//         const productSchemaIsValid = ProductSchema.safeParse(value[index]);
+//         const dbProductSchemaIsValid = DbProductSchema.safeParse(value[index]);
 
-//         if (!productSchemaIsValid.success) {
-//           console.error(productSchemaIsValid.error);
+//         if (!dbProductSchemaIsValid.success) {
+//           console.error(dbProductSchemaIsValid.error);
 //         }
-//         // console.log("schemaKey: ", schemaKey + ` - value[${index}] is `, ProductSchema.safeParse(value[index]));
+//         // console.log("schemaKey: ", schemaKey + ` - value[${index}] is `, DbProductSchema.safeParse(value[index]));
 //         return {
 //           name: product.name,
 //           description: product.description,

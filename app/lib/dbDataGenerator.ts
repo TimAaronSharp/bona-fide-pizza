@@ -1,4 +1,4 @@
-import { ImageType, ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ProductIngredientSchemaType, AddressSeedSchemaType, OrderSeedSchemaType, OrderItemSeedSchemaType } from "@/app/lib/definitions";
+import { ImageType, DbProductSeedSchemaType, DbMenuCategorySeedSchemaType, DbImageSeedSchemaType, DbIngredientSeedSchemaType, DbProductIngredientSchemaType, DbAddressSeedSchemaType, DbOrderSeedSchemaType, DbOrderItemSeedSchemaType } from "@/app/lib/definitions";
 
 /*NOTE This file is for generating data objects to be seeded into the database. Maybe I'll change the name now that
 the main purpose for this file has changed from creating and exporting the data locally? */
@@ -11,19 +11,19 @@ const heroImage: ImageType = {
 }
 
 
-const menuCategoryDbSeedItems: MenuCategorySeedSchemaType[] = [];
-const productDbSeedItems: ProductSeedSchemaType[] = [];
-const imageDbSeedItems: ImageSeedSchemaType[] = [];
-const ingredientDbSeedItems: IngredientSeedSchemaType[] = [];
-const productIngredientDbSeedItems: ProductIngredientSchemaType[] = [];
-const addressDbSeedItems: AddressSeedSchemaType[] = [];
-const orderDbSeedItems: OrderSeedSchemaType[] = [];
-const orderItemDbSeedItems: OrderItemSeedSchemaType[] = [];
+const menuCategoryDbSeedItems: DbMenuCategorySeedSchemaType[] = [];
+const productDbSeedItems: DbProductSeedSchemaType[] = [];
+const imageDbSeedItems: DbImageSeedSchemaType[] = [];
+const ingredientDbSeedItems: DbIngredientSeedSchemaType[] = [];
+const productIngredientDbSeedItems: DbProductIngredientSchemaType[] = [];
+const addressDbSeedItems: DbAddressSeedSchemaType[] = [];
+const orderDbSeedItems: DbOrderSeedSchemaType[] = [];
+const orderItemDbSeedItems: DbOrderItemSeedSchemaType[] = [];
 
 /*TODO Look into whether or not I actually need to create placeholder ids for dbSeedItems. I felt I did originally
 to use with my zod schemas, but I have created the schema/type with the id omitted anyway, so I don't believe
 I need the id for generation.  */
-function generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType {
+function generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType {
   return {
     name,
     description,
@@ -34,8 +34,8 @@ function generateProductDbSeedItem(name: string, description: string, category: 
     price
   }
 }
-
-function generateMenuCategoryDbSeedItem(name: string, category: string, href: string, imgId: number): MenuCategorySeedSchemaType {
+// TODO Remove "imdId" from params just return "imgId: 0" to make invocations cleaner.
+function generateMenuCategoryDbSeedItem(name: string, category: string, href: string, imgId: number): DbMenuCategorySeedSchemaType {
   return {
     name,
     category,
@@ -44,7 +44,7 @@ function generateMenuCategoryDbSeedItem(name: string, category: string, href: st
   }
 }
 
-function generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType {
+function generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType {
   return {
     src,
     alt,
@@ -53,7 +53,7 @@ function generateImageDbSeedItem(src: string, alt: string, width: number, height
   }
 }
 
-function generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType {
+function generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType {
   return {
     name,
     category,
@@ -62,14 +62,14 @@ function generateIngredientDbSeedItem(name: string, category: string, imgId: num
   }
 }
 
-function generateProductIngredientDbSeedItem(productId: number, ingredientId: number): ProductIngredientSchemaType {
+function generateProductIngredientDbSeedItem(productId: number, ingredientId: number): DbProductIngredientSchemaType {
   return {
     productId,
     ingredientId
   }
 }
 
-function generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): AddressSeedSchemaType {
+function generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
   return {
     line1,
     line2: line2 ? line2 : null,
@@ -81,7 +81,7 @@ function generateAddressDbSeedItem(line1: string, city: string, state: string, p
   }
 }
 
-function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): OrderSeedSchemaType {
+function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): DbOrderSeedSchemaType {
   return {
     userId,
     addressId: 0, //Placeholder. Will be replaced in seed script by id from address table.
@@ -90,7 +90,7 @@ function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus
   }
 }
 
-function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number) {
+function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number): DbOrderItemSeedSchemaType {
   return {
     orderId,
     productId,
@@ -101,7 +101,7 @@ function generateOrderItemDbSeedItem(orderId: number, productId: number, quantit
 
 //#region Menu categories for db menu_category table to be used by menu page. 
 
-// generateMenuCategoryDbSeedItem(name: string, category: string, href: string, imgId: number): MenuCategorySeedSchemaType
+// generateMenuCategoryDbSeedItem(name: string, category: string, href: string, imgId: number): DbMenuCategorySeedSchemaType
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Build Your Own Pizza', 'build-your-own-pizza', '/menu/build_your_own_pizza', 1));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Specialty Pizzas', 'specialty', '/menu/specialty_pizza', 1));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Breads', 'bread', '/menu/bread', 1));
@@ -117,7 +117,7 @@ menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Drinks', 'drinks', 
 
 // -- Pizza
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Pepperoni', 'Yummy Pepperoni', 'specialty', '/menu/specialty_pizza/pepperoni', 'pepperoni', 1, 1499));
 productDbSeedItems.push(generateProductDbSeedItem('Supreme', 'Yummy Supreme', 'specialty', '/menu/specialty_pizza/supreme', 'supreme', 1, 1699));
 productDbSeedItems.push(generateProductDbSeedItem('Meat Lovers', 'Yummy Meat Lovers', 'specialty', '/menu/specialty_pizza/meat-lovers', 'meat-lovers', 1, 1899));
@@ -128,7 +128,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy 
 
 // -- Bread
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Breadsticks', 'Yummy Breadsticks', 'bread', '/menu/bread/breadsticks', 'breadsticks', 1, 499));
 productDbSeedItems.push(generateProductDbSeedItem('Cheesy Bread', 'Yummy Cheesy Bread', 'bread', '/menu/bread/cheesy-bread', 'cheesy-bread', 1, 699));
 productDbSeedItems.push(generateProductDbSeedItem('Bread Bites', 'Yummy Bread Bites', 'bread', '/menu/bread/bread-bites', 'bread-bites', 1, 599));
@@ -136,7 +136,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy
 
 // -- Chicken
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Plain Wings', 'Yummy Plain Wings', "chicken", '/menu/chicken/plain-wings', 'plain-wings', 1, 899));
 productDbSeedItems.push(generateProductDbSeedItem('Hot Wings', 'Yummy Hot Wings', "chicken", '/menu/chicken/hot-wings', 'hot-wings', 1, 899));
 productDbSeedItems.push(generateProductDbSeedItem('BBQ Wings', 'Yummy BBQ Wings', "chicken", '/menu/chicken/bbq-wings', 'bbq-wings', 1, 899));
@@ -147,7 +147,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Zesty Asian Wings', 'Yummy Ze
 
 // -- Pasta
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Chicken Alfredo', 'Yummy Chicken Alfredo', 'pasta', '/menu/pasta/chicken-alfredo', 'chicken-alfredo', 1, 1099));
 productDbSeedItems.push(generateProductDbSeedItem('5-Cheese Mac & Cheese', 'Yummy 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/5-cheese-mac-n-cheese', '5-cheese-mac-n-cheese', 1, 999));
 productDbSeedItems.push(generateProductDbSeedItem('Spicy Buffalo 5-Cheese Mac & Cheese', 'Yummy Spicy Buffalo 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/spicy-buffalo-5-cheese-mac-n-cheese', 'spicy-buffalo-5-cheese-mac-n-cheese', 1, 999));
@@ -155,7 +155,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Spaghetti & Meatballs', 'Yumm
 
 // -- Sandwich
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Chicken Parm', 'Yummy Chicken Parm', 'sandwich', '/menu/sandwich/chicken-parm', 'chicken-parm', 1, 899));
 productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'sandwich', '/menu/sandwich/chicken-bacon-ranch', 'chicken-bacon-ranch', 1, 899));
 productDbSeedItems.push(generateProductDbSeedItem('Italian', 'Yummy Italian', 'sandwich', '/menu/sandwich/italian', 'italian', 1, 899));
@@ -164,20 +164,20 @@ productDbSeedItems.push(generateProductDbSeedItem('Philly Cheesesteak', 'Yummy P
 
 // -- Salad
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Classic Garden', 'Yummy Classic Garden', 'salad', '/menu/salad/classic-garden', 'classic-garden', 1, 799));
 productDbSeedItems.push(generateProductDbSeedItem('Chicken Caesar', 'Yummy Chicken Caesar', 'salad', '/menu/salad/chicken-caesar', 'chicken-caesar', 1, 899));
 
 // -- Dessert
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Chocolate Lava Cake', 'Yummy Chocolate Lave Cake', 'dessert', '/menu/dessert/chocolate-lava-cake', 'chocolate-lava-cake', 1, 499));
 productDbSeedItems.push(generateProductDbSeedItem('Chocolate Cookie Brownies', 'Yummy Chocolate Cookie Brownies', 'dessert', '/menu/dessert/chocolate-cookie-brownies', 'chocolate-cookie-brownies', 1, 499));
 productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy Cinnamon Bread Bites', 'dessert', '/menu/dessert/cinnamon-bread-bites', 'cinnamon-bread-bites', 1, 599));
 
 // -- Drinks
 
-// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): ProductSeedSchemaType
+// generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, imgId: number, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Pepsi', 'Yummy Pepsi', 'drinks', '/menu/drink/pepsi', 'pepsi', 1, 399));
 productDbSeedItems.push(generateProductDbSeedItem('Mountain Dew', 'Yummy Mountain Dew', 'drinks', '/menu/drink/mountain-dew', 'mountain-dew', 1, 399));
 productDbSeedItems.push(generateProductDbSeedItem('Mug Root Beer', 'Yummy Mug Root Beer', 'drinks', '/menu/drink/mug-root-beer', 'mug-root-beer', 1, 399));
@@ -190,7 +190,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange 
 
 // -- Menu Categories
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Build Your Own Pizza Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Pizza Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Bread Menu Category', 800, 800));
@@ -203,7 +203,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-catego
 
 // -- Pizza
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/pepperoni.jpg', 'Pepperoni Pizza', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/supreme.jpg', 'Supreme Pizza', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/meat-lovers.jpg', 'Meat Lovers', 800, 800));
@@ -214,7 +214,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/chicken-ba
 
 // -- Bread
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Breadsticks', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Cheesy Bread', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Bread Bites', 800, 800));
@@ -222,7 +222,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- Chicken
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Plain Wings', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Hot Wings', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'BBQ Wings', 800, 800));
@@ -233,7 +233,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-cate
 
 // -- Pasta
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Chicken Alfredo', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', '5-Cheese Mac & Cheese', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800));
@@ -241,7 +241,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category
 
 // -- Sandwich
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Chicken Parm', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Chicken Bacon Ranch', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Italian', 800, 800));
@@ -250,20 +250,20 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-ca
 
 // -- Salad
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category.jpg', 'Classic Garden', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category.jpg', 'Chicken Caesar', 800, 800));
 
 // -- Dessert
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Chocolate Lava Cake', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Chocolate Cookie Brownies', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Cinnamon Bread Bites', 800, 800));
 
 // -- Drinks
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Pepsi', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Mountain Dew', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Mug Root Beer', 800, 800));
@@ -275,7 +275,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-catego
 
 // -- -- Crust
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Hand Tossed Crust', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Parmesan Stuffed Crust', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Handmade Pan Crust', 800, 800));
@@ -285,13 +285,13 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- -- Crust Seasoning
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic Crust Seasoning', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'No Garlic Crust Seasoning', 800, 800));
 
 // -- -- Sauce
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Robust Tomato Sauce', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Honey BBQ Sauce', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic Parmesan Sauce', 800, 800));
@@ -301,13 +301,13 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- -- Mozzarella
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Mozzarella Cheese', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'No Mozzarella Cheese', 800, 800));
 
 // -- -- Meat
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Ham', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Beef', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Pepperoni', 800, 800));
@@ -318,7 +318,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- -- Veggies & More
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Hot Buffalo Sauce', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Jalapeno Peppers', 800, 800));
@@ -333,7 +333,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- -- Add-on Cheeses
 
-// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): ImageSeedSchemaType
+// generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Shredded Provolone', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Cheddar Cheese Blend', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Feta Cheese', 800, 800));
@@ -345,7 +345,7 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category
 
 // -- Crust
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Hand Tossed Crust', 'crust', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Parmesan Stuffed Crust', 'crust', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Handmade Pan Crust', 'crust', 1, 0));
@@ -355,13 +355,13 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Gluten Free Crust', 'cr
 
 // -- Crust Seasoning
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic Crust Seasoning', 'crust-seasoning', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('No Garlic Crust Seasoning', 'crust-seasoning', 1, 0));
 
 // -- Sauce
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Robust Tomato Sauce', 'sauce', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Honey BBQ Sauce', 'sauce', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic Parmesan Sauce', 'sauce', 1, 0));
@@ -371,13 +371,13 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('No Sauce', 'sauce', 1, 
 
 // -- Mozzarella
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Mozzarella Cheese', 'mozzarella', 1, 0));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('No Mozzarella Cheese', 'mozzarella', 1, 0));
 
 // -- Meat
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Ham', 'meat', 1, 100));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Beef', 'meat', 1, 100));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Pepperoni', 'meat', 1, 100));
@@ -388,7 +388,7 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Philly Steak', 'meat', 
 
 // -- Veggies & More
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Hot Buffalo Sauce', 'veggies-n-more', 1, 200));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic', 'veggies-n-more', 1, 200));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Jalapeno Peppers', 'veggies-n-more', 1, 200));
@@ -403,7 +403,7 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Spinach', 'veggies-n-mo
 
 // -- Add-on Cheeses
 
-// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): IngredientSeedSchemaType
+// generateIngredientDbSeedItem(name: string, category: string, imgId: number, price: number): DbIngredientSeedSchemaType
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Shredded Provolone', 'cheese', 1, 300));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Cheddar Cheese Blend', 'cheese', 1, 300));
 ingredientDbSeedItems.push(generateIngredientDbSeedItem('Feta Cheese', 'cheese', 1, 300));
@@ -474,19 +474,19 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 /* NOTE Currently there is no user generator for seeding, so users will need to be created
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
-// generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): AddressSeedSchemaType
-addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', '9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', true, "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', true));
+// generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', true, "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', true));
 
 // #endregion
 
 // #region Orders for order table
 
-// generateOrderDbSeedItem(userId: string, addressId: number, orderTotal: number, orderStatus: string): OrderSeedSchemaType
-orderDbSeedItems.push(generateOrderDbSeedItem('9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', 3497, 'complete'));
-orderDbSeedItems.push(generateOrderDbSeedItem('FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', 999, 'in progress'));
-orderDbSeedItems.push(generateOrderDbSeedItem('9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', 1699, 'cancelled'));
-orderDbSeedItems.push(generateOrderDbSeedItem('FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', 1499, 'complete'));
+// generateOrderDbSeedItem(userId: string, addressId: number, orderTotal: number, orderStatus: string): DbOrderSeedSchemaType
+orderDbSeedItems.push(generateOrderDbSeedItem('vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', 3497, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', 999, 'in progress'));
+orderDbSeedItems.push(generateOrderDbSeedItem('vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', 1699, 'cancelled'));
+orderDbSeedItems.push(generateOrderDbSeedItem('Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', 1499, 'complete'));
 
 // #endregion
 
@@ -496,7 +496,7 @@ orderDbSeedItems.push(generateOrderDbSeedItem('FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa'
 Perhaps running "seedOrder()" from inside "seedProduct()", and then "seedOrderItem()" after "seedOrder()"
 and passing both ids to "seedOrderItem()"? Might not be worth the effort, but at least look into it.*/
 
-// generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number)
+// generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number): DbOrderItemSeedSchemaType
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 3698));
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 1498));
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 8, 1, 499));

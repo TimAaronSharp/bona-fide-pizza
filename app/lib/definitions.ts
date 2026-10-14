@@ -1,6 +1,6 @@
 import z from "zod";
 
-// export const ProductSchema = z.object({
+// export const DbProductSchema = z.object({
 //   link: z.object({
 //     paramName: z.string(),
 //     href: z.string()
@@ -19,9 +19,9 @@ import z from "zod";
 //   })
 // });
 
-// zod schemas
+// #region db zod schemas
 
-export const ProductSchema = z.object({
+export const DbProductSchema = z.object({
   id: z.number(),
   name: z.string(),
   description: z.string(),
@@ -32,11 +32,11 @@ export const ProductSchema = z.object({
   price: z.number()
 });
 
-export const ProductSeedSchema = ProductSchema.omit({
+export const DbProductSeedSchema = DbProductSchema.omit({
   id: true
 });
 
-export const MenuCategorySchema = z.object({
+export const DbMenuCategorySchema = z.object({
   id: z.number(),
   name: z.string(),
   category: z.string(),
@@ -44,11 +44,11 @@ export const MenuCategorySchema = z.object({
   imgId: z.number()
 });
 
-export const MenuCategorySeedSchema = MenuCategorySchema.omit({
+export const DbMenuCategorySeedSchema = DbMenuCategorySchema.omit({
   id: true
 });
 
-export const ImageSchema = z.object({
+export const DbImageSchema = z.object({
   id: z.number(),
   src: z.string(),
   alt: z.string(),
@@ -56,15 +56,15 @@ export const ImageSchema = z.object({
   height: z.number()
 });
 
-export const ImageSeedSchema = ImageSchema.omit({
+export const DbImageSeedSchema = DbImageSchema.omit({
   id: true
 });
 
-export const IdSeedSchema = z.object({
+export const DbIdSeedSchema = z.object({
   id: z.number()
 });
 
-export const IngredientSchema = z.object({
+export const DbIngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
   category: z.string(),
@@ -72,16 +72,16 @@ export const IngredientSchema = z.object({
   price: z.number()
 });
 
-export const IngredientSeedSchema = IngredientSchema.omit({
+export const DbIngredientSeedSchema = DbIngredientSchema.omit({
   id: true
 });
 
-export const ProductIngredientSchema = z.object({
+export const DbProductIngredientSchema = z.object({
   productId: z.number(),
   ingredientId: z.number()
 });
 
-export const UserSchema = z.object({
+export const DbUserSchema = z.object({
   id: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
   name: z.string(),
   email: z.string(),
@@ -101,7 +101,7 @@ export const UserSchema = z.object({
 
 
 
-export const OrderSchema = z.object({
+export const DbOrderSchema = z.object({
   id: z.number(),
   userId: z.string(),
   addressId: z.number(),
@@ -109,11 +109,11 @@ export const OrderSchema = z.object({
   orderStatus: z.string()
 });
 
-export const OrderSeedSchema = OrderSchema.omit({
+export const DbOrderSeedSchema = DbOrderSchema.omit({
   id: true
 });
 
-export const OrderItemSchema = z.object({
+export const DbOrderItemSchema = z.object({
   id: z.number(),
   orderId: z.number(),
   productId: z.number(),
@@ -121,11 +121,11 @@ export const OrderItemSchema = z.object({
   orderItemTotal: z.number()
 });
 
-export const OrderItemSeedSchema = OrderItemSchema.omit({
+export const DbOrderItemSeedSchema = DbOrderItemSchema.omit({
   id: true
 });
 
-export const AddressSchema = z.object({
+export const DbAddressSchema = z.object({
   id: z.number(),
   line1: z.string(),
   line2: z.string().nullable(),
@@ -136,66 +136,70 @@ export const AddressSchema = z.object({
   isActive: z.boolean()
 });
 
-export const AddressSeedSchema = AddressSchema.omit({
+export const DbAddressSeedSchema = DbAddressSchema.omit({
   id: true
 });
 
-export const AddressAndUserIdSeedSchema = z.object({
+export const DbAddressAndUserIdSeedSchema = z.object({
   id: z.number(),
   userId: z.string()
 });
 
-// Inferred types
+// #endregion
 
-export type ProductSchemaType = z.infer<typeof ProductSchema>;
-export type ProductSeedSchemaType = z.infer<typeof ProductSeedSchema>;
+// #region Inferred types
 
-export type MenuCategorySchemaType = z.infer<typeof MenuCategorySchema>;
-export type MenuCategorySeedSchemaType = z.infer<typeof MenuCategorySeedSchema>;
+export type DbProductSchemaType = z.infer<typeof DbProductSchema>;
+export type DbProductSeedSchemaType = z.infer<typeof DbProductSeedSchema>;
 
-export type ImageSchemaType = z.infer<typeof ImageSchema>;
-export type ImageSeedSchemaType = z.infer<typeof ImageSeedSchema>;
+export type DbMenuCategorySchemaType = z.infer<typeof DbMenuCategorySchema>;
+export type DbMenuCategorySeedSchemaType = z.infer<typeof DbMenuCategorySeedSchema>;
 
-export type IdSeedSchemaType = z.infer<typeof IdSeedSchema>;
+export type DbImageSchemaType = z.infer<typeof DbImageSchema>;
+export type DbImageSeedSchemaType = z.infer<typeof DbImageSeedSchema>;
 
-export type IngredientSchemaType = z.infer<typeof IngredientSchema>;
-export type IngredientSeedSchemaType = z.infer<typeof IngredientSeedSchema>;
+export type DbIdSeedSchemaType = z.infer<typeof DbIdSeedSchema>;
 
-export type ProductIngredientSchemaType = z.infer<typeof ProductIngredientSchema>;
+export type DbIngredientSchemaType = z.infer<typeof DbIngredientSchema>;
+export type DbIngredientSeedSchemaType = z.infer<typeof DbIngredientSeedSchema>;
 
-export type UserSchemaType = z.infer<typeof UserSchema>;
+export type DbProductIngredientSchemaType = z.infer<typeof DbProductIngredientSchema>;
+
+export type DbUserSchemaType = z.infer<typeof DbUserSchema>;
 
 
-export type OrderSchemaType = z.infer<typeof OrderSchema>;
-export type OrderSeedSchemaType = z.infer<typeof OrderSeedSchema>;
+export type DbOrderSchemaType = z.infer<typeof DbOrderSchema>;
+export type DbOrderSeedSchemaType = z.infer<typeof DbOrderSeedSchema>;
 
-export type OrderItemSchemaType = z.infer<typeof OrderItemSchema>;
-export type OrderItemSeedSchemaType = z.infer<typeof OrderItemSeedSchema>;
+export type DbOrderItemSchemaType = z.infer<typeof DbOrderItemSchema>;
+export type DbOrderItemSeedSchemaType = z.infer<typeof DbOrderItemSeedSchema>;
 
-export type AddressSchemaType = z.infer<typeof AddressSchema>;
-export type AddressSeedSchemaType = z.infer<typeof AddressSeedSchema>;
+export type DbAddressSchemaType = z.infer<typeof DbAddressSchema>;
+export type DbAddressSeedSchemaType = z.infer<typeof DbAddressSeedSchema>;
 
-export type AddressAndUserIdSeedSchemaType = z.infer<typeof AddressAndUserIdSeedSchema>;
+export type DbAddressAndUserIdSeedSchemaType = z.infer<typeof DbAddressAndUserIdSeedSchema>;
 
-// export type TableSchemaTypeUnion = ProductSchemaType |
-//   MenuCategorySchemaType |
-//   ImageSchemaType |
-//   IngredientSchemaType |
-//   UserSchemaType |
-//   OrderSchemaType |
-//   OrderItemSchemaType |
-//   AddressSchemaType;
+// #endregion
 
-// export type SeedSchemaTypeUnion = ProductSeedSchemaType |
-//   MenuCategorySeedSchemaType |
-//   ImageSeedSchemaType |
-//   IngredientSeedSchemaType |
-//   // UserSchemaType | UserSchemaType has an id and can't be used here yet.
-//   OrderSeedSchemaType |
-//   OrderItemSeedSchemaType |
-//   AddressSeedSchemaType;
+// export type TableSchemaTypeUnion = DbProductSchemaType |
+//   DbMenuCategorySchemaType |
+//   DbImageSchemaType |
+//   DbIngredientSchemaType |
+//   DbUserSchemaType |
+//   DbOrderSchemaType |
+//   DbOrderItemSchemaType |
+//   DbAddressSchemaType;
 
-// export type Product = z.infer<typeof ProductSchema>;
+// export type SeedSchemaTypeUnion = DbProductSeedSchemaType |
+//   DbMenuCategorySeedSchemaType |
+//   DbImageSeedSchemaType |
+//   DbIngredientSeedSchemaType |
+//   // DbUserSchemaType | DbUserSchemaType has an id and can't be used here yet.
+//   DbOrderSeedSchemaType |
+//   DbOrderItemSeedSchemaType |
+//   DbAddressSeedSchemaType;
+
+// export type Product = z.infer<typeof DbProductSchema>;
 
 export type ImageType = {
   src: string;
