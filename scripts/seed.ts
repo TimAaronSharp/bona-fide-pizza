@@ -103,7 +103,7 @@ const seedAddress = async () => {
 }
 
 const seedOrder = async (addressAndUserIds: AddressAndUserIdSeedSchemaType[]) => {
-  console.log("Seeding database order table...")
+  console.log("Seeding database order table...");
   try {
     /*TODO I don't believe this will work if a user has created more than one address, because that userId will be
     matched more than once. This works for now with how many addresses I have but test/look into this later. */
@@ -119,8 +119,21 @@ const seedOrder = async (addressAndUserIds: AddressAndUserIdSeedSchemaType[]) =>
     await db.insert(schemas.order).values(seeds.orderDbSeedItems).returning({ id: schemas.order.id });
 
     console.log("✅ order table seeding complete!");
+
+    await seedOrderItem();
   } catch (error) {
     console.error("❌ Error seeding database order table:", error);
+  }
+}
+
+const seedOrderItem = async () => {
+  console.log("Seeding database order_item table...");
+  try {
+    await db.insert(schemas.orderItem).values(seeds.orderItemDbSeedItems);
+
+    console.log("✅ order_item table seeding complete!");
+  } catch (error) {
+    console.error("❌ Error seeding database order_item table:", error);
   }
 }
 

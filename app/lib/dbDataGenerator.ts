@@ -1,4 +1,4 @@
-import { ImageType, ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ProductIngredientSchemaType, AddressSeedSchemaType, OrderSeedSchemaType } from "@/app/lib/definitions";
+import { ImageType, ProductSeedSchemaType, MenuCategorySeedSchemaType, ImageSeedSchemaType, IngredientSeedSchemaType, ProductIngredientSchemaType, AddressSeedSchemaType, OrderSeedSchemaType, OrderItemSeedSchemaType } from "@/app/lib/definitions";
 
 /*NOTE This file is for generating data objects to be seeded into the database. Maybe I'll change the name now that
 the main purpose for this file has changed from creating and exporting the data locally? */
@@ -18,6 +18,7 @@ const ingredientDbSeedItems: IngredientSeedSchemaType[] = [];
 const productIngredientDbSeedItems: ProductIngredientSchemaType[] = [];
 const addressDbSeedItems: AddressSeedSchemaType[] = [];
 const orderDbSeedItems: OrderSeedSchemaType[] = [];
+const orderItemDbSeedItems: OrderItemSeedSchemaType[] = [];
 
 /*TODO Look into whether or not I actually need to create placeholder ids for dbSeedItems. I felt I did originally
 to use with my zod schemas, but I have created the schema/type with the id omitted anyway, so I don't believe
@@ -86,6 +87,15 @@ function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus
     addressId: 0, //Placeholder. Will be replaced in seed script by id from address table.
     orderTotal,
     orderStatus
+  }
+}
+
+function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number) {
+  return {
+    orderId,
+    productId,
+    quantity,
+    orderItemTotal
   }
 }
 
@@ -465,20 +475,35 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
 // generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): AddressSeedSchemaType
-addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', true, "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', true));
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', '9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', true, "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', true));
 
 // #endregion
 
 // #region Orders for order table
 
 // generateOrderDbSeedItem(userId: string, addressId: number, orderTotal: number, orderStatus: string): OrderSeedSchemaType
-orderDbSeedItems.push(generateOrderDbSeedItem('iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', 3497, 'complete'));
-orderDbSeedItems.push(generateOrderDbSeedItem('INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', 999, 'in progress'));
-orderDbSeedItems.push(generateOrderDbSeedItem('iFtaql6BBqiUWiQRkeXnoaUz02IZF4rE', 1699, 'cancelled'));
-orderDbSeedItems.push(generateOrderDbSeedItem('INbirFzA0BQDyV63XKhXhzkhDGKHT0eS', 1499, 'complete'));
-
+orderDbSeedItems.push(generateOrderDbSeedItem('9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', 3497, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', 999, 'in progress'));
+orderDbSeedItems.push(generateOrderDbSeedItem('9oLoqymnCxLbWvWuBKyvmPc4DVSFu7uw', 1699, 'cancelled'));
+orderDbSeedItems.push(generateOrderDbSeedItem('FycmfpGlrFKk6iiHKoGXHwydrAu9yXRa', 1499, 'complete'));
 
 // #endregion
 
-export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems, productIngredientDbSeedItems, addressDbSeedItems, orderDbSeedItems };
+// #region OrderItems for order_item table
+
+/* TODO Look into making order/product ids assigned from the returned objects after order/product seeding. 
+Perhaps running "seedOrder()" from inside "seedProduct()", and then "seedOrderItem()" after "seedOrder()"
+and passing both ids to "seedOrderItem()"? Might not be worth the effort, but at least look into it.*/
+
+// generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number)
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 3698));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 1498));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 8, 1, 499));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 24, 1, 899));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 27, 1, 899));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 31, 1, 499));
+
+// #endregion
+
+export { heroImage, productDbSeedItems, menuCategoryDbSeedItems, imageDbSeedItems, ingredientDbSeedItems, productIngredientDbSeedItems, addressDbSeedItems, orderDbSeedItems, orderItemDbSeedItems };
