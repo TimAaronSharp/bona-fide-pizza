@@ -28,7 +28,7 @@ export const DbProductSchema = z.object({
   category: z.string(),
   href: z.string(),
   paramName: z.string(),
-  imgId: z.number(),
+  imgId: z.number().nullable(),
   price: z.number(),
   createdAt: z.date(),
   updatedAt: z.date()

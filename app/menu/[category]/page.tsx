@@ -12,8 +12,8 @@ export default async function MenuCategoryPage({ params }: { params: { category:
   const { category } = await params;
   const items = await db.select().from(product).where(eq(product.category, category)).innerJoin(image, eq(image.id, product.imgId));
 
-  console.log("category is", category);
-  console.log("items is ", items);
+  // console.log("category is", category);
+  // console.log("items is ", items);
 
   // TODO Add notFound() logic here.
   return (
