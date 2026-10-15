@@ -14,7 +14,7 @@ export default async function MenuPage() {
 
 
   // console.log("menuCategoryItems is ", menuCategoryItems);
-  console.log("menuCategoryItems is ", menuCategoryItems);
+  // console.log("menuCategoryItems is ", menuCategoryItems);
 
   return (
     <>

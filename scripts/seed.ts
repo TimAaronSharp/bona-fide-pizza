@@ -11,13 +11,20 @@ import * as seeds from "@/app/lib/dbDataGenerator";
 const seedImages = async () => {
   console.log("Seeding database image table...");
   try {
+
+    // console.log("seeds.productDbSeedItems is", seeds.productDbSeedItems);
+    // console.log("seeds.productDbSeedItems.length is", seeds.productDbSeedItems.length);
     const seededImages = await db.insert(schemas.image).values(seeds.imageDbSeedItems).returning({ id: schemas.image.id });
 
     // Pulling out the returned ids from the image table to send the the appropriate seed functions.
 
     const menuCategoryImageIds: DbIdSeedSchemaType[] = await seededImages.slice(0, 9);
-    const productImageIds: DbIdSeedSchemaType[] = await seededImages.slice(9, 47);
-    const ingredientImageIds: DbIdSeedSchemaType[] = await seededImages.slice(47);
+    const productImageIds: DbIdSeedSchemaType[] = await seededImages.slice(9, 48);
+    const ingredientImageIds: DbIdSeedSchemaType[] = await seededImages.slice(48);
+
+    // console.log("menuCategoryImageIds is", menuCategoryImageIds);
+    // console.log("productImageIds is", productImageIds);
+    // console.log("ingredientImageIds is", ingredientImageIds);
 
     console.log("✅ image table seeding complete!");
 

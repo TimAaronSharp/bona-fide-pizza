@@ -241,6 +241,11 @@ export const MenuCategoryPropSchema = z.object({
   menu_category: DbMenuCategorySchema
 });
 
+export const ProductAndImageQueryPropSchema = z.object({
+  product: DbProductSchema,
+  image: DbImageSchema
+});
+
 // #endregion
 
 // #region Inferred local types
@@ -248,6 +253,8 @@ export const MenuCategoryPropSchema = z.object({
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
 
 export type MenuCategoryPropSchemaType = z.infer<typeof MenuCategoryPropSchema>;
+
+export type ProductAndImageQueryPropSchemaType = z.infer<typeof ProductAndImageQueryPropSchema>;
 
 // #endregion
 

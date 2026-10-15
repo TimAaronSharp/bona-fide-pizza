@@ -101,29 +101,33 @@ function generateOrderItemDbSeedItem(orderId: number, productId: number, quantit
 //#region Menu categories for db menu_category table to be used by menu page. 
 
 // generateMenuCategoryDbSeedItem(name: string, href: string): DbMenuCategorySeedSchemaType
-menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Build Your Own Pizza', '/menu/build_your_own_pizza'));
-menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Specialty Pizzas', '/menu/specialty_pizza'));
+menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Build Your Own Pizza', '/menu/build_your_own/pizza'));
+menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Specialty Pizzas', '/menu/specialty'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Breads', '/menu/bread'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Chicken Wings', '/menu/chicken'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Pasta', '/menu/pasta'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Sandwiches', '/menu/sandwich'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Salads', '/menu/salad'));
 menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Desserts', '/menu/dessert'));
-menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Drinks', '/menu/drink'));
+menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Drinks', '/menu/drinks'));
 // #endregion
 
 //#region Individual product items for db product table by category
 
-// -- Pizza
+// -- Build Your Own Pizza
+
+productDbSeedItems.push(generateProductDbSeedItem('Build Your Own Pizza', 'Yummy Build Your Own Pizza', 'pizza', '/menu/build-your-own/pizza', 'pizza', 1499));
+
+// -- Specialty Pizza
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Pepperoni', 'Yummy Pepperoni', 'specialty', '/menu/specialty_pizza/pepperoni', 'pepperoni', 1499));
-productDbSeedItems.push(generateProductDbSeedItem('Supreme', 'Yummy Supreme', 'specialty', '/menu/specialty_pizza/supreme', 'supreme', 1699));
-productDbSeedItems.push(generateProductDbSeedItem('Meat Lovers', 'Yummy Meat Lovers', 'specialty', '/menu/specialty_pizza/meat-lovers', 'meat-lovers', 1899));
-productDbSeedItems.push(generateProductDbSeedItem('6-Cheese', 'Yummy 6-Cheese', 'specialty', '/menu/specialty_pizza/6-cheese', '6-cheese', 1399));
-productDbSeedItems.push(generateProductDbSeedItem('Veggie Lovers', 'Yummy Veggie Lovers', 'specialty', '/menu/specialty_pizza/veggie-lovers', 'veggie-lovers', 1799));
-productDbSeedItems.push(generateProductDbSeedItem('BBQ Chicken', 'Yummy BBQ Chicken', 'specialty', '/menu/specialty_pizza/bbq-chicken', 'bbq-chicken', 1799));
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'specialty', '/menu/specialty_pizza/chicken-bacon-ranch', 'chicken-bacon-ranch', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('Pepperoni', 'Yummy Pepperoni', 'specialty', '/menu/specialty/pepperoni', 'pepperoni', 1499));
+productDbSeedItems.push(generateProductDbSeedItem('Supreme', 'Yummy Supreme', 'specialty', '/menu/specialty/supreme', 'supreme', 1699));
+productDbSeedItems.push(generateProductDbSeedItem('Meat Lovers', 'Yummy Meat Lovers', 'specialty', '/menu/specialty/meat-lovers', 'meat-lovers', 1899));
+productDbSeedItems.push(generateProductDbSeedItem('6-Cheese', 'Yummy 6-Cheese', 'specialty', '/menu/specialty/6-cheese', '6-cheese', 1399));
+productDbSeedItems.push(generateProductDbSeedItem('Veggie Lovers', 'Yummy Veggie Lovers', 'specialty', '/menu/specialty/veggie-lovers', 'veggie-lovers', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('BBQ Chicken', 'Yummy BBQ Chicken', 'specialty', '/menu/specialty/bbq-chicken', 'bbq-chicken', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'specialty', '/menu/specialty/chicken-bacon-ranch', 'chicken-bacon-ranch', 1799));
 
 // -- Bread
 
@@ -177,12 +181,12 @@ productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy
 // -- Drinks
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Pepsi', 'Yummy Pepsi', 'drinks', '/menu/drink/pepsi', 'pepsi', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Mountain Dew', 'Yummy Mountain Dew', 'drinks', '/menu/drink/mountain-dew', 'mountain-dew', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Mug Root Beer', 'Yummy Mug Root Beer', 'drinks', '/menu/drink/mug-root-beer', 'mug-root-beer', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Dr Pepper', 'Yummy Dr Pepper', 'drinks', '/menu/drink/dr-pepper', 'dr-pepper', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Cherry Pepsi', 'Yummy Cherry Pepsi', 'drinks', '/menu/drink/cherry-pepsi', 'cherry-pepsi', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange Crush', 'drinks', '/menu/drink/orange-crush', 'orange-crush', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Pepsi', 'Yummy Pepsi', 'drinks', '/menu/drinks/pepsi', 'pepsi', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Mountain Dew', 'Yummy Mountain Dew', 'drinks', '/menu/drinks/mountain-dew', 'mountain-dew', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Mug Root Beer', 'Yummy Mug Root Beer', 'drinks', '/menu/drinks/mug-root-beer', 'mug-root-beer', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Dr Pepper', 'Yummy Dr Pepper', 'drinks', '/menu/drinks/dr-pepper', 'dr-pepper', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Cherry Pepsi', 'Yummy Cherry Pepsi', 'drinks', '/menu/drinks/cherry-pepsi', 'cherry-pepsi', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange Crush', 'drinks', '/menu/drinks/orange-crush', 'orange-crush', 399));
 // #endregion
 
 // #region Images for db image table
@@ -200,7 +204,11 @@ imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Dessert Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 800, 800));
 
-// -- Pizza
+// -- Build Your Own Pizza
+
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Build Your Own Pizza', 800, 800));
+
+// -- Specialty Pizza
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/pepperoni.jpg', 'Pepperoni Pizza', 800, 800));
@@ -474,18 +482,18 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
 // generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
-addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', true, "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', true));
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', true, "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'KIdSsP73g77xXwq97U7IVve9vd7unMf8', true));
 
 // #endregion
 
 // #region Orders for order table
 
 // generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): DbOrderSeedSchemaType
-orderDbSeedItems.push(generateOrderDbSeedItem('vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', 3497, 'complete'));
-orderDbSeedItems.push(generateOrderDbSeedItem('Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', 999, 'in progress'));
-orderDbSeedItems.push(generateOrderDbSeedItem('vie9fWIFoexuRBaonsYMsXpa1CJC4wkR', 1699, 'cancelled'));
-orderDbSeedItems.push(generateOrderDbSeedItem('Kjq69kKchFvbZCtLusot96ZrnDdQ2B4j', 1499, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', 3497, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('KIdSsP73g77xXwq97U7IVve9vd7unMf8', 999, 'in progress'));
+orderDbSeedItems.push(generateOrderDbSeedItem('VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', 1699, 'cancelled'));
+orderDbSeedItems.push(generateOrderDbSeedItem('KIdSsP73g77xXwq97U7IVve9vd7unMf8', 1499, 'complete'));
 
 // #endregion
 

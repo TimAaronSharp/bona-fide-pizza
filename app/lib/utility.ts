@@ -1,25 +1,26 @@
-import { menuCategory } from "@/app/db/schema.db";
-import { DbProductSchemaType } from "./definitions";
+import { } from "@/app/db/schema.db";
+import { ProductAndImageQueryPropSchemaType, ProductSchemaType } from "./definitions";
 
 // Menu and all product tables share the same schema, so I'm just using menu to infer the type for Schema.
 // type Schema = typeof menuCategory.$inferSelect;
 
-export function generateProduct(menuCategoryItem: Schema): DbProductSchemaType {
+export function generateProduct(data: ProductAndImageQueryPropSchemaType): ProductSchemaType {
+  const { image, product } = data
   return {
     link: {
-      name: menuCategoryItem.paramName,
-      href: menuCategoryItem.href
+      name: product.paramName,
+      href: product.href
     },
     image: {
-      src: menuCategoryItem.imgSrc,
-      alt: menuCategoryItem.imgAlt,
-      width: menuCategoryItem.imgWidth,
-      height: menuCategoryItem.imgHeight
+      src: image.src,
+      alt: image.alt,
+      width: image.width,
+      height: image.height
     },
-    product: {
-      id: menuCategoryItem.id,
-      name: menuCategoryItem.name,
-      description: menuCategoryItem.description
+    info: {
+      id: product.id,
+      name: product.name,
+      description: product.description
     }
   };
 }
