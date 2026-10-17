@@ -24,6 +24,7 @@ export default async function MenuCategoryPage({ params }: { params: { category:
   const { category } = await params;
   // const items = await getMenuCategoryData(category);
   const items = await db.select().from(product).where(eq(product.category, category)).innerJoin(image, eq(image.id, product.imgId));
+  /*NOTE query here temporarily to test out editing menu categories. Will be refactored later in some way. */
   const menuCategoryData = await db.select().from(menuCategory).where(like(menuCategory.href, `%/${category}`));
 
   console.log("menuCategoryData is", menuCategoryData);

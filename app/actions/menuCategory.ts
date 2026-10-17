@@ -5,6 +5,7 @@ import { headers } from "next/headers"
 import { menuCategory } from "@/app/db/schema.db";
 import { db } from "@/app/db/drizzle";
 import { eq } from "drizzle-orm";
+import { updateTag } from "next/cache";
 
 
 export const editMenuCategory = async (id: number, name: string, href: string, imgId: number) => {
@@ -35,4 +36,6 @@ export const editMenuCategory = async (id: number, name: string, href: string, i
     .update(menuCategory)
     .set({ name, href, imgId })
     .where(eq(menuCategory.id, id));
+
+  updateTag("menu-category");
 }

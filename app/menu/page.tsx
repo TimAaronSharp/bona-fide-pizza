@@ -4,13 +4,30 @@ import { image, menuCategory } from "@/app/db/schema.db";
 import { MenuCategoryCard } from "@/app/ui/components/menuCategoryCard";
 import { db } from "../db/drizzle";
 import { asc, eq } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 
 export const metadata: Metadata = {
   title: 'Menu'
 };
 
+/*NOTE Next.js works with fetch() to use its server-side cache. Direct ORM queries bypass the cache completely.
+unstable_cache allows the capture of the result of that query to be used for the server-side cache, as well as being
+able to assign tags to that cached data. This is being used in conjunction with the "updateTag()" function in server
+actions. updateTag() purges the cache for the tag that is passed through so the cache will be rebuilt when that data
+is queried again. This is great for when you've mutated data with a server action (create, update, delete).*/
+
+async function getMenuCategoryData() {
+  return unstable_cache(
+    async () => {
+      return await db.select().from(image).innerJoin(menuCategory, eq(image.id, menuCategory.imgId)).orderBy(asc(menuCategory.id));
+    },
+    ["menu-category-key"],
+    { tags: ["menu-category"] }
+  )();
+}
+
 export default async function MenuPage() {
-  const menuCategoryItems = await db.select().from(image).innerJoin(menuCategory, eq(image.id, menuCategory.imgId)).orderBy(asc(menuCategory.id));
+  const menuCategoryItems = await getMenuCategoryData();
 
 
   console.log("menuCategoryItems is ", menuCategoryItems);
