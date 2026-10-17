@@ -1,18 +1,34 @@
 import '@/app/menu/menu.css';
 import { ProductCard } from "@/app/ui/components/productCard";
-import { product, image } from "@/app/db/schema.db";
+import { product, image, menuCategory } from "@/app/db/schema.db";
 import { db } from "@/app/db/drizzle";
-import { generateProduct } from "@/app/lib/utility";
-import { eq } from 'drizzle-orm';
+import { unstable_cache } from 'next/cache';
+import { eq, like } from 'drizzle-orm';
+import { EditMenuCategory } from '@/app/ui/components/editMenuCategory';
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
 inside the function so that is not accessible outside).*/
 
+// async function getMenuCategoryData(category: string) {
+//   return unstable_cache(
+//     async () => {
+//       return await db.select().from(product).where(eq(product.category, category)).innerJoin(image, eq(image.id, product.imgId));
+//     },
+//     [`category-key-${category}`],
+//     { tags: [`category-${category}`] }
+//   )();
+// }
+
+
 export default async function MenuCategoryPage({ params }: { params: { category: string } }) {
   const { category } = await params;
+  // const items = await getMenuCategoryData(category);
   const items = await db.select().from(product).where(eq(product.category, category)).innerJoin(image, eq(image.id, product.imgId));
+  const menuCategoryData = await db.select().from(menuCategory).where(like(menuCategory.href, `%/${category}`));
 
-  // console.log("category is", category);
+  console.log("menuCategoryData is", menuCategoryData);
+
+  console.log("category is", category);
   // console.log("items is ", items);
 
   // TODO Add notFound() logic here.
@@ -26,6 +42,7 @@ export default async function MenuCategoryPage({ params }: { params: { category:
           })}
         </div>
       </section>
+      <EditMenuCategory menuCategoryProp={menuCategoryData[0]} />
     </main>
   )
 }

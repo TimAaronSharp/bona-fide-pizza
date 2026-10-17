@@ -3,17 +3,17 @@ import '@/app/menu/menu.css';
 import { image, menuCategory } from "@/app/db/schema.db";
 import { MenuCategoryCard } from "@/app/ui/components/menuCategoryCard";
 import { db } from "../db/drizzle";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 export const metadata: Metadata = {
   title: 'Menu'
 };
 
 export default async function MenuPage() {
-  const menuCategoryItems = await db.select().from(image).innerJoin(menuCategory, eq(image.id, menuCategory.imgId));
+  const menuCategoryItems = await db.select().from(image).innerJoin(menuCategory, eq(image.id, menuCategory.imgId)).orderBy(asc(menuCategory.id));
 
 
-  // console.log("menuCategoryItems is ", menuCategoryItems);
+  console.log("menuCategoryItems is ", menuCategoryItems);
   // console.log("menuCategoryItems is ", menuCategoryItems);
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { addProduct, deleteProduct, editProduct } from "@/app/actions/productActions";
+import { addProduct, deleteProduct, editProduct } from "@/app/actions/product";
 import { ProductInfo } from "@/app/lib/definitions";
 import { ChangeEvent, FC, useState } from "react";
 
@@ -13,7 +13,7 @@ import { ChangeEvent, FC, useState } from "react";
 export function Product() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [paramName, setparamName] = useState("");
+  const [paramName, setParamName] = useState("");
   const [href, setHref] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [imgAlt, setImgAlt] = useState("");
@@ -29,7 +29,7 @@ export function Product() {
   }
 
   const handleparamName = (e: ChangeEvent<HTMLInputElement>) => {
-    setparamName(e.target.value);
+    setParamName(e.target.value);
   };
 
   const handleHref = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ export function Product() {
     addProduct(name, description, paramName, href, imgSrc, imgAlt, imgWidth, imgHeight);
     setName("");
     setDescription("");
-    setparamName("");
+    setParamName("");
     setHref("");
     setImgSrc("");
     setImgAlt("");
@@ -69,7 +69,7 @@ export function Product() {
 
   return (
     <>
-      <label htmlFor="create-product-">Product Name:</label>
+      <label htmlFor="create-product">Product Name:</label>
       <input type="text" id="create-product-" onChange={handleName} value={name} />
 
       <label htmlFor="create-product-description">Description:</label>

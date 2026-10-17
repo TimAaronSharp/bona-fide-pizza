@@ -101,7 +101,7 @@ export const DbProductIngredientSchema = z.object({
 export const DbProductIngredientSeedSchema = DbProductIngredientSchema.omit({
   createdAt: true,
   updatedAt: true
-})
+});
 
 export const DbUserSchema = z.object({
   id: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
@@ -236,7 +236,7 @@ export const ProductSchema = z.object({
   }
 });
 
-export const MenuCategoryPropSchema = z.object({
+export const MenuCategoryAndImagePropSchema = z.object({
   image: DbImageSchema,
   menu_category: DbMenuCategorySchema
 });
@@ -252,7 +252,7 @@ export const ProductAndImageQueryPropSchema = z.object({
 
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
 
-export type MenuCategoryPropSchemaType = z.infer<typeof MenuCategoryPropSchema>;
+export type MenuCategoryAndImagePropSchemaType = z.infer<typeof MenuCategoryAndImagePropSchema>;
 
 export type ProductAndImageQueryPropSchemaType = z.infer<typeof ProductAndImageQueryPropSchema>;
 

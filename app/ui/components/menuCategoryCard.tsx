@@ -1,10 +1,10 @@
-import { MenuCategoryPropSchemaType } from "@/app/lib/definitions";
+import { MenuCategoryAndImagePropSchemaType } from "@/app/lib/definitions";
 import '@/app/globals.css';
 import Link from "next/link";
 import Image from "next/image";
 
 
-export function MenuCategoryCard({ menuCategoryProp }: { menuCategoryProp: MenuCategoryPropSchemaType }) {
+export function MenuCategoryCard({ menuCategoryProp }: { menuCategoryProp: MenuCategoryAndImagePropSchemaType }) {
   const { menu_category } = menuCategoryProp;
   const { id, createdAt, updatedAt, ...imageData } = menuCategoryProp.image;
 
