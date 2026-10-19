@@ -1,6 +1,6 @@
 import { adminClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
-import { ac, admin, customer } from "@/app/lib/auth/permissions";
+import { ac, admin, customer, employee, manager } from "@/app/lib/auth/permissions";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 import type { auth } from "@/app/lib/auth/auth";
 // You can also export specific methods if preferred:
@@ -13,6 +13,8 @@ export const authClient = createAuthClient({
       ac,
       roles: {
         admin,
+        manager,
+        employee,
         customer
       }
     }),

@@ -14,7 +14,7 @@ export const editMenuCategory = async (id: number, name: string, href: string, i
   });
 
   if (!session) {
-    throw new Error("Unauthorized: You must be logged in.");
+    throw new Error("Unauthorized: You must be logged in to edit a menu category.");
   }
 
   // TODO create permissions for menuCategories.
