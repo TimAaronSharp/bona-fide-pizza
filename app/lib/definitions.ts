@@ -21,21 +21,21 @@ import z from "zod";
 
 // #region db zod schemas
 
-export const DbProductSchema = z.object({
+export const DbImageSchema = z.object({
   id: z.number(),
-  name: z.string(),
-  description: z.string(),
-  category: z.string(),
-  href: z.string(),
-  paramName: z.string(),
-  imgId: z.number().nullable(),
-  price: z.number(),
+  src: z.string(),
+  alt: z.string(),
+  width: z.number(),
+  height: z.number(),
+  creatorId: z.string(),
+  updaterId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
-export const DbProductSeedSchema = DbProductSchema.omit({
+export const DbImageSeedSchema = DbImageSchema.omit({
   id: true,
+  updaterId: true,
   createdAt: true,
   updatedAt: true
 });
@@ -45,34 +45,39 @@ export const DbMenuCategorySchema = z.object({
   name: z.string(),
   href: z.string(),
   imgId: z.number().nullable(),
+  creatorId: z.string(),
+  updaterId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
 export const DbMenuCategorySeedSchema = DbMenuCategorySchema.omit({
   id: true,
+  updaterId: true,
   createdAt: true,
   updatedAt: true
 });
 
-export const DbImageSchema = z.object({
+export const DbProductSchema = z.object({
   id: z.number(),
-  src: z.string(),
-  alt: z.string(),
-  width: z.number(),
-  height: z.number(),
+  name: z.string(),
+  description: z.string(),
+  category: z.string(),
+  href: z.string(),
+  paramName: z.string(),
+  imgId: z.number().nullable(),
+  price: z.number(),
+  creatorId: z.string(),
+  updaterId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
-export const DbImageSeedSchema = DbImageSchema.omit({
+export const DbProductSeedSchema = DbProductSchema.omit({
   id: true,
+  updaterId: true,
   createdAt: true,
   updatedAt: true
-});
-
-export const DbIdSeedSchema = z.object({
-  id: z.number()
 });
 
 export const DbIngredientSchema = z.object({
@@ -81,12 +86,15 @@ export const DbIngredientSchema = z.object({
   category: z.string(),
   imgId: z.number(),
   price: z.number(),
+  creatorId: z.string(),
+  updaterId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
 export const DbIngredientSeedSchema = DbIngredientSchema.omit({
   id: true,
+  updaterId: true,
   createdAt: true,
   updatedAt: true
 });
@@ -94,11 +102,14 @@ export const DbIngredientSeedSchema = DbIngredientSchema.omit({
 export const DbProductIngredientSchema = z.object({
   productId: z.number(),
   ingredientId: z.number(),
+  creatorId: z.string(),
+  updaterId: z.string(), // NOTE May change my mind on this. Might just delete/create new entries when updating?
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
 export const DbProductIngredientSeedSchema = DbProductIngredientSchema.omit({
+  updaterId: true,
   createdAt: true,
   updatedAt: true
 });
@@ -120,8 +131,6 @@ export const DbUserSchema = z.object({
 });
 
 // TODO Make UserSeedSchema.
-
-
 
 export const DbOrderSchema = z.object({
   id: z.number(),
@@ -161,7 +170,7 @@ export const DbAddressSchema = z.object({
   line2: z.string().nullable(),
   city: z.string(),
   state: z.string(),
-  postalCode: z.string(),
+  zipCode: z.string(),
   userId: z.string(),
   isActive: z.boolean(),
   createdAt: z.date(),
@@ -174,6 +183,10 @@ export const DbAddressSeedSchema = DbAddressSchema.omit({
   updatedAt: true
 });
 
+export const DbIdSeedSchema = z.object({
+  id: z.number()
+});
+
 export const DbAddressAndUserIdSeedSchema = z.object({
   id: z.number(),
   userId: z.string()
@@ -183,16 +196,14 @@ export const DbAddressAndUserIdSeedSchema = z.object({
 
 // #region Inferred db types
 
-export type DbProductSchemaType = z.infer<typeof DbProductSchema>;
-export type DbProductSeedSchemaType = z.infer<typeof DbProductSeedSchema>;
+export type DbImageSchemaType = z.infer<typeof DbImageSchema>;
+export type DbImageSeedSchemaType = z.infer<typeof DbImageSeedSchema>;
 
 export type DbMenuCategorySchemaType = z.infer<typeof DbMenuCategorySchema>;
 export type DbMenuCategorySeedSchemaType = z.infer<typeof DbMenuCategorySeedSchema>;
 
-export type DbImageSchemaType = z.infer<typeof DbImageSchema>;
-export type DbImageSeedSchemaType = z.infer<typeof DbImageSeedSchema>;
-
-export type DbIdSeedSchemaType = z.infer<typeof DbIdSeedSchema>;
+export type DbProductSchemaType = z.infer<typeof DbProductSchema>;
+export type DbProductSeedSchemaType = z.infer<typeof DbProductSeedSchema>;
 
 export type DbIngredientSchemaType = z.infer<typeof DbIngredientSchema>;
 export type DbIngredientSeedSchemaType = z.infer<typeof DbIngredientSeedSchema>;
@@ -202,7 +213,6 @@ export type DbProductIngredientSeedSchemaType = z.infer<typeof DbProductIngredie
 
 export type DbUserSchemaType = z.infer<typeof DbUserSchema>;
 
-
 export type DbOrderSchemaType = z.infer<typeof DbOrderSchema>;
 export type DbOrderSeedSchemaType = z.infer<typeof DbOrderSeedSchema>;
 
@@ -211,6 +221,8 @@ export type DbOrderItemSeedSchemaType = z.infer<typeof DbOrderItemSeedSchema>;
 
 export type DbAddressSchemaType = z.infer<typeof DbAddressSchema>;
 export type DbAddressSeedSchemaType = z.infer<typeof DbAddressSeedSchema>;
+
+export type DbIdSeedSchemaType = z.infer<typeof DbIdSeedSchema>;
 
 export type DbAddressAndUserIdSeedSchemaType = z.infer<typeof DbAddressAndUserIdSeedSchema>;
 
@@ -235,7 +247,7 @@ export const ProductSchema = z.object({
     description: z.string()
   }
 });
-
+/* TODO Look at removing the newly added "creatorId/updaterId" for these. Those won't be needed when queried from the db. */
 export const MenuCategoryAndImagePropSchema = z.object({
   image: DbImageSchema,
   menu_category: DbMenuCategorySchema

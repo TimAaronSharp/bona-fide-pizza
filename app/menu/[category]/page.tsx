@@ -32,6 +32,8 @@ export default async function MenuCategoryPage({ params }: { params: { category:
   // console.log("items is ", items);
 
   // TODO Add notFound() logic here.
+
+  // TODO Type errors below are from new properties being added to db schemas. Will fix typing later.
   return (
     <main>
       <section className="flex justify-center menu-page">

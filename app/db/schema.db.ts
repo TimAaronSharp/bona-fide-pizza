@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey, boolean } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, varchar } from "drizzle-orm/pg-core";
 import { user } from "@/app/db/auth-schema.db";
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
@@ -9,44 +9,57 @@ drizzle-kit generation/migration. */
 
 // export const schemaToTable = something.table
 
+/* TODO Go through and, where appropriate, refactor db schemas to include "creatorId" properties. */
+
+/* TODO Contemplate creating "edit history" tables so you can log how many times a product, menu_category, image, etc.,
+has been edited. */
+
+export const image = pgTable("image", {
+  id: serial().primaryKey(),
+  src: varchar("src", { length: 200 }).notNull(), // Make unique() after you get unique images for everything?
+  alt: varchar("alt", { length: 200 }).notNull(),
+  width: integer("width").notNull(),
+  height: integer("height").notNull(),
+  creatorId: text("creator_id").references(() => user.id).notNull(),
+  updaterId: text("updater_id").references(() => user.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});
+
 export const menuCategory = pgTable("menu_category", {
   id: serial().primaryKey(),
-  name: text("name").notNull(),
-  href: text("href").notNull(),
+  name: varchar("name", { length: 30 }).notNull(),
+  href: varchar("href", { length: 100 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
+  creatorId: text("creator_id").references(() => user.id).notNull(),
+  updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
 export const product = pgTable("product", {
   id: serial().primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  category: text("category").notNull(),
-  paramName: text("param_name").notNull(),
-  href: text("href").notNull(),
+  name: varchar("name", { length: 50 }).notNull(),
+  description: varchar("description", { length: 1000 }).notNull(),
+  category: varchar("category",).notNull(), // Look into seeing if you can reasonably refactor this to be a foreign key for menu_category.id. Currently this is needed as is in [category]/page.tsx.
+  href: varchar("href", { length: 100 }).notNull(),
+  paramName: varchar("param_name", { length: 60 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
-});
-
-export const image = pgTable("image", {
-  id: serial().primaryKey(),
-  src: text("src").notNull(), // Make unique() after you get unique images for everything?
-  alt: text("alt").notNull(),
-  width: integer("width").notNull(),
-  height: integer("height").notNull(),
+  creatorId: text("creator_id").references(() => user.id).notNull(),
+  updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
 export const ingredient = pgTable("ingredient", {
   id: serial().primaryKey(),
-  name: text("name").notNull(),
-  category: text("category").notNull(),
+  name: varchar("name", { length: 50 }).notNull(),
+  category: varchar("category", { length: 30 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
+  creatorId: text("creator_id").references(() => user.id).notNull(),
+  updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -54,6 +67,8 @@ export const ingredient = pgTable("ingredient", {
 export const productIngredient = pgTable("product_ingredient", {
   productId: integer("product_id").references(() => product.id).notNull(),
   ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
+  creatorId: text("creator_id").references(() => user.id).notNull(),
+  updaterId: text("creator_id").references(() => user.id), // NOTE May change my mind on this. Might just delete/create new entries when updating?
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 }, (table) => [
@@ -65,7 +80,7 @@ export const order = pgTable("order", {
   userId: text("user_id").references(() => user.id).notNull(),
   addressId: integer("address_id").references(() => address.id).notNull(),
   orderTotal: integer("order_total").notNull(),
-  orderStatus: text("order_status").notNull(),
+  orderStatus: varchar("order_status", { length: 20 }).notNull(), // TODO Look into refactoring with enum to only allow specific strings ("complete", "in progress", etc.)
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -86,13 +101,18 @@ address in the address table. This will ensure that if someone deletes/updates t
 address that is linked to an order (to be able to keep an accurate order history).*/
 export const address = pgTable("address", {
   id: serial().primaryKey(),
-  line1: text("line_1").notNull(),
-  line2: text("line_2"),
-  city: text("city").notNull(),
-  state: text("state").notNull(),
-  postalCode: text("postal_code").notNull(), // made as text in case user does full 9 digit code with "-" (12345-6789).
+  line1: varchar("line_1", { length: 200 }).notNull(),
+  line2: varchar("line_2", { length: 200 }),
+  city: varchar("city", { length: 100 }).notNull(),
+  state: varchar("state", { length: 13 }).notNull(), // TODO Longest state names have 13 chars. Possible look into making this an enum of state abbreviations?
+  zipCode: varchar("zip_code", { length: 10 }).notNull(), // varchar in case user does full 9 digit code with "-" (12345-6789) and so that integer won't cut off leading 0's (02312 = 2312).
   userId: text("user_id").references(() => user.id).notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
+  isActive: boolean("is_active").default(true).notNull(), // This is set to false if address is deleted/updated (and a new address will be created if updated). This preserves addresses for records if they are deleted/changed by the user.
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
+
+// export const cart = pgTable("cart", {
+//   id: serial().primaryKey(),
+//   userId: text("user_id").references(() => user.id).notNull(),
+// })

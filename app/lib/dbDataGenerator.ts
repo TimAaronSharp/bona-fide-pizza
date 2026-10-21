@@ -31,7 +31,8 @@ function generateProductDbSeedItem(name: string, description: string, category: 
     href,
     paramName,
     imgId: 0, // Placeholder for db insertion. Will be replaced in seed script by id returned from image table seed.
-    price
+    price,
+    creatorId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
@@ -40,6 +41,7 @@ function generateMenuCategoryDbSeedItem(name: string, href: string): DbMenuCateg
     name,
     href,
     imgId: 0, // Placeholder for db insertion. Will be replaced in seed script by id returned from image table seed.
+    creatorId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
@@ -48,7 +50,8 @@ function generateImageDbSeedItem(src: string, alt: string, width: number, height
     src,
     alt,
     width,
-    height
+    height,
+    creatorId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
@@ -57,24 +60,26 @@ function generateIngredientDbSeedItem(name: string, category: string, price: num
     name,
     category,
     imgId: 0, // Placeholder for db insertion. Will be replaced in seed script by id returned from image table seed.
-    price
+    price,
+    creatorId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
 function generateProductIngredientDbSeedItem(productId: number, ingredientId: number): DbProductIngredientSeedSchemaType {
   return {
     productId,
-    ingredientId
+    ingredientId,
+    creatorId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
-function generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
+function generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
   return {
     line1,
     line2: line2 ? line2 : null,
     city,
     state,
-    postalCode,
+    zipCode,
     userId,
     isActive
   }
@@ -481,7 +486,7 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 /* NOTE Currently there is no user generator for seeding, so users will need to be created
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
-// generateAddressDbSeedItem(line1: string, city: string, state: string, postalCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
+// generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
 addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', true, "line2"));
 addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'KIdSsP73g77xXwq97U7IVve9vd7unMf8', true));
 

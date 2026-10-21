@@ -56,7 +56,8 @@ export const addProduct = async (name: string, description: string, category: st
     paramName,
     href,
     imgId,
-    price
+    price,
+    creatorId: session.user.id
   });
 
   return { success: true };

@@ -35,6 +35,8 @@ export default async function ProductPage({ params }: { params: { product: strin
   // const item = generateProduct(dbItem[0]);
 
   // TODO Add notFound() logic here.
+
+  // TODO Type errors below are from new properties being added to db schemas. Will fix typing later.
   return (
     <main>
       <section>
