@@ -79,7 +79,6 @@ export const order = pgTable("order", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id).notNull(),
   addressId: integer("address_id").references(() => address.id).notNull(),
-  orderTotal: integer("order_total").notNull(),
   orderStatus: varchar("order_status", { length: 20 }).notNull(), // TODO Look into refactoring with enum to only allow specific strings ("complete", "in progress", etc.)
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
@@ -90,7 +89,7 @@ export const orderItem = pgTable("order_item", {
   orderId: integer("order_id").references(() => order.id).notNull(),
   productId: integer("product_id").references(() => product.id).notNull(),
   quantity: integer("quantity").notNull(),
-  orderItemTotal: integer("order_item_total").notNull(),
+  unitPrice: integer("unit_price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
@@ -112,7 +111,10 @@ export const address = pgTable("address", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
-// export const cart = pgTable("cart", {
-//   id: serial().primaryKey(),
-//   userId: text("user_id").references(() => user.id).notNull(),
-// })
+export const cart = pgTable("cart", {
+  id: serial().primaryKey(),
+  userId: text("user_id").references(() => user.id),
+  sessionId: varchar("session_id", { length: 36 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});
