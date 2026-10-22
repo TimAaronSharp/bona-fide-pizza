@@ -94,6 +94,24 @@ export const orderItem = pgTable("order_item", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
+export const cart = pgTable("cart", {
+  id: serial().primaryKey(),
+  userId: text("user_id").references(() => user.id),
+  sessionId: varchar("session_id", { length: 36 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});
+
+export const cartItem = pgTable("cart_item", {
+  id: serial().primaryKey(),
+  cartId: integer().references(() => cart.id).notNull(),
+  productId: integer("product_id").references(() => product.id).notNull(),
+  quantity: integer("quantity").notNull(),
+  unitPrice: integer("unit_price").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+});
+
 /* TODO When writing delete/update function for address, make sure to not delete/update the actual row. Instead, for
 delete have it simply change "isActive" to false, and for update have it change "isActive" to false, AND insert a new
 address in the address table. This will ensure that if someone deletes/updates their address it will not affect the
@@ -103,18 +121,10 @@ export const address = pgTable("address", {
   line1: varchar("line_1", { length: 200 }).notNull(),
   line2: varchar("line_2", { length: 200 }),
   city: varchar("city", { length: 100 }).notNull(),
-  state: varchar("state", { length: 13 }).notNull(), // TODO Longest state names have 13 chars. Possible look into making this an enum of state abbreviations?
-  zipCode: varchar("zip_code", { length: 10 }).notNull(), // varchar in case user does full 9 digit code with "-" (12345-6789) and so that integer won't cut off leading 0's (02312 = 2312).
+  state: varchar("state", { length: 13 }).notNull(), // TODO Longest state names have 14 chars (including spaces). Possible look into making this an enum of state abbreviations?
+  zipCode: varchar("zip_code", { length: 10 }).notNull(), // varchar in case user does full 9 digit code with "-" (12345-6789) and so that integer won't cut off leading 0's (02312 = 2312). Maybe would be easier to start with limiting to 5?
   userId: text("user_id").references(() => user.id).notNull(),
   isActive: boolean("is_active").default(true).notNull(), // This is set to false if address is deleted/updated (and a new address will be created if updated). This preserves addresses for records if they are deleted/changed by the user.
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
-});
-
-export const cart = pgTable("cart", {
-  id: serial().primaryKey(),
-  userId: text("user_id").references(() => user.id),
-  sessionId: varchar("session_id", { length: 36 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });

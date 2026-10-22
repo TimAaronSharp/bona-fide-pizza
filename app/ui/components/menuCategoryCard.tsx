@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function MenuCategoryCard({ menuCategoryProp }: { menuCategoryProp: MenuCategoryAndImagePropSchemaType }) {
   const { menu_category } = menuCategoryProp;
-  const { id, createdAt, updatedAt, ...imageData } = menuCategoryProp.image;
+  const { id, createdAt, updatedAt, creatorId, updaterId, ...imageData } = menuCategoryProp.image;
 
   return (
     <Link href={menu_category.href} className="card-dimensions relative">

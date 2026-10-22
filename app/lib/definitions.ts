@@ -28,7 +28,7 @@ export const DbImageSchema = z.object({
   width: z.number(),
   height: z.number(),
   creatorId: z.string(),
-  updaterId: z.string(),
+  updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -46,7 +46,7 @@ export const DbMenuCategorySchema = z.object({
   href: z.string(),
   imgId: z.number().nullable(),
   creatorId: z.string(),
-  updaterId: z.string(),
+  updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -68,7 +68,7 @@ export const DbProductSchema = z.object({
   imgId: z.number().nullable(),
   price: z.number(),
   creatorId: z.string(),
-  updaterId: z.string(),
+  updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -87,7 +87,7 @@ export const DbIngredientSchema = z.object({
   imgId: z.number(),
   price: z.number(),
   creatorId: z.string(),
-  updaterId: z.string(),
+  updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -103,7 +103,7 @@ export const DbProductIngredientSchema = z.object({
   productId: z.number(),
   ingredientId: z.number(),
   creatorId: z.string(),
-  updaterId: z.string(), // NOTE May change my mind on this. Might just delete/create new entries when updating?
+  updaterId: z.string().nullable(), // NOTE May change my mind on this. Might just delete/create new entries when updating?
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -148,14 +148,18 @@ export const DbOrderSeedSchema = DbOrderSchema.omit({
   updatedAt: true
 });
 
-export const DbOrderItemSchema = z.object({
+// Base schema used for both DbOrderItemSchema and DbCartItemSchema
+export const DbBaseItemSchema = z.object({
   id: z.number(),
-  orderId: z.number(),
   productId: z.number(),
   quantity: z.number(),
-  orderItemTotal: z.number(),
+  unitPrice: z.number(),
   createdAt: z.date(),
   updatedAt: z.date()
+})
+
+export const DbOrderItemSchema = DbBaseItemSchema.extend({
+  orderId: z.number(),
 });
 
 export const DbOrderItemSeedSchema = DbOrderItemSchema.omit({
@@ -163,6 +167,20 @@ export const DbOrderItemSeedSchema = DbOrderItemSchema.omit({
   createdAt: true,
   updatedAt: true
 });
+
+export const DbCartSchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  sessionId: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date()
+})
+
+// TODO Should I make a DbCartSeedSchema?
+
+export const DbCartItemSchema = DbBaseItemSchema.extend({
+  cartId: z.number(),
+})
 
 export const DbAddressSchema = z.object({
   id: z.number(),
@@ -218,6 +236,10 @@ export type DbOrderSeedSchemaType = z.infer<typeof DbOrderSeedSchema>;
 
 export type DbOrderItemSchemaType = z.infer<typeof DbOrderItemSchema>;
 export type DbOrderItemSeedSchemaType = z.infer<typeof DbOrderItemSeedSchema>;
+
+export type DbCartSchemaType = z.infer<typeof DbCartSchema>;
+
+export type DbCartItemSchemaType = z.infer<typeof DbCartItemSchema>;
 
 export type DbAddressSchemaType = z.infer<typeof DbAddressSchema>;
 export type DbAddressSeedSchemaType = z.infer<typeof DbAddressSeedSchema>;

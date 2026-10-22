@@ -5,7 +5,7 @@ import '@/app/globals.css';
 
 export function ProductCard({ productProp }: { productProp: ProductAndImageQueryPropSchemaType }) {
   const { image, product } = productProp;
-  const { id, createdAt, updatedAt, ...imageData } = productProp.image;
+  const { id, createdAt, updatedAt, creatorId, updaterId, ...imageData } = productProp.image;
 
   return (
     <Link href={product.href} className="card-dimensions relative">
