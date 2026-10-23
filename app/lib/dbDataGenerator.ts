@@ -73,33 +73,32 @@ function generateProductIngredientDbSeedItem(productId: number, ingredientId: nu
   }
 }
 
-function generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
+function generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
   return {
     line1,
     line2: line2 ? line2 : null,
     city,
     state,
     zipCode,
-    userId,
+    userId: "", // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
     isActive
   }
 }
 
-function generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): DbOrderSeedSchemaType {
+function generateOrderDbSeedItem(orderStatus: string): DbOrderSeedSchemaType {
   return {
-    userId,
+    userId: "", //Placeholder for db insertion. Will be replaced in seed script by id returned from user table.
     addressId: 0, //Placeholder for db insertion. Will be replaced in seed script by id returned from address table.
-    orderTotal,
     orderStatus
   }
 }
 
-function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number): DbOrderItemSeedSchemaType {
+function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, unitPrice: number): DbOrderItemSeedSchemaType {
   return {
     orderId,
     productId,
     quantity,
-    orderItemTotal
+    unitPrice
   }
 }
 
@@ -487,18 +486,18 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
 // generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
-addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', 'VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', true, "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', 'KIdSsP73g77xXwq97U7IVve9vd7unMf8', true));
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', true, "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', true));
 
 // #endregion
 
 // #region Orders for order table
 
 // generateOrderDbSeedItem(userId: string, orderTotal: number, orderStatus: string): DbOrderSeedSchemaType
-orderDbSeedItems.push(generateOrderDbSeedItem('VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', 3497, 'complete'));
-orderDbSeedItems.push(generateOrderDbSeedItem('KIdSsP73g77xXwq97U7IVve9vd7unMf8', 999, 'in progress'));
-orderDbSeedItems.push(generateOrderDbSeedItem('VIgvNNUkgHrdPgnbgOmvKUrYATyoHE6a', 1699, 'cancelled'));
-orderDbSeedItems.push(generateOrderDbSeedItem('KIdSsP73g77xXwq97U7IVve9vd7unMf8', 1499, 'complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('complete'));
+orderDbSeedItems.push(generateOrderDbSeedItem('in progress'));
+orderDbSeedItems.push(generateOrderDbSeedItem('cancelled'));
+orderDbSeedItems.push(generateOrderDbSeedItem('complete'));
 
 // #endregion
 
@@ -509,8 +508,8 @@ Perhaps running "seedOrder()" from inside "seedProduct()", and then "seedOrderIt
 and passing both ids to "seedOrderItem()"? Might not be worth the effort, but at least look into it.*/
 
 // generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number): DbOrderItemSeedSchemaType
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 3698));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 1498));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 1899));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 799));
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 8, 1, 499));
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 24, 1, 899));
 orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 27, 1, 899));

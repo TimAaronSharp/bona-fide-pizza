@@ -1,38 +1,52 @@
 import { config } from "dotenv";
-import { DbIdSeedSchemaType, DbAddressAndUserIdSeedSchemaType } from "@/app/lib/definitions";
+import { DbIntIdSeedSchemaType, DbAddressAndUserIdSeedSchemaType } from "@/app/lib/definitions";
 
 // Loading the environment variables BEFORE importing the db
 config({ path: ".env.local" });
 
 import { db } from "@/app/db/drizzle";
+import { user } from "@/app/db/auth-schema.db";
 import * as schemas from "@/app/db/schema.db";
 import * as seeds from "@/app/lib/dbDataGenerator";
+
+/*NOTE Learn more about how this works - It looks at db.transaction, finds its first argument (the callback function)
+and then find the first argument of THAT function (the tx object itself). This allows me to dynamically type
+the tx object to send to all the seed functions so they all work in the same transaction. */
+type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 const seedImages = async () => {
   console.log("Seeding database image table...");
   try {
+    await db.transaction(async (tx) => {
 
-    // console.log("seeds.productDbSeedItems is", seeds.productDbSeedItems);
-    // console.log("seeds.productDbSeedItems.length is", seeds.productDbSeedItems.length);
-    const seededImages = await db.insert(schemas.image).values(seeds.imageDbSeedItems).returning({ id: schemas.image.id });
+      const [queriedUserId] = await tx.select({ id: user.id }).from(user).limit(1);
+      // Extracting out like this so I don't need to make a "id: string" type to pass "queriedUserId" to other functions.
+      const userId = queriedUserId.id;
+      seeds.imageDbSeedItems.forEach((seed) => {
+        seed.creatorId = queriedUserId.id;
+      });
 
-    // Pulling out the returned ids from the image table to send the the appropriate seed functions.
+      const seededImages = await tx.insert(schemas.image).values(seeds.imageDbSeedItems).returning({ id: schemas.image.id });
 
-    const menuCategoryImageIds: DbIdSeedSchemaType[] = await seededImages.slice(0, 9);
-    const productImageIds: DbIdSeedSchemaType[] = await seededImages.slice(9, 48);
-    const ingredientImageIds: DbIdSeedSchemaType[] = await seededImages.slice(48);
+      // Pulling out the returned ids from the image table to send the the appropriate seed functions.
 
-    // console.log("menuCategoryImageIds is", menuCategoryImageIds);
-    // console.log("productImageIds is", productImageIds);
-    // console.log("ingredientImageIds is", ingredientImageIds);
+      const menuCategoryImageIds: DbIntIdSeedSchemaType[] = await seededImages.slice(0, 9);
+      const productImageIds: DbIntIdSeedSchemaType[] = await seededImages.slice(9, 48);
+      const ingredientImageIds: DbIntIdSeedSchemaType[] = await seededImages.slice(48);
 
-    console.log("✅ image table seeding complete!");
+      // TODO Temporary in case I need to check which ids are in different indexes for later seeding.
+      // console.log("menuCategoryImageIds is", menuCategoryImageIds);
+      // console.log("productImageIds is", productImageIds);
+      // console.log("ingredientImageIds is", ingredientImageIds);
 
-    await seedMenuCategories(menuCategoryImageIds);
-    await seedProducts(productImageIds);
-    await seedIngredients(ingredientImageIds);
-    await seedProductIngredient();
-    await seedAddress();
+      console.log("✅ image table seeding complete!");
+
+      await seedMenuCategories(tx, userId, menuCategoryImageIds);
+      await seedProducts(tx, userId, productImageIds);
+      await seedIngredients(tx, userId, ingredientImageIds);
+      await seedProductIngredient(tx, userId);
+      await seedAddress(tx);
+    });
   }
   catch (error) {
     console.error("❌ Error seeding database image table:", error);
@@ -41,14 +55,15 @@ const seedImages = async () => {
   }
 }
 
-const seedMenuCategories = async (menuCategoryImageIds: DbIdSeedSchemaType[]) => {
+const seedMenuCategories = async (tx: Transaction, userId: string, menuCategoryImageIds: DbIntIdSeedSchemaType[]) => {
   console.log("Seeding database menu_category table...");
   try {
     seeds.menuCategoryDbSeedItems.forEach((seed, index) => {
       seed.imgId = menuCategoryImageIds[index].id;
+      seed.creatorId = userId;
     });
 
-    await db.insert(schemas.menuCategory).values(seeds.menuCategoryDbSeedItems);
+    await tx.insert(schemas.menuCategory).values(seeds.menuCategoryDbSeedItems);
 
     console.log("✅ menu_category table seeding complete!");
   } catch (error) {
@@ -56,14 +71,15 @@ const seedMenuCategories = async (menuCategoryImageIds: DbIdSeedSchemaType[]) =>
   }
 }
 
-const seedProducts = async (productImageIds: DbIdSeedSchemaType[]) => {
+const seedProducts = async (tx: Transaction, userId: string, productImageIds: DbIntIdSeedSchemaType[]) => {
   console.log("Seeding database product table...")
   try {
     seeds.productDbSeedItems.forEach((seed, index) => {
       seed.imgId = productImageIds[index].id;
+      seed.creatorId = userId;
     });
 
-    await db.insert(schemas.product).values(seeds.productDbSeedItems);
+    await tx.insert(schemas.product).values(seeds.productDbSeedItems);
 
     console.log("✅ product table seeding complete!");
   } catch (error) {
@@ -71,14 +87,15 @@ const seedProducts = async (productImageIds: DbIdSeedSchemaType[]) => {
   }
 }
 
-const seedIngredients = async (ingredientImageIds: DbIdSeedSchemaType[]) => {
+const seedIngredients = async (tx: Transaction, userId: string, ingredientImageIds: DbIntIdSeedSchemaType[]) => {
   console.log("Seeding database ingredient table...")
   try {
     seeds.ingredientDbSeedItems.forEach((seed, index) => {
       seed.imgId = ingredientImageIds[index].id;
+      seed.creatorId = userId;
     });
 
-    await db.insert(schemas.ingredient).values(seeds.ingredientDbSeedItems);
+    await tx.insert(schemas.ingredient).values(seeds.ingredientDbSeedItems);
 
     console.log("✅ ingredient table seeding complete!");
   } catch (error) {
@@ -86,57 +103,87 @@ const seedIngredients = async (ingredientImageIds: DbIdSeedSchemaType[]) => {
   }
 }
 
-const seedProductIngredient = async () => {
+const seedProductIngredient = async (tx: Transaction, userId: string) => {
   console.log("Seeding database product_ingredient table...");
   try {
-    await db.insert(schemas.productIngredient).values(seeds.productIngredientDbSeedItems);
+    seeds.productIngredientDbSeedItems.forEach((seed) => {
+      seed.creatorId = userId;
+    })
+    await tx.insert(schemas.productIngredient).values(seeds.productIngredientDbSeedItems);
     console.log("✅ product_ingredient table seeding complete!");
   } catch (error) {
     console.error("❌ Error seeding database product_ingredient table:", error);
   }
 }
 
-const seedAddress = async () => {
+/*NOTE This will only work currently with 2 addresses and 2 users. Will need to refactor if I want to scale it. */
+const seedAddress = async (tx: Transaction) => {
   console.log("Seeding database address table...")
   try {
-    const seededAddresses = await db.insert(schemas.address).values(seeds.addressDbSeedItems).returning({ id: schemas.address.id, userId: schemas.address.userId });
+    const queriedUserIds = await tx.select({ id: user.id }).from(user).limit(2);
+
+    const userIds: string[] = []
+
+    // Extracting out like this so I don't need to make a "id: string" type to pass "queriedUserIds" to other functions.
+    queriedUserIds.map((userId) => {
+      userIds.push(userId.id);
+    });
+
+    seeds.addressDbSeedItems.map((addressSeed, index) => {
+      return seeds.addressDbSeedItems[index].userId = userIds[index];
+    });
+    const seededAddresses = await tx.insert(schemas.address).values(seeds.addressDbSeedItems).returning({ id: schemas.address.id, userId: schemas.address.userId });
 
     console.log("✅ address table seeding complete!");
 
-    await seedOrder(seededAddresses);
+    await seedOrder(tx, seededAddresses);
   } catch (error) {
     console.error("❌ Error seeding database address table:", error);
   }
 }
 
-const seedOrder = async (addressAndUserIds: DbAddressAndUserIdSeedSchemaType[]) => {
+const seedOrder = async (tx: Transaction, addressAndUserIds: DbAddressAndUserIdSeedSchemaType[]) => {
   console.log("Seeding database order table...");
   try {
     /*TODO I don't believe this will work if a user has created more than one address, because that userId will be
     matched more than once. This works for now with how many addresses I have but test/look into this later. */
-    addressAndUserIds.forEach((ids, index) => {
-      seeds.orderDbSeedItems.forEach((seed) => {
-        if (seed.userId == addressAndUserIds[index].userId) {
+    // TODO Temp log in case I need to check these again soon
+    // console.log("seeds.orderDbSeedItems starts as", seeds.orderDbSeedItems);
+    addressAndUserIds.forEach((ids) => {
+      seeds.orderDbSeedItems.forEach((seed, j) => {
+        if (j % 2 === 0) {
+          seed.userId = addressAndUserIds[0].userId;
+          // TODO Temp log in case I need to check these again soon
+          // console.log(`seeds.orderDbSeedItems[${j}] (seed) is now`, seed);
+        } else {
+          seed.userId = addressAndUserIds[1].userId;
+          // TODO Temp log in case I need to check these again soon
+          // console.log(`seeds.orderDbSeedItems[${j}] (seed) is now`, seed);
+        }
+
+        if (seed.userId == ids.userId) {
           // .id === address.id.
-          seed.addressId = addressAndUserIds[index].id;
+          seed.addressId = ids.id;
         }
       });
     });
+    // TODO Temp log in case I need to check these again soon
+    // console.log("seeds.orderDbSeedItems ends as", seeds.orderDbSeedItems);
 
-    await db.insert(schemas.order).values(seeds.orderDbSeedItems).returning({ id: schemas.order.id });
+    await tx.insert(schemas.order).values(seeds.orderDbSeedItems).returning({ id: schemas.order.id });
 
     console.log("✅ order table seeding complete!");
 
-    await seedOrderItem();
+    await seedOrderItem(tx);
   } catch (error) {
     console.error("❌ Error seeding database order table:", error);
   }
 }
 
-const seedOrderItem = async () => {
+const seedOrderItem = async (tx: Transaction) => {
   console.log("Seeding database order_item table...");
   try {
-    await db.insert(schemas.orderItem).values(seeds.orderItemDbSeedItems);
+    await tx.insert(schemas.orderItem).values(seeds.orderItemDbSeedItems);
 
     console.log("✅ order_item table seeding complete!");
   } catch (error) {

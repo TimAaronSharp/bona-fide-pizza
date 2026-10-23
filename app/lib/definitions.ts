@@ -184,7 +184,6 @@ export const DbOrderSchema = z.object({
   id: z.number(),
   userId: z.string(),
   addressId: z.number(),
-  orderTotal: z.number(),
   orderStatus: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
@@ -272,8 +271,11 @@ export const DbAddressSeedSchema = DbAddressSchema.omit({
 });
 
 // #endregion
-
-export const DbIdSeedSchema = z.object({
+/*TODO Decide if you still want this as a type of just extract the .id from the returned
+object. ie) const imageId = seededImages.id (Would be more complex than this since you're
+dealing with an array of ids, and it may be more work to refactor this than to keep as is,
+so it may not really be worth it to change). */
+export const DbIntIdSeedSchema = z.object({
   id: z.number()
 });
 
@@ -320,7 +322,7 @@ export type DbCartItemModifierSchemaType = z.infer<typeof DbCartItemModifierSche
 export type DbAddressSchemaType = z.infer<typeof DbAddressSchema>;
 export type DbAddressSeedSchemaType = z.infer<typeof DbAddressSeedSchema>;
 
-export type DbIdSeedSchemaType = z.infer<typeof DbIdSeedSchema>;
+export type DbIntIdSeedSchemaType = z.infer<typeof DbIntIdSeedSchema>;
 
 export type DbAddressAndUserIdSeedSchemaType = z.infer<typeof DbAddressAndUserIdSeedSchema>;
 
