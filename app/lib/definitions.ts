@@ -21,6 +21,8 @@ import z from "zod";
 
 // #region db zod schemas
 
+// #region -- DbImageSchemas
+
 export const DbImageSchema = z.object({
   id: z.number(),
   src: z.string(),
@@ -40,6 +42,10 @@ export const DbImageSeedSchema = DbImageSchema.omit({
   updatedAt: true
 });
 
+// #endregion
+
+// #region -- DbMenuCategorySchemas
+
 export const DbMenuCategorySchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -58,6 +64,11 @@ export const DbMenuCategorySeedSchema = DbMenuCategorySchema.omit({
   updatedAt: true
 });
 
+// #endregion
+
+// #region -- DbProductSchemas
+
+// NOTE May need/want to add "isActive" property to match db schema config for admin dashboard (to alter active menu)?
 export const DbProductSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -80,6 +91,11 @@ export const DbProductSeedSchema = DbProductSchema.omit({
   updatedAt: true
 });
 
+// #endregion
+
+// #region -- DbIngredientSchemas
+
+// NOTE May need/want to add "isActive" property to match db schema config for admin dashboard (to alter active menu)?
 export const DbIngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -99,6 +115,10 @@ export const DbIngredientSeedSchema = DbIngredientSchema.omit({
   updatedAt: true
 });
 
+// #endregion
+
+// #region -- DbProductIngredientSchemas
+
 export const DbProductIngredientSchema = z.object({
   productId: z.number(),
   ingredientId: z.number(),
@@ -113,6 +133,10 @@ export const DbProductIngredientSeedSchema = DbProductIngredientSchema.omit({
   createdAt: true,
   updatedAt: true
 });
+
+// #endregion
+
+// #region -- DbUserSchemas
 
 export const DbUserSchema = z.object({
   id: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
@@ -132,6 +156,30 @@ export const DbUserSchema = z.object({
 
 // TODO Make UserSeedSchema.
 
+// #endregion
+
+// #region -- DbBaseItemSchemas
+
+// Base schema used for both DbOrderItemSchema and DbCartItemSchema
+export const DbBaseItemSchema = z.object({
+  id: z.number(),
+  productId: z.number(),
+  quantity: z.number(),
+  unitPrice: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date()
+});
+
+export const DbBaseItemModifierSchema = z.object({
+  ingredientId: z.number(),
+  modifierType: z.string(),
+  modifierPrice: z.number()
+});
+
+// #endregion
+
+// #region -- DbOrderSchemas
+
 export const DbOrderSchema = z.object({
   id: z.number(),
   userId: z.string(),
@@ -148,15 +196,9 @@ export const DbOrderSeedSchema = DbOrderSchema.omit({
   updatedAt: true
 });
 
-// Base schema used for both DbOrderItemSchema and DbCartItemSchema
-export const DbBaseItemSchema = z.object({
-  id: z.number(),
-  productId: z.number(),
-  quantity: z.number(),
-  unitPrice: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date()
-})
+// #endregion
+
+// #region -- DbOrderItemSchemas
 
 export const DbOrderItemSchema = DbBaseItemSchema.extend({
   orderId: z.number(),
@@ -168,19 +210,47 @@ export const DbOrderItemSeedSchema = DbOrderItemSchema.omit({
   updatedAt: true
 });
 
+// #endregion
+
+// #region -- DbOrderItemModifierSchemas
+
+export const DbOrderItemModifierSchema = DbBaseItemModifierSchema.extend({
+  orderItemId: z.number()
+});
+
+// #endregion
+
+// #region -- DbCartSchemas
+
 export const DbCartSchema = z.object({
   id: z.number(),
   userId: z.string(),
   sessionId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
-})
+});
 
 // TODO Should I make a DbCartSeedSchema?
 
+// #endregion
+
+// #region -- DbCartItemSchemas
+
 export const DbCartItemSchema = DbBaseItemSchema.extend({
   cartId: z.number(),
-})
+});
+
+// #endregion
+
+// #region -- DbCartItemModifierSchemas
+
+export const DbCartItemModifierSchema = DbBaseItemModifierSchema.extend({
+  cartItemId: z.number()
+});
+
+// #endregion
+
+// #region -- DbAddressSchemas
 
 export const DbAddressSchema = z.object({
   id: z.number(),
@@ -200,6 +270,8 @@ export const DbAddressSeedSchema = DbAddressSchema.omit({
   createdAt: true,
   updatedAt: true
 });
+
+// #endregion
 
 export const DbIdSeedSchema = z.object({
   id: z.number()
@@ -237,9 +309,13 @@ export type DbOrderSeedSchemaType = z.infer<typeof DbOrderSeedSchema>;
 export type DbOrderItemSchemaType = z.infer<typeof DbOrderItemSchema>;
 export type DbOrderItemSeedSchemaType = z.infer<typeof DbOrderItemSeedSchema>;
 
+export type DbOrderItemModifierSchemaType = z.infer<typeof DbOrderItemModifierSchema>;
+
 export type DbCartSchemaType = z.infer<typeof DbCartSchema>;
 
 export type DbCartItemSchemaType = z.infer<typeof DbCartItemSchema>;
+
+export type DbCartItemModifierSchemaType = z.infer<typeof DbCartItemModifierSchema>;
 
 export type DbAddressSchemaType = z.infer<typeof DbAddressSchema>;
 export type DbAddressSeedSchemaType = z.infer<typeof DbAddressSeedSchema>;

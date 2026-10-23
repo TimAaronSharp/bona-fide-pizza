@@ -46,6 +46,7 @@ export const product = pgTable("product", {
   paramName: varchar("param_name", { length: 60 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -58,6 +59,7 @@ export const ingredient = pgTable("ingredient", {
   category: varchar("category", { length: 30 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -81,18 +83,28 @@ export const order = pgTable("order", {
   addressId: integer("address_id").references(() => address.id).notNull(),
   orderStatus: varchar("order_status", { length: 20 }).notNull(), // TODO Look into refactoring with enum to only allow specific strings ("complete", "in progress", etc.)
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  deletedAt: timestamp("deleted_at") // For soft deleting an order to maintain record integrity.
 });
 
 export const orderItem = pgTable("order_item", {
   id: serial().primaryKey(),
-  orderId: integer("order_id").references(() => order.id).notNull(),
+  orderId: integer("order_id").references(() => order.id, { onDelete: "cascade" }).notNull(),
   productId: integer("product_id").references(() => product.id).notNull(),
   quantity: integer("quantity").notNull(),
   unitPrice: integer("unit_price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
+
+export const orderItemModifier = pgTable("order_item_modifier", {
+  orderItemId: integer("order_item_id").references(() => orderItem.id, { onDelete: "cascade" }).notNull(),
+  ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
+  modifierType: varchar("modifier_type", { length: 6 }).notNull(),
+  modifierPrice: integer("modifier_price").notNull()
+}, (table) => [
+  primaryKey({ columns: [table.orderItemId, table.ingredientId] }) // Sets composite key as primary key.
+]);
 
 export const cart = pgTable("cart", {
   id: serial().primaryKey(),
@@ -104,13 +116,22 @@ export const cart = pgTable("cart", {
 
 export const cartItem = pgTable("cart_item", {
   id: serial().primaryKey(),
-  cartId: integer().references(() => cart.id).notNull(),
+  cartId: integer().references(() => cart.id, { onDelete: "cascade" }).notNull(),
   productId: integer("product_id").references(() => product.id).notNull(),
   quantity: integer("quantity").notNull(),
   unitPrice: integer("unit_price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
+
+export const cartItemModifier = pgTable("cart_item_modifier", {
+  cartItemId: integer("cart_item_id").references(() => cartItem.id, { onDelete: "cascade" }).notNull(),
+  ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
+  modifierType: varchar("modifier_type", { length: 6 }).notNull(),
+  modifierPrice: integer("modifier_price").notNull()
+}, (table) => [
+  primaryKey({ columns: [table.cartItemId, table.ingredientId] }) // Sets composite key as primary key.
+]);
 
 /* TODO When writing delete/update function for address, make sure to not delete/update the actual row. Instead, for
 delete have it simply change "isActive" to false, and for update have it change "isActive" to false, AND insert a new
