@@ -1,6 +1,6 @@
 import { db } from "@/app/db/drizzle";
 import { eq } from "drizzle-orm";
-// import { Customizer } from "@/app/ui/components/customizer";
+import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema.db";
 import { generateProduct } from "@/app/lib/utility";
@@ -30,7 +30,7 @@ export default async function ProductPage({ params }: { params: { product: strin
   console.log("item is", item);
 
   const { image } = item;
-  const { id, createdAt, updatedAt, ...imageData } = image;
+  const { id, isActive, createdAt, updatedAt, creatorId, updaterId, deletedAt, ...imageData } = image;
   // console.log("item is ", item);
   // const item = generateProduct(dbItem[0]);
 
@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: { product: strin
         <p>{item.product.description}</p>
         <EditProduct productProp={item.product} />
         <Image {...imageData} />
-        {/* <Customizer /> */}
+        <Customizer />
       </section>
     </main>
   )

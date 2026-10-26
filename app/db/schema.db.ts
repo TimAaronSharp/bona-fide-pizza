@@ -20,12 +20,12 @@ export const image = pgTable("image", {
   alt: varchar("alt", { length: 200 }).notNull(),
   width: integer("width").notNull(),
   height: integer("height").notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
+  isActive: boolean("is_active").default(true).notNull(), // For soft deleting an image to maintain record integrity.
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
-  deletedAt: timestamp("deleted_at") // For soft deleting an image to maintain record integrity.
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  deletedAt: timestamp("deleted_at")
 });
 
 export const menuCategory = pgTable("menu_category", {
@@ -33,12 +33,12 @@ export const menuCategory = pgTable("menu_category", {
   name: varchar("name", { length: 30 }).notNull(),
   href: varchar("href", { length: 100 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
-  isActive: boolean("is_active").default(true).notNull(),
+  isActive: boolean("is_active").default(true).notNull(), // For soft deleting a menu_category to maintain record integrity.
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
-  deletedAt: timestamp("deleted_at") // For soft deleting a menu_category to maintain record integrity.
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  deletedAt: timestamp("deleted_at")
 });
 
 export const product = pgTable("product", {
@@ -50,12 +50,12 @@ export const product = pgTable("product", {
   paramName: varchar("param_name", { length: 60 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
+  isActive: boolean("is_active").default(true).notNull(), // For soft deleting a product to maintain record integrity.
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
-  deletedAt: timestamp("deleted_at") // For soft deleting a product to maintain record integrity.
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  deletedAt: timestamp("deleted_at")
 });
 
 export const ingredient = pgTable("ingredient", {
@@ -64,12 +64,12 @@ export const ingredient = pgTable("ingredient", {
   category: varchar("category", { length: 30 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
-  isActive: boolean("is_active").default(true).notNull(),
+  isActive: boolean("is_active").default(true).notNull(), // For soft deleting an ingredient to maintain record integrity.
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
-  deletedAt: timestamp("deleted_at") // For soft deleting an ingredient to maintain record integrity.
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  deletedAt: timestamp("deleted_at")
 });
 
 export const productIngredient = pgTable("product_ingredient", {
@@ -78,7 +78,7 @@ export const productIngredient = pgTable("product_ingredient", {
   creatorId: text("creator_id").references(() => user.id).notNull(),
   updaterId: text("updater_id").references(() => user.id), // NOTE May change my mind on this. Might just delete/create new entries when updating?
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 }, (table) => [
   primaryKey({ columns: [table.productId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
@@ -89,7 +89,7 @@ export const order = pgTable("order", {
   addressId: integer("address_id").references(() => address.id).notNull(),
   orderStatus: varchar("order_status", { length: 20 }).notNull(), // TODO Look into refactoring with enum to only allow specific strings ("complete", "in progress", etc.)
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date())
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 
 export const orderItem = pgTable("order_item", {
@@ -99,14 +99,15 @@ export const orderItem = pgTable("order_item", {
   quantity: integer("quantity").notNull(),
   unitPrice: integer("unit_price").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date())
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 
 export const orderItemModifier = pgTable("order_item_modifier", {
   orderItemId: integer("order_item_id").references(() => orderItem.id, { onDelete: "cascade" }).notNull(),
   ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
   modifierType: varchar("modifier_type", { length: 6 }).notNull(),
-  modifierPrice: integer("modifier_price").notNull()
+  modifierPrice: integer("modifier_price").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => [
   primaryKey({ columns: [table.orderItemId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
@@ -133,7 +134,8 @@ export const cartItemModifier = pgTable("cart_item_modifier", {
   cartItemId: integer("cart_item_id").references(() => cartItem.id, { onDelete: "cascade" }).notNull(),
   ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
   modifierType: varchar("modifier_type", { length: 6 }).notNull(),
-  modifierPrice: integer("modifier_price").notNull()
+  modifierPrice: integer("modifier_price").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => [
   primaryKey({ columns: [table.cartItemId, table.ingredientId] }) // Sets composite key as primary key.
 ]);

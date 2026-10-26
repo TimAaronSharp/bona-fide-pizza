@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "5fdce3f0-b9a3-4186-bbd4-c47de3b06394",
+  "id": "84fd7ab1-591b-4ec9-8c6f-e3237eac3f71",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -987,6 +987,19 @@
       "table": "cart_item_modifier"
     },
     {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cart_item_modifier"
+    },
+    {
       "type": "serial",
       "typeSchema": null,
       "notNull": true,
@@ -1106,9 +1119,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1249,9 +1262,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1379,9 +1392,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1470,9 +1483,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1561,9 +1574,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1619,6 +1632,19 @@
       "generated": null,
       "identity": null,
       "name": "modifier_price",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "order_item_modifier"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
       "entityType": "columns",
       "schema": "public",
       "table": "order_item_modifier"
@@ -1782,9 +1808,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",
@@ -1873,9 +1899,9 @@
     {
       "type": "timestamp",
       "typeSchema": null,
-      "notNull": false,
+      "notNull": true,
       "dimensions": 0,
-      "default": null,
+      "default": "now()",
       "generated": null,
       "identity": null,
       "name": "updated_at",

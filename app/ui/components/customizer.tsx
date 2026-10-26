@@ -1,5 +1,8 @@
-import { Ingredient } from "@/app/lib/definitions.js";
-// import { ingredients } from "@/app/lib/dbDataGenerator";
+import { db } from "@/app/db/drizzle";
+import { Ingredient } from "@/app/lib/definitions";
+import { unstable_cache } from "next/cache";
+import * as schemas from "@/app/db/schema.db";
+import { getColumns } from "drizzle-orm";
 /*What each product type would need in a customizer:
 
 BUILD YOUR OWN PIZZA:
@@ -89,23 +92,202 @@ ALL:
 // const crustSeasonings = filterByCategory(ingredients, "crust seasoning");
 // const sauces = filterByCategory(ingredients, "sauce");
 
-// export function Customizer() {
-//   return (
-//     <section>
-//       <h2>Crusts:</h2>
-//       {crusts.map((crust) => (
-//         <p key={crust.name}>{crust.name}</p>
-//       ))}
+// function filterCrusts(ingredients: ) {
 
-//       <h2>Crust Seasoning:</h2>
-//       {crustSeasonings.map((crustSeasoning) => (
-//         <p key={crustSeasoning.name}>{crustSeasoning.name}</p>
-//       ))}
-
-//       <h2>Sauce:</h2>
-//       {sauces.map((sauce) => (
-//         <p key={sauce.name}>{sauce.name}</p>
-//       ))}
-//     </section>
-//   )
 // }
+
+async function getIngredientData() {
+  const { isActive, creatorId, updaterId, createdAt, updatedAt, deletedAt, ...ingredientData } = getColumns(schemas.ingredient);
+  return unstable_cache(
+    async () => {
+      return await db.select(ingredientData).from(schemas.ingredient);
+    },
+    ["ingredient-key"],
+    { tags: ["ingredient"] }
+  )();
+}
+
+export async function Customizer() {
+  const ingredients = await getIngredientData();
+  return (
+    <section>
+      <br />
+      <h2>Crusts</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((crust) => {
+          if (crust.category == "crust") {
+            return (
+              <li key={crust.name}>
+                <br />
+                <label htmlFor={crust.name + " id"}>{crust.name}</label>
+                <input type="checkbox" id={crust.name + " id"}></input>
+                <br />
+
+                <label htmlFor={crust.name + "-light"}>Light </label>
+                <input type="radio" id={crust.name + "-light"} />
+                <label htmlFor={crust.name + "-normal"}>Normal </label>
+                <input type="radio" id={crust.name + "-normal"} />
+                <label htmlFor={crust.name + "-extra"}>Extra </label>
+                <input type="radio" id={crust.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Crust Seasoning</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((crustSeasoning) => {
+          if (crustSeasoning.category == "crust-seasoning") {
+            return (
+              <li key={crustSeasoning.name}>
+                <br />
+                <label htmlFor={crustSeasoning.name + " id"}>{crustSeasoning.name}</label>
+                <input type="checkbox" id={crustSeasoning.name + " id"}></input>
+                <br />
+
+                <label htmlFor={crustSeasoning.name + "-light"}>Light </label>
+                <input type="radio" id={crustSeasoning.name + "-light"} />
+                <label htmlFor={crustSeasoning.name + "-normal"}>Normal </label>
+                <input type="radio" id={crustSeasoning.name + "-normal"} />
+                <label htmlFor={crustSeasoning.name + "-extra"}>Extra </label>
+                <input type="radio" id={crustSeasoning.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Sauce</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((sauce) => {
+          if (sauce.category == "sauce") {
+            return (
+              <li key={sauce.name}>
+                <br />
+                <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
+                <input type="checkbox" id={sauce.name + " id"}></input>
+                <br />
+
+                <label htmlFor={sauce.name + "-light"}>Light </label>
+                <input type="radio" id={sauce.name + "-light"} />
+                <label htmlFor={sauce.name + "-normal"}>Normal </label>
+                <input type="radio" id={sauce.name + "-normal"} />
+                <label htmlFor={sauce.name + "-extra"}>Extra </label>
+                <input type="radio" id={sauce.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Cheese</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((mozzarella) => {
+          if (mozzarella.category == "mozzarella") {
+            return (
+              <li key={mozzarella.name}>
+                <br />
+                <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
+                <input type="checkbox" id={mozzarella.name + " id"}></input>
+                <br />
+
+                <label htmlFor={mozzarella.name + "-light"}>Light </label>
+                <input type="radio" id={mozzarella.name + "-light"} />
+                <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
+                <input type="radio" id={mozzarella.name + "-normal"} />
+                <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
+                <input type="radio" id={mozzarella.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Meat</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((meat) => {
+          if (meat.category == "meat") {
+            return (
+              <li key={meat.name}>
+                <br />
+                <label htmlFor={meat.name + " id"}>{meat.name}</label>
+                <input type="checkbox" id={meat.name + " id"}></input>
+                <br />
+
+                <label htmlFor={meat.name + "-light"}>Light </label>
+                <input type="radio" id={meat.name + "-light"} />
+                <label htmlFor={meat.name + "-normal"}>Normal </label>
+                <input type="radio" id={meat.name + "-normal"} />
+                <label htmlFor={meat.name + "-extra"}>Extra </label>
+                <input type="radio" id={meat.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Veggies & More</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((veggies) => {
+          if (veggies.category == "veggies-n-more") {
+            return (
+              <li key={veggies.name}>
+                <br />
+
+                <label htmlFor={veggies.name + "-id"}>{veggies.name}</label>
+                <input type="checkbox" id={veggies.name + "-id"}></input>
+                <br />
+
+                <label htmlFor={veggies.name + "-light"}>Light </label>
+                <input type="radio" id={veggies.name + "-light"} />
+                <label htmlFor={veggies.name + "-normal"}>Normal </label>
+                <input type="radio" id={veggies.name + "-normal"} />
+                <label htmlFor={veggies.name + "-extra"}>Extra </label>
+                <input type="radio" id={veggies.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+      <br />
+      <h2>Add-on Cheeses</h2>
+      <p>-----</p>
+      <ol>
+        {ingredients.map((cheese) => {
+          if (cheese.category == "cheese") {
+            return (
+              <li key={cheese.name}>
+                <br />
+
+                <label htmlFor={cheese.name + " id"}>{cheese.name}</label>
+                <input type="checkbox" id={cheese.name + " id"}></input>
+                <br />
+
+                <label htmlFor={cheese.name + "-light"}>Light </label>
+                <input type="radio" id={cheese.name + "-light"} />
+                <label htmlFor={cheese.name + "-normal"}>Normal </label>
+                <input type="radio" id={cheese.name + "-normal"} />
+                <label htmlFor={cheese.name + "-extra"}>Extra </label>
+                <input type="radio" id={cheese.name + "-extra"} />
+              </li>
+            )
+          }
+        })}
+      </ol>
+      <p>-----</p>
+    </section>
+  )
+}

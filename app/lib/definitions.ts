@@ -347,6 +347,11 @@ export const ProductSchema = z.object({
     description: z.string()
   }
 });
+
+export const IngredientSchema = DbIngredientSeedSchema.omit({
+  creatorId: true
+})
+
 /* TODO Look at removing the newly added "creatorId/updaterId" for these. Those won't be needed when queried from the db. */
 export const MenuCategoryAndImagePropSchema = z.object({
   image: DbImageSchema,
@@ -363,6 +368,8 @@ export const ProductAndImageQueryPropSchema = z.object({
 // #region Inferred local types
 
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
+
+export type Ingredient = z.infer<typeof IngredientSchema>;
 
 export type MenuCategoryAndImagePropSchemaType = z.infer<typeof MenuCategoryAndImagePropSchema>;
 
@@ -386,25 +393,6 @@ export type ProductInfo = {
   id: number;
   name: string;
   description: string;
-}
-
-export type IngredientOptions = {
-  crusts?: Ingredient[];
-  crustSeasonings?: Ingredient[];
-  sauces?: Ingredient[];
-  mozzarella?: Ingredient[];
-  meats?: Ingredient[];
-  veggiesNMore?: Ingredient[];
-  addOnCheeses?: Ingredient[];
-  specialInstructions?: string;
-  dippingsCups?: Ingredient[];
-}
-
-export type Ingredient = {
-  id: number;
-  name: string;
-  category: "quantity" | "crust" | "crust seasoning" | "sauce" | "mozzarella" | "meats" | "veggies & more" | "add-on cheeses" | "special instructions" | "dipping cups";
-  density?: "light" | "normal" | "extra"
 }
 
 

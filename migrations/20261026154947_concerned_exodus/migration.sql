@@ -88,6 +88,7 @@ CREATE TABLE "cart_item_modifier" (
 	"ingredient_id" integer,
 	"modifier_type" varchar(6) NOT NULL,
 	"modifier_price" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "cart_item_modifier_pkey" PRIMARY KEY("cart_item_id","ingredient_id")
 );
 --> statement-breakpoint
@@ -101,7 +102,7 @@ CREATE TABLE "image" (
 	"creator_id" text NOT NULL,
 	"updater_id" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
@@ -115,7 +116,7 @@ CREATE TABLE "ingredient" (
 	"creator_id" text NOT NULL,
 	"updater_id" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
@@ -128,7 +129,7 @@ CREATE TABLE "menu_category" (
 	"creator_id" text NOT NULL,
 	"updater_id" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
@@ -138,7 +139,7 @@ CREATE TABLE "order" (
 	"address_id" integer NOT NULL,
 	"order_status" varchar(20) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "order_item" (
@@ -148,7 +149,7 @@ CREATE TABLE "order_item" (
 	"quantity" integer NOT NULL,
 	"unit_price" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "order_item_modifier" (
@@ -156,6 +157,7 @@ CREATE TABLE "order_item_modifier" (
 	"ingredient_id" integer,
 	"modifier_type" varchar(6) NOT NULL,
 	"modifier_price" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "order_item_modifier_pkey" PRIMARY KEY("order_item_id","ingredient_id")
 );
 --> statement-breakpoint
@@ -172,7 +174,7 @@ CREATE TABLE "product" (
 	"creator_id" text NOT NULL,
 	"updater_id" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
@@ -182,7 +184,7 @@ CREATE TABLE "product_ingredient" (
 	"creator_id" text NOT NULL,
 	"updater_id" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "product_ingredient_pkey" PRIMARY KEY("product_id","ingredient_id")
 );
 --> statement-breakpoint
