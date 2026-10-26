@@ -90,14 +90,28 @@ export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
     return initialState;
   });
 
+  function handleIngredientSelection(ingredientId: number) {
+    setSelectedIngredients((prevState) => {
+      return {
+        ...prevState,
+        [ingredientId]: prevState[ingredientId] !== undefined ? undefined : "normal"
+      };
+    });
+  }
+
   console.log("selectedIngredients starts as", selectedIngredients);
+  console.log("selectedIngredients is now", selectedIngredients);
 
   return (
     <section>
+      {Object.entries(selectedIngredients).map(([key, value]) => (
+        <p key={key}>{key} {value ?? "Not Selected"}</p>
+      ))
+      }
       <br />
       <h2>Crusts</h2>
       <p>-----</p>
-      <CrustList ingredients={ingredients} />
+      <CrustList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
       <br />
       <h2>Crust Seasoning</h2>
@@ -133,7 +147,7 @@ export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function CrustList({ ingredients }: { ingredients: Ingredient[] }) {
+function CrustList({ ingredients, onIngredientSelection }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number) => void }) {
   return (
     <ol>
       {ingredients.map((crust) => {
@@ -142,7 +156,7 @@ function CrustList({ ingredients }: { ingredients: Ingredient[] }) {
             <li key={crust.name}>
               <br />
               <label htmlFor={crust.name + " id"}>{crust.name}</label>
-              <input type="radio" id={crust.name + " id"} name="crust-selection-radio-group"></input>
+              <input type="radio" id={crust.name + " id"} name="crust-selection-radio-group" onChange={() => { onIngredientSelection(crust.id) }}></input>
               <br />
             </li>
           )
