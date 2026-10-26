@@ -100,7 +100,7 @@ export const DbIngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
   category: z.string(),
-  imgId: z.number(),
+  imgId: z.number().nullable(),
   price: z.number(),
   creatorId: z.string(),
   updaterId: z.string().nullable(),
@@ -348,8 +348,11 @@ export const ProductSchema = z.object({
   }
 });
 
-export const IngredientSchema = DbIngredientSeedSchema.omit({
-  creatorId: true
+export const IngredientSchema = DbIngredientSchema.omit({
+  creatorId: true,
+  updaterId: true,
+  createdAt: true,
+  updatedAt: true
 })
 
 /* TODO Look at removing the newly added "creatorId/updaterId" for these. Those won't be needed when queried from the db. */

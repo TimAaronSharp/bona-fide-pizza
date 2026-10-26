@@ -1,11 +1,12 @@
 import { db } from "@/app/db/drizzle";
-import { eq } from "drizzle-orm";
+import { eq, getColumns } from "drizzle-orm";
 import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema.db";
 import { generateProduct } from "@/app/lib/utility";
 import { unstable_cache } from "next/cache";
 import { EditProduct } from "@/app/ui/components/editProduct";
+import { ProductAndImageQueryPropSchema } from "@/app/lib/definitions.js";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
 inside the function so that is not accessible outside).*/
@@ -22,13 +23,26 @@ async function getProductData(product: string) {
   )();
 }
 
+async function getIngredientData() {
+  const { isActive, creatorId, updaterId, createdAt, updatedAt, deletedAt, ...ingredientData } = getColumns(schemas.ingredient);
+  return unstable_cache(
+    async () => {
+      return await db.select(ingredientData).from(schemas.ingredient);
+    },
+    ["ingredient-key"],
+    { tags: ["ingredient"] }
+  )();
+}
+
 export default async function ProductPage({ params }: { params: { product: string } }) {
   const { product } = await params;
   // const schemaKey = category as keyof typeof schemas;
   // console.log("paramName is ", paramName);
   const [item] = await getProductData(product);
-  console.log("item is", item);
-
+  const ingredients = await getIngredientData();
+  // console.log("item is", item);
+  /* TODO Look into intermittent error - TypeError: Cannot destructure property 'image' of 'item' as it is undefined.
+  at ProductPage (app\menu\[category]\[product]/page.tsx:45:11) */
   const { image } = item;
   const { id, isActive, createdAt, updatedAt, creatorId, updaterId, deletedAt, ...imageData } = image;
   // console.log("item is ", item);
@@ -44,7 +58,7 @@ export default async function ProductPage({ params }: { params: { product: strin
         <p>{item.product.description}</p>
         <EditProduct productProp={item.product} />
         <Image {...imageData} />
-        <Customizer />
+        <Customizer ingredients={ingredients} />
       </section>
     </main>
   )
