@@ -366,6 +366,8 @@ export const ProductAndImageQueryPropSchema = z.object({
   image: DbImageSchema
 });
 
+export const DensitySchema = z.enum(["light", "normal", "extra"]).optional();
+
 // #endregion
 
 // #region Inferred local types
@@ -378,7 +380,10 @@ export type MenuCategoryAndImagePropSchemaType = z.infer<typeof MenuCategoryAndI
 
 export type ProductAndImageQueryPropSchemaType = z.infer<typeof ProductAndImageQueryPropSchema>;
 
+export type Density = z.infer<typeof DensitySchema>;
 // #endregion
+
+
 
 export type ImageType = {
   src: string;

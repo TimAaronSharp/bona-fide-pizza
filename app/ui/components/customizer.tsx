@@ -1,6 +1,6 @@
 "use client";
 
-import { Ingredient } from "@/app/lib/definitions";
+import { Density, DensitySchema, Ingredient } from "@/app/lib/definitions";
 import { useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -82,24 +82,37 @@ ALL:
 
 // NOTE Individual components below in this file. Didn't want to scroll to the bottom to look at the main component.
 export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
-  const [selectedIngredients, setSelectedIngredients] = useState<Record<number, 'light' | 'normal' | 'extra' | undefined>>(() => {
-    const initialState: Record<number, 'light' | 'normal' | 'extra' | undefined> = {};
+  const [selectedIngredients, setSelectedIngredients] = useState<Record<number, Density>>(() => {
+
+    const initialState: Record<number, Density> = {};
+
     for (const ingredient of ingredients) {
       initialState[ingredient.id] = undefined;
     }
     return initialState;
   });
 
-  function handleIngredientSelection(ingredientId: number) {
+  function handleDensityValidation(ingredientId: number, density: string) {
+    const validatedDensity = DensitySchema.safeParse(density);
+
+    if (validatedDensity.success) {
+      handleIngredientSelection(ingredientId, validatedDensity.data);
+    } else {
+      // TODO Decide how you want to handle zod schema parsing errors.
+      console.error("ERROR NOOB!")
+    }
+  }
+
+  function handleIngredientSelection(ingredientId: number, value: Density) {
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
-        [ingredientId]: prevState[ingredientId] !== undefined ? undefined : "normal"
+        [ingredientId]: prevState[ingredientId] = value
       };
     });
   }
 
-  console.log("selectedIngredients starts as", selectedIngredients);
+  // console.log("selectedIngredients starts as", selectedIngredients);
   console.log("selectedIngredients is now", selectedIngredients);
 
   return (
@@ -111,52 +124,61 @@ export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
       <br />
       <h2>Crusts</h2>
       <p>-----</p>
-      <CrustList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+      <CrustList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
       <p>-----</p>
       <br />
       <h2>Crust Seasoning</h2>
       <p>-----</p>
-      <CrustSeasoningList ingredients={ingredients} />
+      <CrustSeasoningList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
       <br />
       <h2>Sauce</h2>
       <p>-----</p>
-      <SauceList ingredients={ingredients} />
+      <SauceList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
       <p>-----</p>
       <br />
       <h2>Cheese</h2>
       <p>-----</p>
-      <MozzarellaList ingredients={ingredients} />
+      <MozzarellaList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
       <br />
       <h2>Meat</h2>
       <p>-----</p>
-      <MeatList ingredients={ingredients} />
+      <MeatList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
       <br />
       <h2>Veggies & More</h2>
       <p>-----</p>
-      <VeggiesNMoreList ingredients={ingredients} />
+      <VeggiesNMoreList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
       <br />
       <h2>Add-on Cheeses</h2>
       <p>-----</p>
-      <AddonCheeseList ingredients={ingredients} />
+      <AddonCheeseList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
       <p>-----</p>
     </section>
   )
 }
 
-function CrustList({ ingredients, onIngredientSelection }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number) => void }) {
+function CrustList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, density: string) => void }) {
   return (
     <ol>
       {ingredients.map((crust) => {
         if (crust.category == "crust") {
+          const radioId = `${crust.name}-id`;
           return (
             <li key={crust.name}>
               <br />
-              <label htmlFor={crust.name + " id"}>{crust.name}</label>
-              <input type="radio" id={crust.name + " id"} name="crust-selection-radio-group" onChange={() => { onIngredientSelection(crust.id) }}></input>
+              <fieldset className="border-1">
+                <label htmlFor={crust.name + " id"}>{crust.name}</label>
+                <input
+                  type="radio"
+                  id={crust.name + " id"}
+                  name="crust-selection-radio-group"
+                  checked={selectedIngredients[crust.id] === "normal"}
+                  onChange={(e) => { onDensityValidation(crust.id, e.target.value) }}
+                  value="normal" ></input>
+              </fieldset>
               <br />
             </li>
           )
@@ -166,7 +188,7 @@ function CrustList({ ingredients, onIngredientSelection }: { ingredients: Ingred
   )
 }
 
-function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[] }) {
+function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
   return (
     <ol>
       {ingredients.map((crustSeasoning) => {
@@ -174,8 +196,10 @@ function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[] }) {
           return (
             <li key={crustSeasoning.name}>
               <br />
-              <label htmlFor={crustSeasoning.name + " id"}>{crustSeasoning.name}</label>
-              <input type="radio" id={crustSeasoning.name + " id"} name="crustSeasoning-selection-radio-group"></input>
+              <fieldset className="border-1">
+                <label htmlFor={crustSeasoning.name + " id"}>{crustSeasoning.name}</label>
+                <input type="radio" id={crustSeasoning.name + " id"} name="crustSeasoning-selection-radio-group" value="normal"></input>
+              </fieldset>
               <br />
             </li>
           );
@@ -185,7 +209,7 @@ function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function SauceList({ ingredients }: { ingredients: Ingredient[] }) {
+function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, density: string) => void }) {
   return (
     <ol>
       {ingredients.map((sauce) => {
@@ -196,13 +220,35 @@ function SauceList({ ingredients }: { ingredients: Ingredient[] }) {
               <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
               <input type="radio" id={sauce.name + " id"} name="sauce-selection-radio-group"></input>
               <br />
-
-              <label htmlFor={sauce.name + "-light"}>Light </label>
-              <input type="radio" id={sauce.name + "-light"} name={`sauce-density-radio-group`} />
-              <label htmlFor={sauce.name + "-normal"}>Normal </label>
-              <input type="radio" id={sauce.name + "-normal"} name={`sauce-density-radio-group`} />
-              <label htmlFor={sauce.name + "-extra"}>Extra </label>
-              <input type="radio" id={sauce.name + "-extra"} name={`sauce-density-radio-group`} />
+              <fieldset className="border-1">
+                <input
+                  type="radio"
+                  id={sauce.name + "-light"}
+                  name={`sauce-${sauce.name}-density-radio-group`}
+                  checked={selectedIngredients[sauce.id] === "light"}
+                  onChange={(e) => { onDensityValidation(sauce.id, e.target.value) }}
+                  value="light"
+                />
+                <label htmlFor={sauce.name + "-light"}>Light </label>
+                <input
+                  type="radio"
+                  id={sauce.name + "-normal"}
+                  name={`sauce-${sauce.name}density-radio-group`}
+                  checked={selectedIngredients[sauce.id] === "normal"}
+                  onChange={(e) => { onDensityValidation(sauce.id, e.target.value) }}
+                  value="normal"
+                />
+                <label htmlFor={sauce.name + "-normal"}>Normal </label>
+                <input
+                  type="radio"
+                  id={sauce.name + "-extra"}
+                  name={`sauce-${sauce.name}density-radio-group`}
+                  checked={selectedIngredients[sauce.id] === "extra"}
+                  onChange={(e) => { onDensityValidation(sauce.id, e.target.value) }}
+                  value="extra"
+                />
+                <label htmlFor={sauce.name + "-extra"}>Extra </label>
+              </fieldset>
             </li>
           )
         }
@@ -211,7 +257,7 @@ function SauceList({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function MozzarellaList({ ingredients }: { ingredients: Ingredient[] }) {
+function MozzarellaList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
   return (
     <ol>
       {ingredients.map((mozzarella) => {
@@ -222,13 +268,14 @@ function MozzarellaList({ ingredients }: { ingredients: Ingredient[] }) {
               <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
               <input type="radio" id={mozzarella.name + " id"} name="mozzarella-selection-radio-group"></input>
               <br />
-
-              <label htmlFor={mozzarella.name + "-light"}>Light </label>
-              <input type="radio" id={mozzarella.name + "-light"} name="mozzarella-density-radio-group" />
-              <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
-              <input type="radio" id={mozzarella.name + "-normal"} name="mozzarella-density-radio-group" />
-              <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
-              <input type="radio" id={mozzarella.name + "-extra"} name="mozzarella-density-radio-group" />
+              <fieldset className="border-1">
+                <label htmlFor={mozzarella.name + "-light"}>Light </label>
+                <input type="radio" id={mozzarella.name + "-light"} name="mozzarella-density-radio-group" value="light" />
+                <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
+                <input type="radio" id={mozzarella.name + "-normal"} name="mozzarella-density-radio-group" value="normal" />
+                <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
+                <input type="radio" id={mozzarella.name + "-extra"} name="mozzarella-density-radio-group" value="extra" />
+              </fieldset>
             </li>
           )
         }
@@ -237,7 +284,7 @@ function MozzarellaList({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function MeatList({ ingredients }: { ingredients: Ingredient[] }) {
+function MeatList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
   return (
     <ol>
       {ingredients.map((meat) => {
@@ -248,13 +295,14 @@ function MeatList({ ingredients }: { ingredients: Ingredient[] }) {
               <label htmlFor={meat.name + " id"}>{meat.name}</label>
               <input type="checkbox" id={meat.name + " id"}></input>
               <br />
-
-              <label htmlFor={meat.name + "-light"}>Light </label>
-              <input type="radio" id={meat.name + "-light"} name="meat-density-radio-group" />
-              <label htmlFor={meat.name + "-normal"}>Normal </label>
-              <input type="radio" id={meat.name + "-normal"} name="meat-density-radio-group" />
-              <label htmlFor={meat.name + "-extra"}>Extra </label>
-              <input type="radio" id={meat.name + "-extra"} name="meat-density-radio-group" />
+              <fieldset className="border-1">
+                <label htmlFor={meat.name + "-light"}>Light </label>
+                <input type="radio" id={meat.name + "-light"} name="meat-density-radio-group" value="light" />
+                <label htmlFor={meat.name + "-normal"}>Normal </label>
+                <input type="radio" id={meat.name + "-normal"} name="meat-density-radio-group" value="normal" />
+                <label htmlFor={meat.name + "-extra"}>Extra </label>
+                <input type="radio" id={meat.name + "-extra"} name="meat-density-radio-group" value="extra" />
+              </fieldset>
             </li>
           )
         }
@@ -263,7 +311,7 @@ function MeatList({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[] }) {
+function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
   return (
     <ol>
       {ingredients.map((veggies) => {
@@ -275,13 +323,14 @@ function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[] }) {
               <label htmlFor={veggies.name + "-id"}>{veggies.name}</label>
               <input type="checkbox" id={veggies.name + "-id"}></input>
               <br />
-
-              <label htmlFor={veggies.name + "-light"}>Light </label>
-              <input type="radio" id={veggies.name + "-light"} name="veggies-density-radio-group" />
-              <label htmlFor={veggies.name + "-normal"}>Normal </label>
-              <input type="radio" id={veggies.name + "-normal"} name="veggies-density-radio-group" />
-              <label htmlFor={veggies.name + "-extra"}>Extra </label>
-              <input type="radio" id={veggies.name + "-extra"} name="veggies-density-radio-group" />
+              <fieldset className="border-1">
+                <label htmlFor={veggies.name + "-light"}>Light </label>
+                <input type="radio" id={veggies.name + "-light"} name="veggies-density-radio-group" value="light" />
+                <label htmlFor={veggies.name + "-normal"}>Normal </label>
+                <input type="radio" id={veggies.name + "-normal"} name="veggies-density-radio-group" value="normal" />
+                <label htmlFor={veggies.name + "-extra"}>Extra </label>
+                <input type="radio" id={veggies.name + "-extra"} name="veggies-density-radio-group" value="extra" />
+              </fieldset>
             </li>
           )
         }
@@ -290,7 +339,7 @@ function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[] }) {
   )
 }
 
-function AddonCheeseList({ ingredients }: { ingredients: Ingredient[] }) {
+function AddonCheeseList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
   return (
     <ol>
       {ingredients.map((cheese) => {
@@ -302,13 +351,14 @@ function AddonCheeseList({ ingredients }: { ingredients: Ingredient[] }) {
               <label htmlFor={cheese.name + " id"}>{cheese.name}</label>
               <input type="checkbox" id={cheese.name + " id"}></input>
               <br />
-
-              <label htmlFor={cheese.name + "-light"}>Light </label>
-              <input type="radio" id={cheese.name + "-light"} name="addonCheeses-density-radio-group" />
-              <label htmlFor={cheese.name + "-normal"}>Normal </label>
-              <input type="radio" id={cheese.name + "-normal"} name="addonCheeses-density-radio-group" />
-              <label htmlFor={cheese.name + "-extra"}>Extra </label>
-              <input type="radio" id={cheese.name + "-extra"} name="addonCheeses-density-radio-group" />
+              <fieldset className="border-1">
+                <label htmlFor={cheese.name + "-light"}>Light </label>
+                <input type="radio" id={cheese.name + "-light"} name="addonCheeses-density-radio-group" value="light" />
+                <label htmlFor={cheese.name + "-normal"}>Normal </label>
+                <input type="radio" id={cheese.name + "-normal"} name="addonCheeses-density-radio-group" value="normal" />
+                <label htmlFor={cheese.name + "-extra"}>Extra </label>
+                <input type="radio" id={cheese.name + "-extra"} name="addonCheeses-density-radio-group" value="extra" />
+              </fieldset>
             </li>
           )
         }
