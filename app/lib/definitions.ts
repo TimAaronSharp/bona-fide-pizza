@@ -1,4 +1,5 @@
 import z from "zod";
+import { db } from "@/app/db/drizzle";
 
 // export const DbProductSchema = z.object({
 //   link: z.object({
@@ -328,6 +329,11 @@ export type DbAddressAndUserIdSeedSchemaType = z.infer<typeof DbAddressAndUserId
 
 // #endregion
 
+/*NOTE Learn more about how this works - It looks at db.transaction, finds its first argument (the callback function)
+and then find the first argument of THAT function (the tx object itself). This allows me to dynamically type
+the tx object to send to all the seed functions so they all work in the same transaction. */
+export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
 // #region zod local schemas
 
 export const ProductSchema = z.object({
@@ -355,6 +361,10 @@ export const IngredientSchema = DbIngredientSchema.omit({
   updatedAt: true
 })
 
+export const ProductIngredientSchema = DbProductIngredientSeedSchema.omit({
+  creatorId: true
+});
+
 /* TODO Look at removing the newly added "creatorId/updaterId" for these. Those won't be needed when queried from the db. */
 export const MenuCategoryAndImagePropSchema = z.object({
   image: DbImageSchema,
@@ -375,6 +385,8 @@ export const DensitySchema = z.enum(["light", "normal", "extra"]).optional();
 export type ProductSchemaType = z.infer<typeof ProductSchema>;
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
+
+export type ProductIngredient = z.infer<typeof ProductIngredientSchema>;
 
 export type MenuCategoryAndImagePropSchemaType = z.infer<typeof MenuCategoryAndImagePropSchema>;
 

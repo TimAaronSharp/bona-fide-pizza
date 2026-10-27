@@ -429,27 +429,27 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Shredded Parmesan Asiag
 // Pepperoni
 
 // generateProductIngredientDbSeedItem(productId: number, ingredientId: number)
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 1));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 7));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 9));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 15));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(1, 19));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 1));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 7));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 9));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 15));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 19));
 
 
 
 // Supreme
 
 // generateProductIngredientDbSeedItem(productId: number, ingredientId: number)
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 1));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 7));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 9));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 15));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 19));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 20));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 27));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 30));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 31));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 33));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 1));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 7));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 9));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 15));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 19));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 20));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 27));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 30));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 31));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(3, 33));
 
 // #endregion
 
@@ -458,22 +458,22 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(2, 33));
 // Chicken Bacon Ranch
 
 // generateProductIngredientDbSeedItem(productId: number, ingredientId: number)
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 9));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 15));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 21));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 22));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(24, 35));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 9));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 15));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 21));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 22));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
 
 // Italian
 
 // generateProductIngredientDbSeedItem(productId: number, ingredientId: number)
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 15));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 17));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 19));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 27));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 28));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 33));
-productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(25, 35));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 15));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 17));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 19));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 27));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 28));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 33));
+productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 35));
 
 
 // #endregion

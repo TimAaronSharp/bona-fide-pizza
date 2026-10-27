@@ -8,11 +8,8 @@ import { db } from "@/app/db/drizzle";
 import { user } from "@/app/db/auth-schema.db";
 import * as schemas from "@/app/db/schema.db";
 import * as seeds from "@/app/lib/dbDataGenerator";
+import type { Transaction } from "@/app/lib/definitions";
 
-/*NOTE Learn more about how this works - It looks at db.transaction, finds its first argument (the callback function)
-and then find the first argument of THAT function (the tx object itself). This allows me to dynamically type
-the tx object to send to all the seed functions so they all work in the same transaction. */
-type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 const seedImages = async () => {
   console.log("Seeding database image table...");

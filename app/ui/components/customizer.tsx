@@ -1,6 +1,6 @@
 "use client";
 
-import { Density, DensitySchema, Ingredient } from "@/app/lib/definitions";
+import { Density, DensitySchema, Ingredient, ProductIngredient } from "@/app/lib/definitions";
 import { useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -81,7 +81,7 @@ ALL:
 */
 
 // NOTE Individual components below in this file. Didn't want to scroll to the bottom to look at the main component.
-export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
+export function Customizer({ ingredients, productIngredients }: { ingredients: Ingredient[], productIngredients: ProductIngredient[] }) {
   const [selectedIngredients, setSelectedIngredients] = useState<Record<number, Density>>(() => {
 
     const initialState: Record<number, Density> = {};
@@ -113,7 +113,7 @@ export function Customizer({ ingredients }: { ingredients: Ingredient[] }) {
   }
 
   // console.log("selectedIngredients starts as", selectedIngredients);
-  console.log("selectedIngredients is now", selectedIngredients);
+  // console.log("selectedIngredients is now", selectedIngredients);
 
   return (
     <section>
