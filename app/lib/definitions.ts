@@ -24,6 +24,8 @@ import { db } from "@/app/db/drizzle";
 
 // #region -- DbImageSchemas
 
+// TODO MAKE ALL SCHEMAS MATCH UP WITH THE UPDATED DRIZZLE SCHEMAS (isActive, deletedAt, etc.).
+
 export const DbImageSchema = z.object({
   id: z.number(),
   src: z.string(),

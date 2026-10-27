@@ -99,7 +99,7 @@ export function Customizer({ ingredients, productIngredients }: { ingredients: I
       handleIngredientSelection(ingredientId, validatedDensity.data);
     } else {
       // TODO Decide how you want to handle zod schema parsing errors.
-      console.error("ERROR NOOB!")
+      console.error("ERROR NOOB!");
     }
   }
 
