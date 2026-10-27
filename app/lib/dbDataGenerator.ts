@@ -73,15 +73,14 @@ function generateProductIngredientDbSeedItem(productId: number, ingredientId: nu
   }
 }
 
-function generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType {
+function generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, line2?: string): DbAddressSeedSchemaType {
   return {
     line1,
     line2: line2 ? line2 : null,
     city,
     state,
     zipCode,
-    userId: "", // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
-    isActive
+    userId: "" // Placeholder for db insertion. Will be replaced in seed script by id returned from user table select in seed script.
   }
 }
 
@@ -486,8 +485,8 @@ productIngredientDbSeedItems.push(generateProductIngredientDbSeedItem(26, 35));
 manually through the /register route form before seeding addresses to avoid foreign key constraint errors.*/
 
 // generateAddressDbSeedItem(line1: string, city: string, state: string, zipCode: string, userId: string, isActive: boolean, line2?: string): DbAddressSeedSchemaType
-addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', true, "line2"));
-addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321', true));
+addressDbSeedItems.push(generateAddressDbSeedItem('123 Fake Street', 'Realtown', 'UT', '12345-6789', "line2"));
+addressDbSeedItems.push(generateAddressDbSeedItem('456 Real Street', 'Not Fakington', 'UT', '98765-4321'));
 
 // #endregion
 

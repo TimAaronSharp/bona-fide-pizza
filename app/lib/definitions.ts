@@ -25,6 +25,8 @@ import { db } from "@/app/db/drizzle";
 // #region -- DbImageSchemas
 
 // TODO MAKE ALL SCHEMAS MATCH UP WITH THE UPDATED DRIZZLE SCHEMAS (isActive, deletedAt, etc.).
+/* TODO See if there is a way to create a "CommonOmit" schema that you can use in place of writing the full omit 
+for every seedSchema.*/
 
 export const DbImageSchema = z.object({
   id: z.number(),
@@ -32,17 +34,21 @@ export const DbImageSchema = z.object({
   alt: z.string(),
   width: z.number(),
   height: z.number(),
+  isActive: z.boolean(),
   creatorId: z.string(),
   updaterId: z.string().nullable(),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
+  deletedAt: z.date()
 });
 
 export const DbImageSeedSchema = DbImageSchema.omit({
   id: true,
+  isActive: true,
   updaterId: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 });
 
 // #endregion
@@ -54,24 +60,27 @@ export const DbMenuCategorySchema = z.object({
   name: z.string(),
   href: z.string(),
   imgId: z.number().nullable(),
+  isActive: z.boolean(),
   creatorId: z.string(),
   updaterId: z.string().nullable(),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
+  deletedAt: z.date()
 });
 
 export const DbMenuCategorySeedSchema = DbMenuCategorySchema.omit({
   id: true,
+  isActive: true,
   updaterId: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 });
 
 // #endregion
 
 // #region -- DbProductSchemas
 
-// NOTE May need/want to add "isActive" property to match db schema config for admin dashboard (to alter active menu)?
 export const DbProductSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -81,17 +90,21 @@ export const DbProductSchema = z.object({
   paramName: z.string(),
   imgId: z.number().nullable(),
   price: z.number(),
+  isActive: z.boolean(),
   creatorId: z.string(),
   updaterId: z.string().nullable(),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
+  deletedAt: z.date()
 });
 
 export const DbProductSeedSchema = DbProductSchema.omit({
   id: true,
+  isActive: true,
   updaterId: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 });
 
 // #endregion
@@ -105,23 +118,28 @@ export const DbIngredientSchema = z.object({
   category: z.string(),
   imgId: z.number().nullable(),
   price: z.number(),
+  isActive: z.boolean(),
   creatorId: z.string(),
   updaterId: z.string().nullable(),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
+  deletedAt: z.date()
 });
 
 export const DbIngredientSeedSchema = DbIngredientSchema.omit({
   id: true,
+  isActive: true,
   updaterId: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 });
 
 // #endregion
 
 // #region -- DbProductIngredientSchemas
 
+// TODO Should you actually need/want "isActive/deletedAt" for this? 
 export const DbProductIngredientSchema = z.object({
   productId: z.number(),
   ingredientId: z.number(),
@@ -253,7 +271,8 @@ export const DbCartItemModifierSchema = DbBaseItemModifierSchema.extend({
 // #endregion
 
 // #region -- DbAddressSchemas
-
+/* TODO Think about if you want to be able to update address. If you do then records could be compromised.
+Fix this soon.*/
 export const DbAddressSchema = z.object({
   id: z.number(),
   line1: z.string(),
@@ -264,13 +283,16 @@ export const DbAddressSchema = z.object({
   userId: z.string(),
   isActive: z.boolean(),
   createdAt: z.date(),
-  updatedAt: z.date()
+  updatedAt: z.date(),
+  deletedAt: z.date()
 });
 
 export const DbAddressSeedSchema = DbAddressSchema.omit({
   id: true,
+  isActive: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 });
 
 // #endregion
