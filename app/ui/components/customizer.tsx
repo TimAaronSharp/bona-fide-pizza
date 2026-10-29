@@ -196,7 +196,7 @@ function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[], onIngr
   return (
     <ol>
       {ingredients.map((crustSeasoning) => {
-        if (crustSeasoning.category == "crust-seasoning") {
+        if (crustSeasoning.category == "crust_seasoning") {
           return (
             <li key={crustSeasoning.name}>
               <br />
@@ -319,7 +319,7 @@ function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[], onIngred
   return (
     <ol>
       {ingredients.map((veggies) => {
-        if (veggies.category == "veggies-n-more") {
+        if (veggies.category == "veggies_n_more") {
           return (
             <li key={veggies.name}>
               <br />

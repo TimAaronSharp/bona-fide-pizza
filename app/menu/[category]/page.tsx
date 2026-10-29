@@ -5,11 +5,12 @@ import { db } from "@/app/db/drizzle";
 import { unstable_cache } from 'next/cache';
 import { eq, like } from 'drizzle-orm';
 import { EditMenuCategory } from '@/app/ui/components/editMenuCategory';
+import { ProductCategoryEnumType } from '@/app/lib/definitions';
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
 inside the function so that is not accessible outside).*/
 
-async function getMenuCategoryProductData(category: string) {
+async function getMenuCategoryProductData(category: ProductCategoryEnumType) {
   return unstable_cache(
     async () => {
       return await db.select().from(product).where(eq(product.category, category)).innerJoin(image, eq(image.id, product.imgId));
@@ -19,7 +20,7 @@ async function getMenuCategoryProductData(category: string) {
   )();
 }
 
-export default async function MenuCategoryPage({ params }: { params: { category: string } }) {
+export default async function MenuCategoryPage({ params }: { params: { category: ProductCategoryEnumType } }) {
   const { category } = await params;
   const items = await getMenuCategoryProductData(category);
 

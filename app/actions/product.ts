@@ -6,6 +6,7 @@ import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema.db";
 import { headers } from "next/headers";
 import { auth } from "@/app/lib/auth/auth";
+import { ProductCategoryEnumType } from "../lib/definitions";
 
 export const getProducts = async () => {
   const data = await db.select().from(schemas.product);
@@ -23,7 +24,7 @@ a utility if possible so the other functions are cleaner, unless there is a reas
 //   })
 // }
 
-export const addProduct = async (name: string, description: string, category: string, paramName: string, href: string, imgId: number, price: number) => {
+export const addProduct = async (name: string, description: string, category: ProductCategoryEnumType, paramName: string, href: string, imgId: number, price: number) => {
 
   const session = await auth.api.getSession({
     headers: await headers()
@@ -69,7 +70,7 @@ export const deleteProduct = async (id: number) => {
   // revalidatePath("/");
 };
 
-export const editProduct = async (id: number, name: string, description: string, category: string, currentCategory: string, paramName: string, href: string, imgId: number, price: number) => {
+export const editProduct = async (id: number, name: string, description: string, category: ProductCategoryEnumType, currentCategory: string, paramName: string, href: string, imgId: number, price: number) => {
   const session = await auth.api.getSession({
     headers: await headers()
   });

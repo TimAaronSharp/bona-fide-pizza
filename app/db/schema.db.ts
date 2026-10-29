@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, varchar, pgEnum } from "drizzle-orm/pg-core";
 import { user } from "@/app/db/auth-schema.db";
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
@@ -11,8 +11,29 @@ drizzle-kit generation/migration. */
 
 /* TODO Go through and, where appropriate, refactor db schemas to include "creatorId" properties. */
 
-/* TODO Contemplate creating "edit history" tables so you can log how many times a product, menu_category, image, etc.,
-has been edited. */
+/* TODO Contemplate creating "edit history" tables so you can log how many times a product, menu_category, image, etc., has been edited. */
+
+export const productCategoryEnum = pgEnum("product_category_enum", [
+  "pizza",
+  "specialty",
+  "bread",
+  "chicken",
+  "pasta",
+  "sandwich",
+  "salad",
+  "dessert",
+  "drinks"
+]);
+
+export const ingredientCategoryEnum = pgEnum("ingredient_category_enum", [
+  "crust",
+  "crust_seasoning",
+  "sauce",
+  "mozzarella",
+  "meat",
+  "veggies_n_more",
+  "cheese"
+]);
 
 export const image = pgTable("image", {
   id: serial().primaryKey(),
@@ -45,7 +66,7 @@ export const product = pgTable("product", {
   id: serial().primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
   description: varchar("description", { length: 1000 }).notNull(),
-  category: varchar("category",).notNull(), // Look into seeing if you can reasonably refactor this to be a foreign key for menu_category.id. Currently this is needed as is in [category]/page.tsx.
+  category: productCategoryEnum("category").notNull(), // Look into seeing if you can reasonably refactor this to be a foreign key for menu_category.id. Currently this is needed as is in [category]/page.tsx.
   href: varchar("href", { length: 100 }).notNull(),
   paramName: varchar("param_name", { length: 60 }).notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
@@ -61,7 +82,7 @@ export const product = pgTable("product", {
 export const ingredient = pgTable("ingredient", {
   id: serial().primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
-  category: varchar("category", { length: 30 }).notNull(),
+  category: ingredientCategoryEnum("category").notNull(),
   imgId: integer("img_id").references(() => image.id), // nullable so that a fallback img can be used. REVISIT THIS. Shouldn't NEED to be nullable, right?
   price: integer("price").notNull(),
   isActive: boolean("is_active").default(true).notNull(), // For soft deleting an ingredient to maintain record integrity.

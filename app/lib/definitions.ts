@@ -28,6 +28,28 @@ import { db } from "@/app/db/drizzle";
 /* TODO See if there is a way to create a "CommonOmit" schema that you can use in place of writing the full omit 
 for every seedSchema.*/
 
+export const ProductCategoryEnum = z.enum([
+  "pizza",
+  "specialty",
+  "bread",
+  "chicken",
+  "pasta",
+  "sandwich",
+  "salad",
+  "dessert",
+  "drinks"
+]);
+
+export const IngredientCategoryEnum = z.enum([
+  "crust",
+  "crust_seasoning",
+  "sauce",
+  "mozzarella",
+  "meat",
+  "veggies_n_more",
+  "cheese"
+]);
+
 export const DbImageSchema = z.object({
   id: z.number(),
   src: z.string(),
@@ -85,7 +107,7 @@ export const DbProductSchema = z.object({
   id: z.number(),
   name: z.string(),
   description: z.string(),
-  category: z.string(),
+  category: ProductCategoryEnum,
   href: z.string(),
   paramName: z.string(),
   imgId: z.number().nullable(),
@@ -115,7 +137,7 @@ export const DbProductSeedSchema = DbProductSchema.omit({
 export const DbIngredientSchema = z.object({
   id: z.number(),
   name: z.string(),
-  category: z.string(),
+  category: IngredientCategoryEnum,
   imgId: z.number().nullable(),
   price: z.number(),
   isActive: z.boolean(),
@@ -474,6 +496,10 @@ export type ProductAndImageQueryPropSchemaType = z.infer<typeof ProductAndImageQ
 export type Density = z.infer<typeof DensityEnum>;
 
 export type CustomizedProductStateType = z.infer<typeof CustomizedProductStateSchema>;
+
+export type ProductCategoryEnumType = z.infer<typeof ProductCategoryEnum>;
+
+export type IngredientCategoryEnumType = z.infer<typeof IngredientCategoryEnum>;
 
 // #endregion
 

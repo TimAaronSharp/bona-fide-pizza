@@ -26,7 +26,8 @@ export function EditProduct({ productProp }: { productProp: DbProductSchemaType 
   const handleDescription = (e: ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   }
-
+  /*TODO I believe this is because ChangeEvent always returns a string. Category is now a strict union.
+  Figure out how to handle this. */
   const handleCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value);
   }
@@ -38,11 +39,11 @@ export function EditProduct({ productProp }: { productProp: DbProductSchemaType 
   const handleParamName = (e: ChangeEvent<HTMLInputElement>) => {
     setParamName(e.target.value);
   }
-
+  /*TODO I believe this is because ChangeEvent always returns a string. Coerce to a number or do something else. */
   const handleImgId = (e: ChangeEvent<HTMLInputElement>) => {
     setImgId(e.target.value);
   }
-
+  /*TODO I believe this is because ChangeEvent always returns a string. Coerce to a number or do something else. */
   const handlePrice = (e: ChangeEvent<HTMLInputElement>) => {
     setPrice(e.target.value);
   }
@@ -50,6 +51,7 @@ export function EditProduct({ productProp }: { productProp: DbProductSchemaType 
   function handleEdit() {
     console.log("in editProduct category is", category);
     console.log("in editProduct currentCategory is", currentCategory);
+    // TODO Prob will change imgId's to not be nullable in the db, but will be locally so a backup img can be used.
     editProduct(id, name, description, category, currentCategory, paramName, href, imgId, price);
   }
 

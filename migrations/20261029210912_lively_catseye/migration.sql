@@ -1,3 +1,5 @@
+CREATE TYPE "ingredient_category_enum" AS ENUM('crust', 'crust_seasoning', 'sauce', 'mozzarella', 'meat', 'veggies_n_more', 'cheese');--> statement-breakpoint
+CREATE TYPE "product_category_enum" AS ENUM('pizza', 'specialty', 'bread', 'chicken', 'pasta', 'sandwich', 'salad', 'dessert', 'drinks');--> statement-breakpoint
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY,
 	"account_id" text NOT NULL,
@@ -110,7 +112,7 @@ CREATE TABLE "image" (
 CREATE TABLE "ingredient" (
 	"id" serial PRIMARY KEY,
 	"name" varchar(50) NOT NULL,
-	"category" varchar(30) NOT NULL,
+	"category" "ingredient_category_enum" NOT NULL,
 	"img_id" integer,
 	"price" integer NOT NULL,
 	"is_active" boolean DEFAULT true NOT NULL,
@@ -167,7 +169,7 @@ CREATE TABLE "product" (
 	"id" serial PRIMARY KEY,
 	"name" varchar(50) NOT NULL,
 	"description" varchar(1000) NOT NULL,
-	"category" varchar NOT NULL,
+	"category" "product_category_enum" NOT NULL,
 	"href" varchar(100) NOT NULL,
 	"param_name" varchar(60) NOT NULL,
 	"img_id" integer,

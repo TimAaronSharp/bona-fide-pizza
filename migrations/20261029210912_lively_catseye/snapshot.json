@@ -1,11 +1,41 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "be323372-7474-44bc-b629-05a58eb262b0",
+  "id": "872c8f53-c7bf-49cf-b06b-45745f480676",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
+    {
+      "values": [
+        "crust",
+        "crust_seasoning",
+        "sauce",
+        "mozzarella",
+        "meat",
+        "veggies_n_more",
+        "cheese"
+      ],
+      "name": "ingredient_category_enum",
+      "entityType": "enums",
+      "schema": "public"
+    },
+    {
+      "values": [
+        "pizza",
+        "specialty",
+        "bread",
+        "chicken",
+        "pasta",
+        "sandwich",
+        "salad",
+        "dessert",
+        "drinks"
+      ],
+      "name": "product_category_enum",
+      "entityType": "enums",
+      "schema": "public"
+    },
     {
       "isRlsEnabled": false,
       "name": "account",
@@ -1182,8 +1212,8 @@
       "table": "ingredient"
     },
     {
-      "type": "varchar(30)",
-      "typeSchema": null,
+      "type": "ingredient_category_enum",
+      "typeSchema": "public",
       "notNull": true,
       "dimensions": 0,
       "default": null,
@@ -1715,8 +1745,8 @@
       "table": "product"
     },
     {
-      "type": "varchar",
-      "typeSchema": null,
+      "type": "product_category_enum",
+      "typeSchema": "public",
       "notNull": true,
       "dimensions": 0,
       "default": null,

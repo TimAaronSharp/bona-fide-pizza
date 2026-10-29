@@ -1,4 +1,16 @@
-import { ImageType, DbProductSeedSchemaType, DbMenuCategorySeedSchemaType, DbImageSeedSchemaType, DbIngredientSeedSchemaType, DbAddressSeedSchemaType, DbOrderSeedSchemaType, DbOrderItemSeedSchemaType, DbProductIngredientSeedSchemaType } from "@/app/lib/definitions";
+import {
+  ImageType,
+  DbProductSeedSchemaType,
+  DbMenuCategorySeedSchemaType,
+  DbImageSeedSchemaType,
+  DbIngredientSeedSchemaType,
+  DbAddressSeedSchemaType,
+  DbOrderSeedSchemaType,
+  DbOrderItemSeedSchemaType,
+  DbProductIngredientSeedSchemaType,
+  ProductCategoryEnumType,
+  IngredientCategoryEnumType
+} from "@/app/lib/definitions";
 
 /*NOTE This file is for generating data objects to be seeded into the database. Maybe I'll change the name now that
 the main purpose for this file has changed from creating and exporting the data locally? */
@@ -23,7 +35,7 @@ const orderItemDbSeedItems: DbOrderItemSeedSchemaType[] = [];
 /*TODO Look into whether or not I actually need to create placeholder ids for dbSeedItems. I felt I did originally
 to use with my zod schemas, but I have created the schema/type with the id omitted anyway, so I don't believe
 I need the id for generation.  */
-function generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType {
+function generateProductDbSeedItem(name: string, description: string, category: ProductCategoryEnumType, href: string, paramName: string, price: number): DbProductSeedSchemaType {
   return {
     name,
     description,
@@ -55,7 +67,7 @@ function generateImageDbSeedItem(src: string, alt: string, width: number, height
   }
 }
 
-function generateIngredientDbSeedItem(name: string, category: string, price: number): DbIngredientSeedSchemaType {
+function generateIngredientDbSeedItem(name: string, category: IngredientCategoryEnumType, price: number): DbIngredientSeedSchemaType {
   return {
     name,
     category,
@@ -120,77 +132,77 @@ menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Drinks', '/menu/dri
 
 // -- Build Your Own Pizza
 
-productDbSeedItems.push(generateProductDbSeedItem('Build Your Own Pizza', 'Yummy Build Your Own Pizza', 'pizza', '/menu/build-your-own/pizza', 'pizza', 1499));
+productDbSeedItems.push(generateProductDbSeedItem('Build Your Own Pizza', 'Yummy Build Your Own Pizza', 'pizza', '/menu/build_your_own/pizza', 'pizza', 1499));
 
 // -- Specialty Pizza
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Pepperoni', 'Yummy Pepperoni', 'specialty', '/menu/specialty/pepperoni', 'pepperoni', 1499));
 productDbSeedItems.push(generateProductDbSeedItem('Supreme', 'Yummy Supreme', 'specialty', '/menu/specialty/supreme', 'supreme', 1699));
-productDbSeedItems.push(generateProductDbSeedItem('Meat Lovers', 'Yummy Meat Lovers', 'specialty', '/menu/specialty/meat-lovers', 'meat-lovers', 1899));
-productDbSeedItems.push(generateProductDbSeedItem('6-Cheese', 'Yummy 6-Cheese', 'specialty', '/menu/specialty/6-cheese', '6-cheese', 1399));
-productDbSeedItems.push(generateProductDbSeedItem('Veggie Lovers', 'Yummy Veggie Lovers', 'specialty', '/menu/specialty/veggie-lovers', 'veggie-lovers', 1799));
-productDbSeedItems.push(generateProductDbSeedItem('BBQ Chicken', 'Yummy BBQ Chicken', 'specialty', '/menu/specialty/bbq-chicken', 'bbq-chicken', 1799));
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'specialty', '/menu/specialty/chicken-bacon-ranch', 'chicken-bacon-ranch', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('Meat Lovers', 'Yummy Meat Lovers', 'specialty', '/menu/specialty/meat_lovers', 'meat_lovers', 1899));
+productDbSeedItems.push(generateProductDbSeedItem('6-Cheese', 'Yummy 6-Cheese', 'specialty', '/menu/specialty/6_cheese', '6_cheese', 1399));
+productDbSeedItems.push(generateProductDbSeedItem('Veggie Lovers', 'Yummy Veggie Lovers', 'specialty', '/menu/specialty/veggie_lovers', 'veggie_lovers', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('BBQ Chicken', 'Yummy BBQ Chicken', 'specialty', '/menu/specialty/bbq_chicken', 'bbq_chicken', 1799));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'specialty', '/menu/specialty/chicken_bacon_ranch', 'chicken_bacon_ranch', 1799));
 
 // -- Bread
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Breadsticks', 'Yummy Breadsticks', 'bread', '/menu/bread/breadsticks', 'breadsticks', 499));
-productDbSeedItems.push(generateProductDbSeedItem('Cheesy Bread', 'Yummy Cheesy Bread', 'bread', '/menu/bread/cheesy-bread', 'cheesy-bread', 699));
-productDbSeedItems.push(generateProductDbSeedItem('Bread Bites', 'Yummy Bread Bites', 'bread', '/menu/bread/bread-bites', 'bread-bites', 599));
-productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy Cinnamon Bread Bites', 'bread', '/menu/bread/cinnamon-bread-bites', 'cinnamon-bread-bites', 599));
+productDbSeedItems.push(generateProductDbSeedItem('Cheesy Bread', 'Yummy Cheesy Bread', 'bread', '/menu/bread/cheesy_bread', 'cheesy_bread', 699));
+productDbSeedItems.push(generateProductDbSeedItem('Bread Bites', 'Yummy Bread Bites', 'bread', '/menu/bread/bread_bites', 'bread_bites', 599));
+productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy Cinnamon Bread Bites', 'bread', '/menu/bread/cinnamon_bread_bites', 'cinnamon_bread_bites', 599));
 
 // -- Chicken
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Plain Wings', 'Yummy Plain Wings', "chicken", '/menu/chicken/plain-wings', 'plain-wings', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Hot Wings', 'Yummy Hot Wings', "chicken", '/menu/chicken/hot-wings', 'hot-wings', 899));
-productDbSeedItems.push(generateProductDbSeedItem('BBQ Wings', 'Yummy BBQ Wings', "chicken", '/menu/chicken/bbq-wings', 'bbq-wings', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Buffalo Wings', 'Yummy Buffalo Wings', "chicken", '/menu/chicken/buffalo-wings', 'buffalo-wings', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Garlic Parmesan Wings', 'Yummy Garlic Parmesan Wings', "chicken", '/menu/chicken/garlic-parmesan-wings', 'garlic-parmesan-wings', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Boneless Wings', 'Yummy Boneless Wings', "chicken", '/menu/chicken/boneless-wings', 'boneless-wings', 999));
-productDbSeedItems.push(generateProductDbSeedItem('Zesty Asian Wings', 'Yummy Zesty Asian Wings', "chicken", '/menu/chicken/zesty-asian-wings', 'zesty-asian-wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Plain Wings', 'Yummy Plain Wings', "chicken", '/menu/chicken/plain_wings', 'plain_wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Hot Wings', 'Yummy Hot Wings', "chicken", '/menu/chicken/hot_wings', 'hot_wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('BBQ Wings', 'Yummy BBQ Wings', "chicken", '/menu/chicken/bbq_wings', 'bbq_wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Buffalo Wings', 'Yummy Buffalo Wings', "chicken", '/menu/chicken/buffalo_wings', 'buffalo_wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Garlic Parmesan Wings', 'Yummy Garlic Parmesan Wings', "chicken", '/menu/chicken/garlic_parmesan_wings', 'garlic_parmesan_wings', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Boneless Wings', 'Yummy Boneless Wings', "chicken", '/menu/chicken/boneless_wings', 'boneless_wings', 999));
+productDbSeedItems.push(generateProductDbSeedItem('Zesty Asian Wings', 'Yummy Zesty Asian Wings', "chicken", '/menu/chicken/zesty_asian_wings', 'zesty_asian_wings', 899));
 
 // -- Pasta
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Alfredo', 'Yummy Chicken Alfredo', 'pasta', '/menu/pasta/chicken-alfredo', 'chicken-alfredo', 1099));
-productDbSeedItems.push(generateProductDbSeedItem('5-Cheese Mac & Cheese', 'Yummy 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/5-cheese-mac-n-cheese', '5-cheese-mac-n-cheese', 999));
-productDbSeedItems.push(generateProductDbSeedItem('Spicy Buffalo 5-Cheese Mac & Cheese', 'Yummy Spicy Buffalo 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/spicy-buffalo-5-cheese-mac-n-cheese', 'spicy-buffalo-5-cheese-mac-n-cheese', 999));
-productDbSeedItems.push(generateProductDbSeedItem('Spaghetti & Meatballs', 'Yummy Spaghetti & Meatballs', 'pasta', '/menu/pasta/spaghetti-n-meatballs', 'spaghetti-n-meatballs', 1099));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Alfredo', 'Yummy Chicken Alfredo', 'pasta', '/menu/pasta/chicken_alfredo', 'chicken_alfredo', 1099));
+productDbSeedItems.push(generateProductDbSeedItem('5-Cheese Mac & Cheese', 'Yummy 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/5_cheese_mac_n_cheese', '5_cheese_mac_n_cheese', 999));
+productDbSeedItems.push(generateProductDbSeedItem('Spicy Buffalo 5-Cheese Mac & Cheese', 'Yummy Spicy Buffalo 5-Cheese Mac & Cheese', 'pasta', '/menu/pasta/spicy_buffalo_5_cheese_mac_n_cheese', 'spicy_buffalo_5_cheese_mac_n_cheese', 999));
+productDbSeedItems.push(generateProductDbSeedItem('Spaghetti & Meatballs', 'Yummy Spaghetti & Meatballs', 'pasta', '/menu/pasta/spaghetti_n_meatballs', 'spaghetti_n_meatballs', 1099));
 
 // -- Sandwich
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Parm', 'Yummy Chicken Parm', 'sandwich', '/menu/sandwich/chicken-parm', 'chicken-parm', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'sandwich', '/menu/sandwich/chicken-bacon-ranch', 'chicken-bacon-ranch', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Parm', 'Yummy Chicken Parm', 'sandwich', '/menu/sandwich/chicken_parm', 'chicken_parm', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Bacon Ranch', 'Yummy Chicken Bacon Ranch', 'sandwich', '/menu/sandwich/chicken_bacon_ranch', 'chicken_bacon_ranch', 899));
 productDbSeedItems.push(generateProductDbSeedItem('Italian', 'Yummy Italian', 'sandwich', '/menu/sandwich/italian', 'italian', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Buffalo Chicken', 'Yummy Buffalo Chicken', 'sandwich', '/menu/sandwich/buffalo-chicken', 'buffalo-chicken', 899));
-productDbSeedItems.push(generateProductDbSeedItem('Philly Cheesesteak', 'Yummy Philly Cheesesteak', 'sandwich', '/menu/sandwich/philly-cheesesteak', 'philly-cheesesteak', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Buffalo Chicken', 'Yummy Buffalo Chicken', 'sandwich', '/menu/sandwich/buffalo_chicken', 'buffalo_chicken', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Philly Cheesesteak', 'Yummy Philly Cheesesteak', 'sandwich', '/menu/sandwich/philly_cheesesteak', 'philly_cheesesteak', 899));
 
 // -- Salad
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Classic Garden', 'Yummy Classic Garden', 'salad', '/menu/salad/classic-garden', 'classic-garden', 799));
-productDbSeedItems.push(generateProductDbSeedItem('Chicken Caesar', 'Yummy Chicken Caesar', 'salad', '/menu/salad/chicken-caesar', 'chicken-caesar', 899));
+productDbSeedItems.push(generateProductDbSeedItem('Classic Garden', 'Yummy Classic Garden', 'salad', '/menu/salad/classic_garden', 'classic_garden', 799));
+productDbSeedItems.push(generateProductDbSeedItem('Chicken Caesar', 'Yummy Chicken Caesar', 'salad', '/menu/salad/chicken_caesar', 'chicken_caesar', 899));
 
 // -- Dessert
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
-productDbSeedItems.push(generateProductDbSeedItem('Chocolate Lava Cake', 'Yummy Chocolate Lave Cake', 'dessert', '/menu/dessert/chocolate-lava-cake', 'chocolate-lava-cake', 499));
-productDbSeedItems.push(generateProductDbSeedItem('Chocolate Cookie Brownies', 'Yummy Chocolate Cookie Brownies', 'dessert', '/menu/dessert/chocolate-cookie-brownies', 'chocolate-cookie-brownies', 499));
-productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy Cinnamon Bread Bites', 'dessert', '/menu/dessert/cinnamon-bread-bites', 'cinnamon-bread-bites', 599));
+productDbSeedItems.push(generateProductDbSeedItem('Chocolate Lava Cake', 'Yummy Chocolate Lave Cake', 'dessert', '/menu/dessert/chocolate_lava_cake', 'chocolate_lava_cake', 499));
+productDbSeedItems.push(generateProductDbSeedItem('Chocolate Cookie Brownies', 'Yummy Chocolate Cookie Brownies', 'dessert', '/menu/dessert/chocolate_cookie_brownies', 'chocolate_cookie_brownies', 499));
+productDbSeedItems.push(generateProductDbSeedItem('Cinnamon Bread Bites', 'Yummy Cinnamon Bread Bites', 'dessert', '/menu/dessert/cinnamon_bread_bites', 'cinnamon_bread_bites', 599));
 
 // -- Drinks
 
 // generateProductDbSeedItem(name: string, description: string, category: string, href: string, paramName: string, price: number): DbProductSeedSchemaType
 productDbSeedItems.push(generateProductDbSeedItem('Pepsi', 'Yummy Pepsi', 'drinks', '/menu/drinks/pepsi', 'pepsi', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Mountain Dew', 'Yummy Mountain Dew', 'drinks', '/menu/drinks/mountain-dew', 'mountain-dew', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Mug Root Beer', 'Yummy Mug Root Beer', 'drinks', '/menu/drinks/mug-root-beer', 'mug-root-beer', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Dr Pepper', 'Yummy Dr Pepper', 'drinks', '/menu/drinks/dr-pepper', 'dr-pepper', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Cherry Pepsi', 'Yummy Cherry Pepsi', 'drinks', '/menu/drinks/cherry-pepsi', 'cherry-pepsi', 399));
-productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange Crush', 'drinks', '/menu/drinks/orange-crush', 'orange-crush', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Mountain Dew', 'Yummy Mountain Dew', 'drinks', '/menu/drinks/mountain_dew', 'mountain_dew', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Mug Root Beer', 'Yummy Mug Root Beer', 'drinks', '/menu/drinks/mug_root_beer', 'mug_root_beer', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Dr Pepper', 'Yummy Dr Pepper', 'drinks', '/menu/drinks/dr_pepper', 'dr_pepper', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Cherry Pepsi', 'Yummy Cherry Pepsi', 'drinks', '/menu/drinks/cherry_pepsi', 'cherry_pepsi', 399));
+productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange Crush', 'drinks', '/menu/drinks/orange_crush', 'orange_crush', 399));
 // #endregion
 
 // #region Images for db image table
@@ -198,157 +210,157 @@ productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange 
 // -- Menu Categories
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Build Your Own Pizza Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Pizza Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Bread Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Chicken Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Pasta Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Sandwich Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category.jpg', 'Salad Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Dessert Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Drinks Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Build Your Own Pizza Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Pizza Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Bread Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Chicken Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', 'Pasta Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Sandwich Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad_category.jpg', 'Salad Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert_category.jpg', 'Dessert Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Drinks Menu Category', 800, 800));
 
 // -- Build Your Own Pizza
 
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty-category.jpg', 'Build Your Own Pizza', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Build Your Own Pizza', 800, 800));
 
 // -- Specialty Pizza
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/pepperoni.jpg', 'Pepperoni Pizza', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/supreme.jpg', 'Supreme Pizza', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/meat-lovers.jpg', 'Meat Lovers', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/6-cheese.jpg', '6-Cheese', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/veggie-lovers.jpg', 'Veggie Lovers', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/bbq-chicken.jpg', 'BBQ Chicken', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/chicken-bacon-ranch.jpg', 'Chicken Bacon Ranch', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/meat_lovers.jpg', 'Meat Lovers Pizza', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/6_cheese.jpg', '6-Cheese Pizza', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/veggie_lovers.jpg', 'Veggie Lovers Pizza', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/bbq_chicken.jpg', 'BBQ Chicken Pizza', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/chicken_bacon_ranch.jpg', 'Chicken Bacon Ranch Pizza', 800, 800));
 
 // -- Bread
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Breadsticks', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Cheesy Bread', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Bread Bites', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Cinnamon Bread Bites', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Breadsticks', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Cheesy Bread', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Bread Bites', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Cinnamon Bread Bites', 800, 800));
 
 // -- Chicken
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Plain Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Hot Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'BBQ Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Buffalo Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Garlic Parmesan Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Boneless Wings', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken-category.jpg', 'Zesty Asian Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Plain Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Hot Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'BBQ Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Buffalo Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Garlic Parmesan Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Boneless Wings', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Zesty Asian Wings', 800, 800));
 
 // -- Pasta
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Chicken Alfredo', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', '5-Cheese Mac & Cheese', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta-category.jpg', 'Spaghetti & Meatballs', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', 'Chicken Alfredo', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', '5-Cheese Mac & Cheese', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', 'Spicy Buffalo 5-Cheese Mac & Cheese', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', 'Spaghetti & Meatballs', 800, 800));
 
 // -- Sandwich
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Chicken Parm', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Chicken Bacon Ranch', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Italian', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Buffalo Chicken', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich-category.jpg', 'Philly Cheesesteak', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Chicken Parm', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Chicken Bacon Ranch', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Italian', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Buffalo Chicken', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/sandwich/sandwich_category.jpg', 'Philly Cheesesteak', 800, 800));
 
 // -- Salad
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category.jpg', 'Classic Garden', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad-category.jpg', 'Chicken Caesar', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad_category.jpg', 'Classic Garden', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/salad/salad_category.jpg', 'Chicken Caesar', 800, 800));
 
 // -- Dessert
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Chocolate Lava Cake', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Chocolate Cookie Brownies', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert-category.jpg', 'Cinnamon Bread Bites', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert_category.jpg', 'Chocolate Lava Cake', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert_category.jpg', 'Chocolate Cookie Brownies', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/dessert/dessert_category.jpg', 'Cinnamon Bread Bites', 800, 800));
 
 // -- Drinks
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Pepsi', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Mountain Dew', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Mug Root Beer', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Dr Pepper', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Cherry Pepsi', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks-category.jpg', 'Orange Crush', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Pepsi', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Mountain Dew', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Mug Root Beer', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Dr Pepper', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Cherry Pepsi', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/drinks/drinks_category.jpg', 'Orange Crush', 800, 800));
 
 // -- Ingredients
 
 // -- -- Crust
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Hand Tossed Crust', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Parmesan Stuffed Crust', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Handmade Pan Crust', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Thin Crust', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'New York Style Crust', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Gluten Free Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Hand Tossed Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Parmesan Stuffed Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Handmade Pan Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Thin Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'New York Style Crust', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Gluten Free Crust', 800, 800));
 
 // -- -- Crust Seasoning
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic Crust Seasoning', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'No Garlic Crust Seasoning', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Garlic Crust Seasoning', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'No Garlic Crust Seasoning', 800, 800));
 
 // -- -- Sauce
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Robust Tomato Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Honey BBQ Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic Parmesan Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Alfredo Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Ranch Dressing Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'No Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Robust Tomato Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Honey BBQ Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Garlic Parmesan Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Alfredo Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Ranch Dressing Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'No Sauce', 800, 800));
 
 // -- -- Mozzarella
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Mozzarella Cheese', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'No Mozzarella Cheese', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Mozzarella Cheese', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'No Mozzarella Cheese', 800, 800));
 
 // -- -- Meat
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Ham', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Beef', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Pepperoni', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Italian Sausage', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Chicken', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Bacon', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Philly Steak', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Ham', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Beef', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Pepperoni', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Italian Sausage', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Chicken', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Bacon', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Philly Steak', 800, 800));
 
 // -- -- Veggies & More
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Hot Buffalo Sauce', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Garlic', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Jalapeno Peppers', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Onions', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Banana Peppers', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Diced Tomatoes', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Black Olives', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Mushrooms', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Pineapple', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Green Peppers', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Spinach', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Hot Buffalo Sauce', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Garlic', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Jalapeno Peppers', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Onions', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Banana Peppers', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Diced Tomatoes', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Black Olives', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Mushrooms', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Pineapple', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Green Peppers', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Spinach', 800, 800));
 
 // -- -- Add-on Cheeses
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Shredded Provolone', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Cheddar Cheese Blend', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Feta Cheese', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread-category.jpg', 'Shredded Parmesan Asiago', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Shredded Provolone', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Cheddar Cheese Blend', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Feta Cheese', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Shredded Parmesan Asiago', 800, 800));
 
 // #endregion
 
@@ -367,8 +379,8 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Gluten Free Crust', 'cr
 // -- Crust Seasoning
 
 // generateIngredientDbSeedItem(name: string, category: string, price: number): DbIngredientSeedSchemaType
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic Crust Seasoning', 'crust-seasoning', 0));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('No Garlic Crust Seasoning', 'crust-seasoning', 0));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic Crust Seasoning', 'crust_seasoning', 0));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('No Garlic Crust Seasoning', 'crust_seasoning', 0));
 
 // -- Sauce
 
@@ -400,17 +412,17 @@ ingredientDbSeedItems.push(generateIngredientDbSeedItem('Philly Steak', 'meat', 
 // -- Veggies & More
 
 // generateIngredientDbSeedItem(name: string, category: string, price: number): DbIngredientSeedSchemaType
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Hot Buffalo Sauce', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Jalapeno Peppers', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Onions', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Banana Peppers', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Diced Tomatoes', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Black Olives', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Mushrooms', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Pineapple', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Green Peppers', 'veggies-n-more', 200));
-ingredientDbSeedItems.push(generateIngredientDbSeedItem('Spinach', 'veggies-n-more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Hot Buffalo Sauce', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Garlic', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Jalapeno Peppers', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Onions', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Banana Peppers', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Diced Tomatoes', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Black Olives', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Mushrooms', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Pineapple', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Green Peppers', 'veggies_n_more', 200));
+ingredientDbSeedItems.push(generateIngredientDbSeedItem('Spinach', 'veggies_n_more', 200));
 
 // -- Add-on Cheeses
 

@@ -18,7 +18,7 @@ export function EditMenuCategory({ menuCategoryProp }: { menuCategoryProp: DbMen
   const handleHref = (e: ChangeEvent<HTMLInputElement>) => {
     setHref(e.target.value);
   }
-
+  /*TODO I believe this is because ChangeEvent always returns a string. Coerce to a number or do something else. */
   const handleImgId = (e: ChangeEvent<HTMLInputElement>) => {
     setImgId(e.target.value);
   }
