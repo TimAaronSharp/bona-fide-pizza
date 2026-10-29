@@ -115,41 +115,51 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
         <p key={key}>{key} {value ?? "Not Selected"}</p>
       ))
       } */}
-      <br />
-      <h2>Crusts</h2>
-      <p>-----</p>
-      <CrustList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
-      <p>-----</p>
-      <br />
-      <h2>Crust Seasoning</h2>
-      <p>-----</p>
-      <CrustSeasoningList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
-      <p>-----</p>
-      <br />
-      <h2>Sauce</h2>
-      <p>-----</p>
-      <SauceList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
-      <p>-----</p>
-      <br />
-      <h2>Cheese</h2>
-      <p>-----</p>
-      <MozzarellaList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
-      <p>-----</p>
-      <br />
-      <h2>Meat</h2>
-      <p>-----</p>
-      <MeatList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
-      <p>-----</p>
-      <br />
-      <h2>Veggies & More</h2>
-      <p>-----</p>
-      <VeggiesNMoreList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
-      <p>-----</p>
-      <br />
-      <h2>Add-on Cheeses</h2>
-      <p>-----</p>
-      <AddonCheeseList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
-      <p>-----</p>
+      {selectedIngredients.category === "specialty" && (
+        <div>
+          <br />
+          <h2>Crusts</h2>
+          <p>-----</p>
+          <CrustList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
+          <p>-----</p>
+          <br />
+          <h2>Crust Seasoning</h2>
+          <p>-----</p>
+          <CrustSeasoningList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <p>-----</p>
+          <br />
+          <h2>Cheese</h2>
+          <p>-----</p>
+          <MozzarellaList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <p>-----</p>
+          <br />
+        </div>
+      )}
+      {["specialty", "sandwich"].includes(selectedIngredients.category) && (
+        <div>
+          <br />
+          <h2>Sauce</h2>
+          <p>-----</p>
+          <SauceList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
+          <p>-----</p>
+          <br />
+          <h2>Meat</h2>
+          <p>-----</p>
+          <MeatList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <p>-----</p>
+          <br />
+          <h2>Veggies & More</h2>
+          <p>-----</p>
+          <VeggiesNMoreList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <p>-----</p>
+          <br />
+          <h2>Add-on Cheeses</h2>
+          <p>-----</p>
+          <AddonCheeseList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <p>-----</p>
+          <br />
+        </div>
+      )}
     </section>
   )
 }
