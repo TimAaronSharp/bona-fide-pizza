@@ -115,7 +115,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
         <p key={key}>{key} {value ?? "Not Selected"}</p>
       ))
       } */}
-      {selectedIngredients.category === "specialty" && (
+      {["pizza", "specialty"].includes(selectedIngredients.category) && (
         <div>
           <br />
           <h2>Crusts</h2>
@@ -135,7 +135,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
           <br />
         </div>
       )}
-      {["specialty", "sandwich"].includes(selectedIngredients.category) && (
+      {["pizza", "specialty", "sandwich"].includes(selectedIngredients.category) && (
         <div>
           <br />
           <h2>Sauce</h2>

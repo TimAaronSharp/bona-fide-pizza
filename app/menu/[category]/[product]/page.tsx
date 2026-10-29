@@ -5,7 +5,7 @@ import Image from "next/image";
 import * as schemas from "@/app/db/schema.db";
 import { unstable_cache } from "next/cache";
 import { EditProduct } from "@/app/ui/components/editProduct";
-import { Product, ProductAndImageQueryPropSchemaType, ProductIngredient } from "@/app/lib/definitions";
+import { CustomizedProductStateType, Product, ProductAndImageQueryPropSchemaType, ProductIngredient } from "@/app/lib/definitions";
 import { generateDefaultToppings } from "@/app/lib/utility";
 // import type { Transaction } from "@/app/lib/definitions";
 
@@ -63,21 +63,74 @@ async function getProductIngredientData(product: string, productId: number) {
   )();
 }
 
-function buildInitialState(product: Product, productIngredients: ProductIngredient[]) {
+function buildInitialState(product: Product, productIngredients: ProductIngredient[]): CustomizedProductStateType {
   if (product.category === "specialty") {
     return {
       category: product.category,
+      qty: 1,
       productId: product.id,
       crust: 1,
+      crustSeasoning: 7,
+      mozzarella: {
+        id: 15,
+        density: "normal"
+      },
+      sauce: {
+        id: 9,
+        density: "normal"
+      },
       toppings: generateDefaultToppings(productIngredients)
     };
+  } else if (product.category === "bread") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
+  } else if (product.category === "chicken") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
+  } else if (product.category === "pasta") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
   } else if (product.category === "sandwich") {
     return {
       category: product.category,
+      qty: 1,
       productId: product.id,
+      sauce: {
+        id: 9,
+        density: "normal"
+      },
       toppings: generateDefaultToppings(productIngredients)
     };
+  } else if (product.category === "salad") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
+  } else if (product.category === "dessert") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
+  } else if (product.category === "drinks") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id
+    }
   }
+  // const _exhaustiveCheck: never = product.category;
+  throw new Error("Unsupported product category: ")
 }
 
 export default async function ProductPage({ params }: { params: { product: string } }) {

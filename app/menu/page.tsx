@@ -30,7 +30,6 @@ export default async function MenuPage() {
   const menuCategoryItems = await getMenuCategoryData();
 
 
-  console.log("menuCategoryItems is ", menuCategoryItems);
   // console.log("menuCategoryItems is ", menuCategoryItems);
 
   // TODO Type errors below are from new properties being added to db schemas. Will fix typing later.

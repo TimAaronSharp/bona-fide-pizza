@@ -389,6 +389,7 @@ export const DensityEnum = z.enum(["light", "normal", "extra"]);
 
 export const BaseProduct = z.object({
   productId: z.number(),
+  qty: z.number(),
   toppings: z.record(z.string(), DensityEnum).optional()
 });
 
@@ -397,14 +398,26 @@ export const SpecialtyPizzaSchema = BaseProduct.extend({
   // size field?
   crust: z.number(),
   crustSeasoning: z.number(),
-  sauce: z.object({
-    id: z.number(),
-    density: DensityEnum
-  }),
   mozzarella: z.object({
     id: z.number(),
     density: DensityEnum
+  }),
+  sauce: z.object({
+    id: z.number(),
+    density: DensityEnum
   })
+});
+
+export const BreadSchema = BaseProduct.extend({
+  category: z.literal("bread")
+});
+
+export const ChickenSchema = BaseProduct.extend({
+  category: z.literal("chicken")
+});
+
+export const PastaSchema = BaseProduct.extend({
+  category: z.literal("pasta")
 });
 
 export const SandwichSchema = BaseProduct.extend({
@@ -413,11 +426,30 @@ export const SandwichSchema = BaseProduct.extend({
     id: z.number(),
     density: DensityEnum
   })
-})
+});
+
+export const SaladSchema = BaseProduct.extend({
+  category: z.literal("salad")
+});
+
+export const DessertSchema = BaseProduct.extend({
+  category: z.literal("dessert")
+});
+
+export const DrinksSchema = BaseProduct.extend({
+  category: z.literal("drinks")
+});
+
 
 export const CustomizedProductStateSchema = z.discriminatedUnion("category", [
   SpecialtyPizzaSchema,
-  SandwichSchema
+  BreadSchema,
+  ChickenSchema,
+  PastaSchema,
+  SandwichSchema,
+  SaladSchema,
+  DessertSchema,
+  DrinksSchema
 ]);
 
 // #endregion
