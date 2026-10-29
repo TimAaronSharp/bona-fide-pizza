@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomizedProductStateType, Density, DensityEnum, Ingredient, ProductIngredient } from "@/app/lib/definitions";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 /*What each product type would need in a customizer:
 
 BUILD YOUR OWN PIZZA:
@@ -95,6 +95,16 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     }
   }
 
+  function handleQtySelect(e: ChangeEvent<HTMLInputElement>) {
+    const quantity = parseInt(e.target.value)
+    setSelectedIngredients((prevState) => {
+      return {
+        ...prevState,
+        qty: quantity
+      }
+    })
+  }
+
   function handleIngredientSelection(ingredientId: number, value: Density) {
     setSelectedIngredients((prevState) => {
       return {
@@ -115,6 +125,8 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
         <p key={key}>{key} {value ?? "Not Selected"}</p>
       ))
       } */}
+
+      <QtySelect selectedIngredients={selectedIngredients} onQtySelect={handleQtySelect} />
       {["pizza", "specialty"].includes(selectedIngredients.category) && (
         <div>
           <br />
@@ -161,6 +173,15 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
         </div>
       )}
     </section>
+  )
+}
+
+function QtySelect({ selectedIngredients, onQtySelect }: { selectedIngredients: CustomizedProductStateType, onQtySelect: (quantity: ChangeEvent<HTMLInputElement>) => void }) {
+  return (
+    <div>
+      <label htmlFor="qty-input">Qty:</label>
+      <input type="number" id="qty-input" value={selectedIngredients.qty} onChange={onQtySelect} />
+    </div>
   )
 }
 
