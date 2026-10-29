@@ -98,10 +98,12 @@ export const orderItem = pgTable("order_item", {
   productId: integer("product_id").references(() => product.id).notNull(),
   quantity: integer("quantity").notNull(),
   unitPrice: integer("unit_price").notNull(),
+  customizationSignature: varchar("customization_signature", { length: 500 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 
+// TODO Look into how enums work in these schemas for modifierType field.
 export const orderItemModifier = pgTable("order_item_modifier", {
   orderItemId: integer("order_item_id").references(() => orderItem.id, { onDelete: "cascade" }).notNull(),
   ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),
@@ -126,10 +128,12 @@ export const cartItem = pgTable("cart_item", {
   productId: integer("product_id").references(() => product.id).notNull(),
   quantity: integer("quantity").notNull(),
   unitPrice: integer("unit_price").notNull(),
+  customizationSignature: varchar("customization_signature", { length: 500 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
+// TODO Look into how enums work in these schemas for modifierType field.
 export const cartItemModifier = pgTable("cart_item_modifier", {
   cartItemId: integer("cart_item_id").references(() => cartItem.id, { onDelete: "cascade" }).notNull(),
   ingredientId: integer("ingredient_id").references(() => ingredient.id).notNull(),

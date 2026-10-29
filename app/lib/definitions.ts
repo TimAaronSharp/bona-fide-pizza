@@ -39,7 +39,7 @@ export const DbImageSchema = z.object({
   updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date()
+  deletedAt: z.date().nullable()
 });
 
 export const DbImageSeedSchema = DbImageSchema.omit({
@@ -65,7 +65,7 @@ export const DbMenuCategorySchema = z.object({
   updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date()
+  deletedAt: z.date().nullable()
 });
 
 export const DbMenuCategorySeedSchema = DbMenuCategorySchema.omit({
@@ -95,7 +95,7 @@ export const DbProductSchema = z.object({
   updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date()
+  deletedAt: z.date().nullable()
 });
 
 export const DbProductSeedSchema = DbProductSchema.omit({
@@ -123,7 +123,7 @@ export const DbIngredientSchema = z.object({
   updaterId: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date()
+  deletedAt: z.date().nullable()
 });
 
 export const DbIngredientSeedSchema = DbIngredientSchema.omit({
@@ -187,6 +187,7 @@ export const DbBaseItemSchema = z.object({
   productId: z.number(),
   quantity: z.number(),
   unitPrice: z.number(),
+  customizationSignature: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
@@ -284,7 +285,7 @@ export const DbAddressSchema = z.object({
   isActive: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date()
+  deletedAt: z.date().nullable()
 });
 
 export const DbAddressSeedSchema = DbAddressSchema.omit({
@@ -360,29 +361,13 @@ export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 // #region zod local schemas
 
-export const ProductSchema = z.object({
-  link: {
-    name: z.string(),
-    href: z.string()
-  },
-  image: {
-    src: z.string(),
-    alt: z.string(),
-    width: z.number(),
-    height: z.number()
-  },
-  info: {
-    id: z.number(),
-    name: z.string(),
-    description: z.string()
-  }
-});
-
 export const IngredientSchema = DbIngredientSchema.omit({
+  isActive: true,
   creatorId: true,
   updaterId: true,
   createdAt: true,
-  updatedAt: true
+  updatedAt: true,
+  deletedAt: true
 })
 
 export const ProductIngredientSchema = DbProductIngredientSeedSchema.omit({
@@ -400,13 +385,51 @@ export const ProductAndImageQueryPropSchema = z.object({
   image: DbImageSchema
 });
 
-export const DensitySchema = z.enum(["light", "normal", "extra"]).optional();
+export const DensityEnum = z.enum(["light", "normal", "extra"]);
+
+export const BaseProduct = z.object({
+  productId: z.number(),
+  toppings: z.record(z.string(), DensityEnum).optional()
+});
+
+export const SpecialtyPizzaSchema = BaseProduct.extend({
+  category: z.literal("specialty"),
+  // size field?
+  crust: z.number(),
+  crustSeasoning: z.number(),
+  sauce: z.object({
+    id: z.number(),
+    density: DensityEnum
+  }),
+  mozzarella: z.object({
+    id: z.number(),
+    density: DensityEnum
+  })
+});
+
+export const SandwichSchema = BaseProduct.extend({
+  category: z.literal("sandwich"),
+  sauce: z.object({
+    id: z.number(),
+    density: DensityEnum
+  })
+})
+
+export const CustomizedProductStateSchema = z.discriminatedUnion("category", [
+  SpecialtyPizzaSchema,
+  SandwichSchema
+]);
 
 // #endregion
 
 // #region Inferred local types
 
-export type ProductSchemaType = z.infer<typeof ProductSchema>;
+// export type ProductSchemaType = z.infer<typeof ProductSchema>;
+
+/* NOTE Would this be confusing since I already have a DbProductSchemaType that is the same thing?
+I thought about this so the readability on the front end would be better but could this pattern of doing things
+be confusing at larger scales?*/
+export type Product = z.infer<typeof DbProductSchema>;
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
 
@@ -415,8 +438,11 @@ export type ProductIngredient = z.infer<typeof ProductIngredientSchema>;
 export type MenuCategoryAndImagePropSchemaType = z.infer<typeof MenuCategoryAndImagePropSchema>;
 
 export type ProductAndImageQueryPropSchemaType = z.infer<typeof ProductAndImageQueryPropSchema>;
+// NOTE Still need this Density type?
+export type Density = z.infer<typeof DensityEnum>;
 
-export type Density = z.infer<typeof DensitySchema>;
+export type CustomizedProductStateType = z.infer<typeof CustomizedProductStateSchema>;
+
 // #endregion
 
 

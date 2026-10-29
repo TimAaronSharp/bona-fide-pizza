@@ -92,12 +92,13 @@ function generateOrderDbSeedItem(orderStatus: string): DbOrderSeedSchemaType {
   }
 }
 
-function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, unitPrice: number): DbOrderItemSeedSchemaType {
+function generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, unitPrice: number, customizationSignature: string): DbOrderItemSeedSchemaType {
   return {
     orderId,
     productId,
     quantity,
-    unitPrice
+    unitPrice,
+    customizationSignature
   }
 }
 
@@ -506,13 +507,13 @@ orderDbSeedItems.push(generateOrderDbSeedItem('complete'));
 Perhaps running "seedOrder()" from inside "seedProduct()", and then "seedOrderItem()" after "seedOrder()"
 and passing both ids to "seedOrderItem()"? Might not be worth the effort, but at least look into it.*/
 
-// generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, orderItemTotal: number): DbOrderItemSeedSchemaType
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 1899));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 799));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 8, 1, 499));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 24, 1, 899));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 27, 1, 899));
-orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 31, 1, 499));
+// generateOrderItemDbSeedItem(orderId: number, productId: number, quantity: number, unitPrice: number): DbOrderItemSeedSchemaType
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 3, 2, 1899, "prod_3"));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 28, 2, 799, "prod_28"));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(1, 8, 1, 499, "prod_8"));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 24, 1, 899, "prod_24"));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 27, 1, 899, "prod_27"));
+orderItemDbSeedItems.push(generateOrderItemDbSeedItem(2, 31, 1, 499, "prod_31"));
 
 // #endregion
 

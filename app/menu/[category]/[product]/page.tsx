@@ -1,11 +1,12 @@
 import { db } from "@/app/db/drizzle";
-import { eq, getColumns } from "drizzle-orm";
+import { asc, eq, getColumns } from "drizzle-orm";
 import { Customizer } from "@/app/ui/components/customizer";
 import Image from "next/image";
 import * as schemas from "@/app/db/schema.db";
 import { unstable_cache } from "next/cache";
 import { EditProduct } from "@/app/ui/components/editProduct";
-import { ProductAndImageQueryPropSchemaType } from "@/app/lib/definitions.js";
+import { Product, ProductAndImageQueryPropSchemaType, ProductIngredient } from "@/app/lib/definitions";
+import { generateDefaultToppings } from "@/app/lib/utility";
 // import type { Transaction } from "@/app/lib/definitions";
 
 /* TODO Think about how to dynamically populate metadata info (title) based on the dynamic route (params is received
@@ -55,11 +56,28 @@ async function getProductIngredientData(product: string, productId: number) {
   console.log("productId is", productId);
   return unstable_cache(
     async () => {
-      return await db.select(productIngredientData).from(schemas.productIngredient).where(eq(schemas.productIngredient.productId, productId));
+      return await db.select(productIngredientData).from(schemas.productIngredient).where(eq(schemas.productIngredient.productId, productId)).orderBy(asc(schemas.productIngredient.ingredientId));
     },
     [`productIngredient-key-${product}`],
     { tags: [`productIngredient-${product}`] }
   )();
+}
+
+function buildInitialState(product: Product, productIngredients: ProductIngredient[]) {
+  if (product.category === "specialty") {
+    return {
+      category: product.category,
+      productId: product.id,
+      crust: 1,
+      toppings: generateDefaultToppings(productIngredients)
+    };
+  } else if (product.category === "sandwich") {
+    return {
+      category: product.category,
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
+    };
+  }
 }
 
 export default async function ProductPage({ params }: { params: { product: string } }) {
@@ -67,9 +85,13 @@ export default async function ProductPage({ params }: { params: { product: strin
   // const schemaKey = category as keyof typeof schemas;
   // console.log("paramName is ", paramName);
 
-  const [item]: ProductAndImageQueryPropSchemaType[] = await getProductData(product);
+  // TODO Figure out how to use the "getColumns()" to destruct "isActive" etc. in "getProductData()" query (unsure w/ 2 tables).
+  const [item] = await getProductData(product);
   const ingredients = await getIngredientData();
   const productIngredients = await getProductIngredientData(product, item.product.id);
+  const initialState = buildInitialState(item.product, productIngredients);
+
+  console.log("initialState is", initialState);
 
   console.log("productIngredients returns:", productIngredients);
   // console.log("item is", item);
@@ -90,7 +112,7 @@ export default async function ProductPage({ params }: { params: { product: strin
         <p>{item.product.description}</p>
         <EditProduct productProp={item.product} />
         <Image {...imageData} />
-        <Customizer ingredients={ingredients} productIngredients={productIngredients} />
+        <Customizer ingredients={ingredients} productIngredients={productIngredients} initialState={initialState} />
       </section>
     </main>
   )

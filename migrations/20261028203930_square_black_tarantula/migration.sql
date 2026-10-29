@@ -79,6 +79,7 @@ CREATE TABLE "cart_item" (
 	"product_id" integer NOT NULL,
 	"quantity" integer NOT NULL,
 	"unit_price" integer NOT NULL,
+	"customization_signature" varchar(500) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -148,6 +149,7 @@ CREATE TABLE "order_item" (
 	"product_id" integer NOT NULL,
 	"quantity" integer NOT NULL,
 	"unit_price" integer NOT NULL,
+	"customization_signature" varchar(500) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

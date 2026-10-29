@@ -1,6 +1,6 @@
 "use client";
 
-import { Density, DensitySchema, Ingredient, ProductIngredient } from "@/app/lib/definitions";
+import { CustomizedProductStateType, Density, DensityEnum, Ingredient, ProductIngredient } from "@/app/lib/definitions";
 import { useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -81,19 +81,11 @@ ALL:
 */
 
 // NOTE Individual components below in this file. Didn't want to scroll to the bottom to look at the main component.
-export function Customizer({ ingredients, productIngredients }: { ingredients: Ingredient[], productIngredients: ProductIngredient[] }) {
-  const [selectedIngredients, setSelectedIngredients] = useState<Record<number, Density>>(() => {
-
-    const initialState: Record<number, Density> = {};
-
-    for (const ingredient of ingredients) {
-      initialState[ingredient.id] = undefined;
-    }
-    return initialState;
-  });
+export function Customizer({ ingredients, productIngredients, initialState }: { ingredients: Ingredient[], productIngredients: ProductIngredient[], initialState: CustomizedProductStateType }) {
+  const [selectedIngredients, setSelectedIngredients] = useState<CustomizedProductStateType>(initialState);
 
   function handleDensityValidation(ingredientId: number, density: string) {
-    const validatedDensity = DensitySchema.safeParse(density);
+    const validatedDensity = DensityEnum.safeParse(density);
 
     if (validatedDensity.success) {
       handleIngredientSelection(ingredientId, validatedDensity.data);
@@ -107,20 +99,22 @@ export function Customizer({ ingredients, productIngredients }: { ingredients: I
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
-        [ingredientId]: prevState[ingredientId] = value
+        // [ingredientId]: prevState[ingredientId] = value
       };
     });
   }
+
+  console.log("selectedIngredients is", selectedIngredients);
 
   // console.log("selectedIngredients starts as", selectedIngredients);
   // console.log("selectedIngredients is now", selectedIngredients);
 
   return (
     <section>
-      {Object.entries(selectedIngredients).map(([key, value]) => (
+      {/* {Object.entries(selectedIngredients).map(([key, value]) => (
         <p key={key}>{key} {value ?? "Not Selected"}</p>
       ))
-      }
+      } */}
       <br />
       <h2>Crusts</h2>
       <p>-----</p>

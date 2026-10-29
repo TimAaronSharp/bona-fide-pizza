@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "84fd7ab1-591b-4ec9-8c6f-e3237eac3f71",
+  "id": "be323372-7474-44bc-b629-05a58eb262b0",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -909,6 +909,19 @@
       "table": "cart_item"
     },
     {
+      "type": "varchar(500)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "customization_signature",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "cart_item"
+    },
+    {
       "type": "timestamp",
       "typeSchema": null,
       "notNull": true,
@@ -1554,6 +1567,19 @@
       "generated": null,
       "identity": null,
       "name": "unit_price",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "order_item"
+    },
+    {
+      "type": "varchar(500)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "customization_signature",
       "entityType": "columns",
       "schema": "public",
       "table": "order_item"
