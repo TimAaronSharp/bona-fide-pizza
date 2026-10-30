@@ -129,6 +129,15 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     });
   }
 
+  function handleCrustSeasoningSelection(crustSeasoningId: number) {
+    setSelectedIngredients((prevState) => {
+      return {
+        ...prevState,
+        crustSeasoning: crustSeasoningId
+      };
+    });
+  }
+
   function handleIngredientSelection(ingredientId: number, stateKey: IngredientCategoryEnumType, value: Density) {
 
     setSelectedIngredients((prevState) => {
@@ -157,7 +166,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
           <br />
           <h2>Crust Seasoning</h2>
           <p>-----</p>
-          <CrustSeasoningList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <CrustSeasoningList ingredients={ingredients} selectedIngredients={selectedIngredients} onCrustSeasoningSelection={handleCrustSeasoningSelection} />
           <p>-----</p>
           <br />
           <h2>Cheese</h2>
@@ -212,7 +221,7 @@ function CrustList({ ingredients, selectedIngredients, onCrustSelection }: { ing
   return (
     <ol>
       {ingredients.map((crust) => {
-        if (crust.category == "crust" && selectedIngredients.category === "specialty") {
+        if (crust.category === "crust" && (selectedIngredients.category === "custom_pizza" || selectedIngredients.category === "specialty")) {
           const radioId = `${crust.name}-id`;
           return (
             <li key={crust.name}>
@@ -227,7 +236,7 @@ function CrustList({ ingredients, selectedIngredients, onCrustSelection }: { ing
                   /*TODO Tease out how to test this as a malicious user in the dev tools console (if they wanted to
                   change the crust id in the state manually, not going through the ui). */
                   onChange={(e) => { onCrustSelection(crust.id) }}
-                  value="normal" ></input>
+                ></input>
               </fieldset>
               <br />
             </li>
@@ -238,11 +247,11 @@ function CrustList({ ingredients, selectedIngredients, onCrustSelection }: { ing
   )
 }
 
-function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[], onIngredientSelection: (ingredientId: number, density: Density) => void }) {
+function CrustSeasoningList({ ingredients, selectedIngredients, onCrustSeasoningSelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onCrustSeasoningSelection: (crustSeasoningId: number) => void }) {
   return (
     <ol>
       {ingredients.map((crustSeasoning) => {
-        if (crustSeasoning.category == "crust_seasoning") {
+        if (crustSeasoning.category == "crust_seasoning" && (selectedIngredients.category === "custom_pizza" || selectedIngredients.category === "specialty")) {
           return (
             <li key={crustSeasoning.name}>
               <br />
@@ -252,8 +261,9 @@ function CrustSeasoningList({ ingredients }: { ingredients: Ingredient[], onIngr
                   type="radio"
                   id={crustSeasoning.name + " id"}
                   name="crustSeasoning-selection-radio-group"
-                  onChange={(e) => { }}
-                  value="normal"></input>
+                  checked={selectedIngredients["crustSeasoning"] === crustSeasoning.id}
+                  onChange={(e) => { onCrustSeasoningSelection(crustSeasoning.id) }}
+                ></input>
               </fieldset>
               <br />
             </li>
