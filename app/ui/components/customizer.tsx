@@ -101,7 +101,9 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
 
   function handleQtyIncrease() {
     if (selectedIngredients.qty >= 10) return
+
     const newQty = selectedIngredients.qty + 1;
+
     setSelectedIngredients((prevState) => {
       console.log("prevState is", prevState);
       return {
@@ -113,7 +115,9 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
 
   function handleQtyDecrease() {
     if (selectedIngredients.qty <= 1) return
+
     const newQty = selectedIngredients.qty - 1;
+
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
@@ -152,10 +156,25 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
   function handleMozzarellaSelection(id: number, densityString: string) {
     /*TODO Figure some way to validate that the id of the mozzarella is a valid id of the mozzarella category. */
     const { density } = handleDensityValidation(densityString);
+
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
         mozzarella: {
+          id,
+          density
+        }
+      };
+    });
+  }
+
+  function handleSauceSelection(id: number, densityString: string) {
+    const { density } = handleDensityValidation(densityString);
+
+    setSelectedIngredients((prevState) => {
+      return {
+        ...prevState,
+        sauce: {
           id,
           density
         }
@@ -196,22 +215,22 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
           <br />
           <h2>Sauce</h2>
           <p>-----</p>
-          <SauceList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensityValidation={handleDensityValidation} />
+          <SauceList ingredients={ingredients} selectedIngredients={selectedIngredients} onSauceSelection={handleSauceSelection} />
           <p>-----</p>
           <br />
           <h2>Meat</h2>
           <p>-----</p>
-          <MeatList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <MeatList ingredients={ingredients} />
           <p>-----</p>
           <br />
           <h2>Veggies & More</h2>
           <p>-----</p>
-          <VeggiesNMoreList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <VeggiesNMoreList ingredients={ingredients} />
           <p>-----</p>
           <br />
           <h2>Add-on Cheeses</h2>
           <p>-----</p>
-          <AddonCheeseList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <AddonCheeseList ingredients={ingredients} />
           <p>-----</p>
           <br />
         </div>
@@ -289,7 +308,7 @@ function CrustSeasoningList({ ingredients, selectedIngredients, onCrustSeasoning
   )
 }
 
-function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onMozzarellaSelection: (mozzarellaId: number, density: string) => void }) {
+function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onMozzarellaSelection: (id: number, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((mozzarella) => {
@@ -299,6 +318,7 @@ function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelectio
           return (
             <li key={mozzarella.name}>
               <br />
+              {/*TODO Work on the logic for choosing the mozzarella itself like you did with the densities. */}
               <input type="radio" id={productRadioId} name="mozzarella-selection-radio-group"></input>
               <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
               <br />
@@ -338,14 +358,15 @@ function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelectio
   )
 }
 
-function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
+function SauceList({ ingredients, selectedIngredients, onSauceSelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onSauceSelection: (id: number, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((sauce) => {
-        if (sauce.category == "sauce") {
+        if (sauce.category == "sauce" && (selectedIngredients.category === "custom_pizza" || selectedIngredients.category === "specialty" || selectedIngredients.category === "sandwich")) {
           return (
             <li key={sauce.name}>
               <br />
+              {/*TODO Work on the logic for choosing the sauce itself like you did with the densities. */}
               <input type="radio" id={sauce.name + " id"} name="sauce-selection-radio-group"></input>
               <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
               <br />
@@ -354,8 +375,8 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
                   type="radio"
                   id={sauce.name + "-light"}
                   name={`sauce-${sauce.name}-density-radio-group`}
-                  checked={selectedIngredients[sauce.id] === "light"}
-                  onChange={(e) => { onDensityValidation(sauce.id, sauce.category, e.target.value) }}
+                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "light"}
+                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
                   value="light"
                 />
                 <label htmlFor={sauce.name + "-light"}>Light </label>
@@ -363,8 +384,8 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
                   type="radio"
                   id={sauce.name + "-normal"}
                   name={`sauce-${sauce.name}density-radio-group`}
-                  checked={selectedIngredients[sauce.id] === "normal"}
-                  onChange={(e) => { onDensityValidation(sauce.id, sauce.category, e.target.value) }}
+                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "normal"}
+                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
                   value="normal"
                 />
                 <label htmlFor={sauce.name + "-normal"}>Normal </label>
@@ -372,8 +393,8 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
                   type="radio"
                   id={sauce.name + "-extra"}
                   name={`sauce-${sauce.name}density-radio-group`}
-                  checked={selectedIngredients[sauce.id] === "extra"}
-                  onChange={(e) => { onDensityValidation(sauce.id, sauce.category, e.target.value) }}
+                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "extra"}
+                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
                   value="extra"
                 />
                 <label htmlFor={sauce.name + "-extra"}>Extra </label>
@@ -386,7 +407,7 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
   )
 }
 
-function MeatList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
+function MeatList({ ingredients }: { ingredients: Ingredient[] }) {
   return (
     <ol>
       {ingredients.map((meat) => {
@@ -413,7 +434,7 @@ function MeatList({ ingredients, selectedIngredients, onDensityValidation }: { i
   )
 }
 
-function VeggiesNMoreList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
+function VeggiesNMoreList({ ingredients }: { ingredients: Ingredient[] }) {
   return (
     <ol>
       {ingredients.map((veggies) => {
@@ -441,7 +462,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onDensityValidatio
   )
 }
 
-function AddonCheeseList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
+function AddonCheeseList({ ingredients }: { ingredients: Ingredient[] }) {
   return (
     <ol>
       {ingredients.map((cheese) => {
