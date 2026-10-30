@@ -132,7 +132,7 @@ menuCategoryDbSeedItems.push(generateMenuCategoryDbSeedItem('Drinks', '/menu/dri
 
 // -- Build Your Own Pizza
 
-productDbSeedItems.push(generateProductDbSeedItem('Build Your Own Pizza', 'Yummy Build Your Own Pizza', 'pizza', '/menu/build_your_own/pizza', 'pizza', 1499));
+productDbSeedItems.push(generateProductDbSeedItem('Build Your Own Pizza', 'Yummy Build Your Own Pizza', 'custom_pizza', '/menu/build_your_own/pizza', 'pizza', 1499));
 
 // -- Specialty Pizza
 
@@ -211,7 +211,7 @@ productDbSeedItems.push(generateProductDbSeedItem('Orange Crush', 'Yummy Orange 
 
 // generateImageDbSeedItem(src: string, alt: string, width: number, height: number): DbImageSeedSchemaType
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Build Your Own Pizza Menu Category', 800, 800));
-imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Pizza Menu Category', 800, 800));
+imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/specialty/specialty_category.jpg', 'Specialty Pizza Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/bread/bread_category.jpg', 'Bread Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/chicken/chicken_category.jpg', 'Chicken Menu Category', 800, 800));
 imageDbSeedItems.push(generateImageDbSeedItem('/assets/menu/pasta/pasta_category.jpg', 'Pasta Menu Category', 800, 800));

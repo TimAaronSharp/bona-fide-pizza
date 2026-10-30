@@ -14,7 +14,7 @@ drizzle-kit generation/migration. */
 /* TODO Contemplate creating "edit history" tables so you can log how many times a product, menu_category, image, etc., has been edited. */
 
 export const productCategoryEnum = pgEnum("product_category_enum", [
-  "pizza",
+  "custom_pizza",
   "specialty",
   "bread",
   "chicken",

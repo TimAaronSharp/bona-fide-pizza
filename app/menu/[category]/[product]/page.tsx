@@ -64,7 +64,24 @@ async function getProductIngredientData(product: string, productId: number) {
 }
 
 function buildInitialState(product: Product, productIngredients: ProductIngredient[]): CustomizedProductStateType {
-  if (product.category === "specialty") {
+  if (product.category === "custom_pizza") {
+    return {
+      category: product.category,
+      qty: 1,
+      productId: product.id,
+      crust: 1,
+      crustSeasoning: 7,
+      mozzarella: {
+        id: 15,
+        density: "normal"
+      },
+      sauce: {
+        id: 9,
+        density: "normal"
+      },
+      toppings: generateDefaultToppings(productIngredients)
+    };
+  } else if (product.category === "specialty") {
     return {
       category: product.category,
       qty: 1,

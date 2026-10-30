@@ -29,7 +29,7 @@ import { db } from "@/app/db/drizzle";
 for every seedSchema.*/
 
 export const ProductCategoryEnum = z.enum([
-  "pizza",
+  "custom_pizza",
   "specialty",
   "bread",
   "chicken",
@@ -415,6 +415,21 @@ export const BaseProduct = z.object({
   toppings: z.record(z.string(), DensityEnum).optional()
 });
 
+export const CustomPizzaSchema = BaseProduct.extend({
+  category: z.literal("custom_pizza"),
+  // size field?
+  crust: z.number(),
+  crustSeasoning: z.number(),
+  mozzarella: z.object({
+    id: z.number(),
+    density: DensityEnum
+  }),
+  sauce: z.object({
+    id: z.number(),
+    density: DensityEnum
+  })
+})
+
 export const SpecialtyPizzaSchema = BaseProduct.extend({
   category: z.literal("specialty"),
   // size field?
@@ -464,6 +479,7 @@ export const DrinksSchema = BaseProduct.extend({
 
 
 export const CustomizedProductStateSchema = z.discriminatedUnion("category", [
+  CustomPizzaSchema,
   SpecialtyPizzaSchema,
   BreadSchema,
   ChickenSchema,
