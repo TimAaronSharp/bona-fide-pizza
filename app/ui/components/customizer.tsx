@@ -86,14 +86,16 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
 
   console.log("selectedIngredients is", selectedIngredients);
 
-  function handleDensityValidation(ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) {
+  function handleDensityValidation(density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
 
     if (validatedDensity.success) {
-      handleIngredientSelection(ingredientId, stateKey, validatedDensity.data);
+      return {
+        density: validatedDensity.data
+      }
     } else {
       // TODO Decide how you want to handle zod schema parsing errors.
-      console.error("ERROR NOOB!");
+      throw new Error("ERROR N00B!!!");
     }
   }
 
@@ -139,13 +141,26 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
   }
 
   function handleIngredientSelection(ingredientId: number, stateKey: IngredientCategoryEnumType, value: Density) {
-
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
         [stateKey]: value
       };
     });
+  }
+
+  function handleMozzarellaSelection(mozzarellaId: number, density: string) {
+    // debugger;
+    const validatedData = handleDensityValidation(density);
+    setSelectedIngredients((prevState) => {
+      return {
+        ...prevState,
+        mozzarella: {
+          id: mozzarellaId,
+          density: validatedData.density
+        }
+      }
+    })
   }
 
   return (
@@ -171,7 +186,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
           <br />
           <h2>Cheese</h2>
           <p>-----</p>
-          <MozzarellaList ingredients={ingredients} onIngredientSelection={handleIngredientSelection} />
+          <MozzarellaList ingredients={ingredients} selectedIngredients={selectedIngredients} onMozzarellaSelection={handleMozzarellaSelection} />
           <p>-----</p>
           <br />
         </div>
@@ -227,7 +242,6 @@ function CrustList({ ingredients, selectedIngredients, onCrustSelection }: { ing
             <li key={crust.name}>
               <br />
               <fieldset className="border-1">
-                <label htmlFor={crust.name + " id"}>{crust.name}</label>
                 <input
                   type="radio"
                   id={crust.name + "-id"}
@@ -237,6 +251,7 @@ function CrustList({ ingredients, selectedIngredients, onCrustSelection }: { ing
                   change the crust id in the state manually, not going through the ui). */
                   onChange={(e) => { onCrustSelection(crust.id) }}
                 ></input>
+                <label htmlFor={crust.name + " id"}>{crust.name}</label>
               </fieldset>
               <br />
             </li>
@@ -256,7 +271,6 @@ function CrustSeasoningList({ ingredients, selectedIngredients, onCrustSeasoning
             <li key={crustSeasoning.name}>
               <br />
               <fieldset className="border-1">
-                <label htmlFor={crustSeasoning.name + " id"}>{crustSeasoning.name}</label>
                 <input
                   type="radio"
                   id={crustSeasoning.name + " id"}
@@ -264,10 +278,60 @@ function CrustSeasoningList({ ingredients, selectedIngredients, onCrustSeasoning
                   checked={selectedIngredients["crustSeasoning"] === crustSeasoning.id}
                   onChange={(e) => { onCrustSeasoningSelection(crustSeasoning.id) }}
                 ></input>
+                <label htmlFor={crustSeasoning.name + " id"}>{crustSeasoning.name}</label>
               </fieldset>
               <br />
             </li>
           );
+        }
+      })}
+    </ol>
+  )
+}
+
+function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onMozzarellaSelection: (mozzarellaId: number, density: string) => void }) {
+  return (
+    <ol>
+      {ingredients.map((mozzarella) => {
+        const productRadioId = `${mozzarella.name}-selection-id`;
+
+        if (mozzarella.category == "mozzarella" && (selectedIngredients.category === "custom_pizza" || selectedIngredients.category === "specialty")) {
+          return (
+            <li key={mozzarella.name}>
+              <br />
+              <input type="radio" id={productRadioId} name="mozzarella-selection-radio-group"></input>
+              <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
+              <br />
+              <fieldset className="border-1">
+                <input
+                  type="radio"
+                  id={`${mozzarella.name}-light`}
+                  name="mozzarella-density-radio-group"
+                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "light"}
+                  value="light"
+                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }} />
+                <label htmlFor={mozzarella.name + "-light"}>Light </label>
+                <input
+                  type="radio"
+                  id={`${mozzarella.name}-normal`}
+                  name="mozzarella-density-radio-group"
+                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "normal"}
+                  value="normal"
+                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
+                />
+                <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
+                <input
+                  type="radio"
+                  id={`${mozzarella.name}-extra`}
+                  name="mozzarella-density-radio-group"
+                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "extra"}
+                  value="extra"
+                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
+                />
+                <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
+              </fieldset>
+            </li>
+          )
         }
       })}
     </ol>
@@ -282,8 +346,8 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
           return (
             <li key={sauce.name}>
               <br />
-              <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
               <input type="radio" id={sauce.name + " id"} name="sauce-selection-radio-group"></input>
+              <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
               <br />
               <fieldset className="border-1">
                 <input
@@ -322,33 +386,6 @@ function SauceList({ ingredients, selectedIngredients, onDensityValidation }: { 
   )
 }
 
-function MozzarellaList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
-  return (
-    <ol>
-      {ingredients.map((mozzarella) => {
-        if (mozzarella.category == "mozzarella") {
-          return (
-            <li key={mozzarella.name}>
-              <br />
-              <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
-              <input type="radio" id={mozzarella.name + " id"} name="mozzarella-selection-radio-group"></input>
-              <br />
-              <fieldset className="border-1">
-                <label htmlFor={mozzarella.name + "-light"}>Light </label>
-                <input type="radio" id={mozzarella.name + "-light"} name="mozzarella-density-radio-group" value="light" />
-                <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
-                <input type="radio" id={mozzarella.name + "-normal"} name="mozzarella-density-radio-group" value="normal" />
-                <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
-                <input type="radio" id={mozzarella.name + "-extra"} name="mozzarella-density-radio-group" value="extra" />
-              </fieldset>
-            </li>
-          )
-        }
-      })}
-    </ol>
-  )
-}
-
 function MeatList({ ingredients, selectedIngredients, onDensityValidation }: { ingredients: Ingredient[], selectedIngredients: Record<number, Density>, onDensityValidation: (ingredientId: number, stateKey: IngredientCategoryEnumType, density: string) => void }) {
   return (
     <ol>
@@ -357,16 +394,16 @@ function MeatList({ ingredients, selectedIngredients, onDensityValidation }: { i
           return (
             <li key={meat.name}>
               <br />
-              <label htmlFor={meat.name + " id"}>{meat.name}</label>
               <input type="checkbox" id={meat.name + " id"}></input>
+              <label htmlFor={meat.name + " id"}>{meat.name}</label>
               <br />
               <fieldset className="border-1">
-                <label htmlFor={meat.name + "-light"}>Light </label>
                 <input type="radio" id={meat.name + "-light"} name="meat-density-radio-group" value="light" />
-                <label htmlFor={meat.name + "-normal"}>Normal </label>
+                <label htmlFor={meat.name + "-light"}>Light </label>
                 <input type="radio" id={meat.name + "-normal"} name="meat-density-radio-group" value="normal" />
-                <label htmlFor={meat.name + "-extra"}>Extra </label>
+                <label htmlFor={meat.name + "-normal"}>Normal </label>
                 <input type="radio" id={meat.name + "-extra"} name="meat-density-radio-group" value="extra" />
+                <label htmlFor={meat.name + "-extra"}>Extra </label>
               </fieldset>
             </li>
           )
@@ -385,16 +422,16 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onDensityValidatio
             <li key={veggies.name}>
               <br />
 
-              <label htmlFor={veggies.name + "-id"}>{veggies.name}</label>
               <input type="checkbox" id={veggies.name + "-id"}></input>
+              <label htmlFor={veggies.name + "-id"}>{veggies.name}</label>
               <br />
               <fieldset className="border-1">
-                <label htmlFor={veggies.name + "-light"}>Light </label>
                 <input type="radio" id={veggies.name + "-light"} name="veggies-density-radio-group" value="light" />
-                <label htmlFor={veggies.name + "-normal"}>Normal </label>
+                <label htmlFor={veggies.name + "-light"}>Light </label>
                 <input type="radio" id={veggies.name + "-normal"} name="veggies-density-radio-group" value="normal" />
-                <label htmlFor={veggies.name + "-extra"}>Extra </label>
+                <label htmlFor={veggies.name + "-normal"}>Normal </label>
                 <input type="radio" id={veggies.name + "-extra"} name="veggies-density-radio-group" value="extra" />
+                <label htmlFor={veggies.name + "-extra"}>Extra </label>
               </fieldset>
             </li>
           )
@@ -413,16 +450,16 @@ function AddonCheeseList({ ingredients, selectedIngredients, onDensityValidation
             <li key={cheese.name}>
               <br />
 
-              <label htmlFor={cheese.name + " id"}>{cheese.name}</label>
               <input type="checkbox" id={cheese.name + " id"}></input>
+              <label htmlFor={cheese.name + " id"}>{cheese.name}</label>
               <br />
               <fieldset className="border-1">
-                <label htmlFor={cheese.name + "-light"}>Light </label>
                 <input type="radio" id={cheese.name + "-light"} name="addonCheeses-density-radio-group" value="light" />
-                <label htmlFor={cheese.name + "-normal"}>Normal </label>
+                <label htmlFor={cheese.name + "-light"}>Light </label>
                 <input type="radio" id={cheese.name + "-normal"} name="addonCheeses-density-radio-group" value="normal" />
-                <label htmlFor={cheese.name + "-extra"}>Extra </label>
+                <label htmlFor={cheese.name + "-normal"}>Normal </label>
                 <input type="radio" id={cheese.name + "-extra"} name="addonCheeses-density-radio-group" value="extra" />
+                <label htmlFor={cheese.name + "-extra"}>Extra </label>
               </fieldset>
             </li>
           )
