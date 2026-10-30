@@ -92,7 +92,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     if (validatedDensity.success) {
       return {
         density: validatedDensity.data
-      }
+      };
     } else {
       // TODO Decide how you want to handle zod schema parsing errors.
       throw new Error("ERROR N00B!!!");
@@ -122,45 +122,45 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     });
   }
 
-  function handleCrustSelection(crustId: number) {
+  function handleCrustSelection(id: number) {
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
-        crust: crustId
+        crust: id
       };
     });
   }
 
-  function handleCrustSeasoningSelection(crustSeasoningId: number) {
+  function handleCrustSeasoningSelection(id: number) {
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
-        crustSeasoning: crustSeasoningId
+        crustSeasoning: id
       };
     });
   }
 
-  function handleIngredientSelection(ingredientId: number, stateKey: IngredientCategoryEnumType, value: Density) {
-    setSelectedIngredients((prevState) => {
-      return {
-        ...prevState,
-        [stateKey]: value
-      };
-    });
-  }
+  // function handleIngredientSelection(ingredientId: number, stateKey: IngredientCategoryEnumType, value: Density) {
+  //   setSelectedIngredients((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       [stateKey]: value
+  //     };
+  //   });
+  // }
 
-  function handleMozzarellaSelection(mozzarellaId: number, density: string) {
-    // debugger;
-    const validatedData = handleDensityValidation(density);
+  function handleMozzarellaSelection(id: number, densityString: string) {
+    /*TODO Figure some way to validate that the id of the mozzarella is a valid id of the mozzarella category. */
+    const { density } = handleDensityValidation(densityString);
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
         mozzarella: {
-          id: mozzarellaId,
-          density: validatedData.density
+          id,
+          density
         }
-      }
-    })
+      };
+    });
   }
 
   return (
