@@ -84,6 +84,8 @@ ALL:
 export function Customizer({ ingredients, productIngredients, initialState }: { ingredients: Ingredient[], productIngredients: ProductIngredient[], initialState: CustomizedProductStateType }) {
   const [selectedIngredients, setSelectedIngredients] = useState<CustomizedProductStateType>(initialState);
 
+  console.log("selectedIngredients is", selectedIngredients);
+
   function handleDensityValidation(ingredientId: number, density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
 
@@ -95,12 +97,35 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     }
   }
 
-  function handleQtySelect(e: ChangeEvent<HTMLInputElement>) {
-    const quantity = parseInt(e.target.value)
+  // function handleQtySelect() {
+  //   const quantity = parseInt(e.target.value)
+  //   setSelectedIngredients((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       qty: quantity
+  //     }
+  //   })
+  // }
+
+  function handleQtyIncrease() {
+    if (selectedIngredients.qty >= 10) return
+    const newQty = selectedIngredients.qty + 1;
+    setSelectedIngredients((prevState) => {
+      console.log("prevState is", prevState);
+      return {
+        ...prevState,
+        qty: newQty
+      }
+    })
+  }
+
+  function handleQtyDecrease() {
+    if (selectedIngredients.qty <= 1) return
+    const newQty = selectedIngredients.qty - 1;
     setSelectedIngredients((prevState) => {
       return {
         ...prevState,
-        qty: quantity
+        qty: newQty
       }
     })
   }
@@ -114,11 +139,6 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     });
   }
 
-  console.log("selectedIngredients is", selectedIngredients);
-
-  // console.log("selectedIngredients starts as", selectedIngredients);
-  // console.log("selectedIngredients is now", selectedIngredients);
-
   return (
     <section>
       {/* {Object.entries(selectedIngredients).map(([key, value]) => (
@@ -126,7 +146,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
       ))
       } */}
 
-      <QtySelect selectedIngredients={selectedIngredients} onQtySelect={handleQtySelect} />
+      <QtySelect selectedIngredients={selectedIngredients} onQtyIncrease={handleQtyIncrease} onQtyDecrease={handleQtyDecrease} />
       {["pizza", "specialty"].includes(selectedIngredients.category) && (
         <div>
           <br />
@@ -176,11 +196,14 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
   )
 }
 
-function QtySelect({ selectedIngredients, onQtySelect }: { selectedIngredients: CustomizedProductStateType, onQtySelect: (quantity: ChangeEvent<HTMLInputElement>) => void }) {
+function QtySelect({ selectedIngredients, onQtyIncrease, onQtyDecrease }: { selectedIngredients: CustomizedProductStateType, onQtyIncrease: () => void, onQtyDecrease: () => void }) {
   return (
     <div>
       <label htmlFor="qty-input">Qty:</label>
-      <input type="number" id="qty-input" value={selectedIngredients.qty} onChange={onQtySelect} />
+      {/* <input type="number" id="qty-input" value={selectedIngredients.qty} onChange={onQtySelect} /> */}
+      <button className="border-1 p-2 m-2" onClick={onQtyDecrease}>-</button>
+      <span>{selectedIngredients.qty}</span>
+      <button className="border-1 p-2 m-2" onClick={onQtyIncrease}>+</button>
     </div>
   )
 }

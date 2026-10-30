@@ -53,7 +53,7 @@ async function getIngredientData() {
 
 async function getProductIngredientData(product: string, productId: number) {
   const { creatorId, updaterId, createdAt, updatedAt, ...productIngredientData } = getColumns(schemas.productIngredient);
-  console.log("productId is", productId);
+  // console.log("productId is", productId);
   return unstable_cache(
     async () => {
       return await db.select(productIngredientData).from(schemas.productIngredient).where(eq(schemas.productIngredient.productId, productId)).orderBy(asc(schemas.productIngredient.ingredientId));
@@ -136,7 +136,6 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
 export default async function ProductPage({ params }: { params: { product: string } }) {
   const { product } = await params;
   // const schemaKey = category as keyof typeof schemas;
-  // console.log("paramName is ", paramName);
 
   // TODO Figure out how to use the "getColumns()" to destruct "isActive" etc. in "getProductData()" query (unsure w/ 2 tables).
   const [item] = await getProductData(product);
@@ -144,9 +143,9 @@ export default async function ProductPage({ params }: { params: { product: strin
   const productIngredients = await getProductIngredientData(product, item.product.id);
   const initialState = buildInitialState(item.product, productIngredients);
 
-  console.log("initialState is", initialState);
+  // console.log("initialState is", initialState);
 
-  console.log("productIngredients returns:", productIngredients);
+  // console.log("productIngredients returns:", productIngredients);
   // console.log("item is", item);
   /* TODO Look into intermittent error - TypeError: Cannot destructure property 'image' of 'item' as it is undefined.
   at ProductPage (app\menu\[category]\[product]/page.tsx:45:11) */
