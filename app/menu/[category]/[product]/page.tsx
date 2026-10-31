@@ -102,19 +102,22 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "chicken") {
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "pasta") {
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "sandwich") {
     return {
@@ -131,19 +134,22 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "dessert") {
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "drinks") {
     return {
       category: product.category,
       qty: 1,
-      productId: product.id
+      productId: product.id,
+      toppings: generateDefaultToppings(productIngredients)
     }
   }
   // const _exhaustiveCheck: never = product.category;

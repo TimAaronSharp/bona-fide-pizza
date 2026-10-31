@@ -1,5 +1,5 @@
 import { } from "@/app/db/schema.db";
-import { ProductAndImageQueryPropSchemaType, ProductIngredient } from "./definitions";
+import { Density, ProductAndImageQueryPropSchemaType, ProductIngredient } from "./definitions";
 
 // Menu and all product tables share the same schema, so I'm just using menu to infer the type for Schema.
 // type Schema = typeof menuCategory.$inferSelect;
@@ -25,7 +25,7 @@ import { ProductAndImageQueryPropSchemaType, ProductIngredient } from "./definit
 //   };
 // }
 
-export function generateDefaultToppings(productIngredients: ProductIngredient[]) {
+export function generateDefaultToppings(productIngredients: ProductIngredient[]): Record<string, Density> {
 
   const excludedIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
@@ -34,6 +34,6 @@ export function generateDefaultToppings(productIngredients: ProductIngredient[])
       acc[topping.ingredientId.toString()] = "normal";
     }
     return acc;
-  }, {} as Record<string, "light" | "normal" | "extra">);
+  }, {} as Record<string, Density>);
   return toppingsRecord;
 }

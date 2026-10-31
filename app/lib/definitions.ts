@@ -412,7 +412,7 @@ export const DensityEnum = z.enum(["light", "normal", "extra"]);
 export const BaseProduct = z.object({
   productId: z.number(),
   qty: z.number(),
-  toppings: z.record(z.string(), DensityEnum).optional()
+  toppings: z.record(z.string(), DensityEnum)
 });
 
 export const CustomPizzaSchema = BaseProduct.extend({
