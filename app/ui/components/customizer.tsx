@@ -258,7 +258,7 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
           <br />
           <h2>Add-on Cheeses</h2>
           <p>-----</p>
-          <AddonCheeseList ingredients={ingredients} selectedIngredients={selectedIngredients} onDensitySelection={handleDensitySelection} />
+          <AddonCheeseList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onDensitySelection={handleDensitySelection} />
           <p>-----</p>
           <br />
         </div>
@@ -577,7 +577,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
   )
 }
 
-function AddonCheeseList({ ingredients, selectedIngredients, onDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onDensitySelection: (id: string, densityString: string) => void }) {
+function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection, onDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onDensitySelection: (id: string, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((cheese) => {
@@ -587,9 +587,18 @@ function AddonCheeseList({ ingredients, selectedIngredients, onDensitySelection 
           return (
             <li key={cheese.name}>
               <br />
-              <input type="checkbox" id={cheese.name + "-id"}></input>
+
+              <input
+                type="checkbox"
+                id={cheese.name + "-id"}
+                name="toppings[]"
+                checked={Object.hasOwn(selectedIngredients.toppings, cheeseKey)}
+                value="normal"
+                onChange={(e) => { onToppingsSelection(cheeseKey, e.target.value) }}
+              ></input>
               <label htmlFor={cheese.name + "-id"}>{cheese.name}</label>
               <br />
+
               <fieldset className="border">
                 <input
                   type="radio"
@@ -600,6 +609,7 @@ function AddonCheeseList({ ingredients, selectedIngredients, onDensitySelection 
                   onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
                 />
                 <label htmlFor={cheese.name + "-light"}>Light </label>
+
                 <input
                   type="radio"
                   id={cheese.name + "-normal"}
@@ -609,6 +619,7 @@ function AddonCheeseList({ ingredients, selectedIngredients, onDensitySelection 
                   onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
                 />
                 <label htmlFor={cheese.name + "-normal"}>Normal </label>
+
                 <input
                   type="radio"
                   id={cheese.name + "-extra"}
