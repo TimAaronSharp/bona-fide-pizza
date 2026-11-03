@@ -477,37 +477,39 @@ function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDen
               <label htmlFor={meat.name + " id"}>{meat.name}</label>
               <br />
 
-              <fieldset className="border">
-                <input
-                  type="radio"
-                  id={meat.name + "-light"}
-                  name={`meat-${meat.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[meatKey] === "light"}
-                  value="light"
-                  onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
-                />
-                <label htmlFor={meat.name + "-light"}>Light </label>
+              {Object.hasOwn(selectedIngredients.toppings, meatKey) && (
+                <fieldset className="border">
+                  <input
+                    type="radio"
+                    id={meat.name + "-light"}
+                    name={`meat-${meat.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[meatKey] === "light"}
+                    value="light"
+                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                  />
+                  <label htmlFor={meat.name + "-light"}>Light </label>
 
-                <input
-                  type="radio"
-                  id={meat.name + "-normal"}
-                  name={`meat-${meat.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[meatKey] === "normal"}
-                  value="normal"
-                  onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
-                />
-                <label htmlFor={meat.name + "-normal"}>Normal </label>
+                  <input
+                    type="radio"
+                    id={meat.name + "-normal"}
+                    name={`meat-${meat.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[meatKey] === "normal"}
+                    value="normal"
+                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                  />
+                  <label htmlFor={meat.name + "-normal"}>Normal </label>
 
-                <input
-                  type="radio"
-                  id={meat.name + "-extra"}
-                  name={`meat-${meat.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[meatKey] === "extra"}
-                  value="extra"
-                  onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
-                />
-                <label htmlFor={meat.name + "-extra"}>Extra </label>
-              </fieldset>
+                  <input
+                    type="radio"
+                    id={meat.name + "-extra"}
+                    name={`meat-${meat.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[meatKey] === "extra"}
+                    value="extra"
+                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                  />
+                  <label htmlFor={meat.name + "-extra"}>Extra </label>
+                </fieldset>
+              )}
             </li>
           )
         }
@@ -538,37 +540,40 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
               <label htmlFor={veg.name + "-id"}>{veg.name}</label>
               <br />
 
-              <fieldset className="border">
-                <input
-                  type="radio"
-                  id={veg.name + "-light"}
-                  name={`veg-${veg.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[vegKey] === "light"}
-                  value="light"
-                  onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
-                />
-                <label htmlFor={veg.name + "-light"}>Light </label>
+              {Object.hasOwn(selectedIngredients.toppings, vegKey) && (
 
-                <input
-                  type="radio"
-                  id={veg.name + "-normal"}
-                  name={`veg-${veg.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[vegKey] === "normal"}
-                  value="normal"
-                  onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
-                />
-                <label htmlFor={veg.name + "-normal"}>Normal </label>
+                <fieldset className="border">
+                  <input
+                    type="radio"
+                    id={veg.name + "-light"}
+                    name={`veg-${veg.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[vegKey] === "light"}
+                    value="light"
+                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                  />
+                  <label htmlFor={veg.name + "-light"}>Light </label>
 
-                <input
-                  type="radio"
-                  id={veg.name + "-extra"}
-                  name={`veg-${veg.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[vegKey] === "extra"}
-                  value="extra"
-                  onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
-                />
-                <label htmlFor={veg.name + "-extra"}>Extra </label>
-              </fieldset>
+                  <input
+                    type="radio"
+                    id={veg.name + "-normal"}
+                    name={`veg-${veg.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[vegKey] === "normal"}
+                    value="normal"
+                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                  />
+                  <label htmlFor={veg.name + "-normal"}>Normal </label>
+
+                  <input
+                    type="radio"
+                    id={veg.name + "-extra"}
+                    name={`veg-${veg.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[vegKey] === "extra"}
+                    value="extra"
+                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                  />
+                  <label htmlFor={veg.name + "-extra"}>Extra </label>
+                </fieldset>
+              )}
             </li>
           )
         }
@@ -599,37 +604,39 @@ function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection
               <label htmlFor={cheese.name + "-id"}>{cheese.name}</label>
               <br />
 
-              <fieldset className="border">
-                <input
-                  type="radio"
-                  id={cheese.name + "-light"}
-                  name={`addonCheeses-${cheese.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[cheeseKey] === "light"}
-                  value="light"
-                  onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
-                />
-                <label htmlFor={cheese.name + "-light"}>Light </label>
+              {Object.hasOwn(selectedIngredients.toppings, cheeseKey) && (
+                <fieldset className="border">
+                  <input
+                    type="radio"
+                    id={cheese.name + "-light"}
+                    name={`addonCheeses-${cheese.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[cheeseKey] === "light"}
+                    value="light"
+                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                  />
+                  <label htmlFor={cheese.name + "-light"}>Light </label>
 
-                <input
-                  type="radio"
-                  id={cheese.name + "-normal"}
-                  name={`addonCheeses-${cheese.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[cheeseKey] === "normal"}
-                  value="normal"
-                  onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
-                />
-                <label htmlFor={cheese.name + "-normal"}>Normal </label>
+                  <input
+                    type="radio"
+                    id={cheese.name + "-normal"}
+                    name={`addonCheeses-${cheese.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[cheeseKey] === "normal"}
+                    value="normal"
+                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                  />
+                  <label htmlFor={cheese.name + "-normal"}>Normal </label>
 
-                <input
-                  type="radio"
-                  id={cheese.name + "-extra"}
-                  name={`addonCheeses-${cheese.id}-density-radio-group`}
-                  checked={selectedIngredients.toppings[cheeseKey] === "extra"}
-                  value="extra"
-                  onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
-                />
-                <label htmlFor={cheese.name + "-extra"}>Extra </label>
-              </fieldset>
+                  <input
+                    type="radio"
+                    id={cheese.name + "-extra"}
+                    name={`addonCheeses-${cheese.id}-density-radio-group`}
+                    checked={selectedIngredients.toppings[cheeseKey] === "extra"}
+                    value="extra"
+                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                  />
+                  <label htmlFor={cheese.name + "-extra"}>Extra </label>
+                </fieldset>
+              )}
             </li>
           )
         }
