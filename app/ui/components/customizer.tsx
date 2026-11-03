@@ -332,38 +332,48 @@ function MozzarellaList({ ingredients, selectedIngredients, onMozzarellaSelectio
           return (
             <li key={mozzarella.name}>
               <br />
-              {/*TODO Work on the logic for choosing the mozzarella itself like you did with the densities. */}
-              <input type="radio" id={productRadioId} name="mozzarella-selection-radio-group"></input>
+
+              <input
+                type="radio"
+                id={productRadioId}
+                name="mozzarella-selection-radio-group"
+                checked={selectedIngredients.mozzarella.id === mozzarella.id}
+                value="normal"
+                onChange={(e) => onMozzarellaSelection(mozzarella.id, e.target.value)}
+              ></input>
               <label htmlFor={mozzarella.name + " id"}>{mozzarella.name}</label>
               <br />
-              <fieldset className="border">
-                <input
-                  type="radio"
-                  id={`${mozzarella.name}-light`}
-                  name="mozzarella-density-radio-group"
-                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "light"}
-                  value="light"
-                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }} />
-                <label htmlFor={mozzarella.name + "-light"}>Light </label>
-                <input
-                  type="radio"
-                  id={`${mozzarella.name}-normal`}
-                  name="mozzarella-density-radio-group"
-                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "normal"}
-                  value="normal"
-                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
-                />
-                <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
-                <input
-                  type="radio"
-                  id={`${mozzarella.name}-extra`}
-                  name="mozzarella-density-radio-group"
-                  checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "extra"}
-                  value="extra"
-                  onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
-                />
-                <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
-              </fieldset>
+
+              {(selectedIngredients.mozzarella.id === mozzarella.id && mozzarella.name !== "No Mozzarella Cheese") && (
+                <fieldset className="border">
+                  <input
+                    type="radio"
+                    id={`${mozzarella.name}-light`}
+                    name="mozzarella-density-radio-group"
+                    checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "light"}
+                    value="light"
+                    onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }} />
+                  <label htmlFor={mozzarella.name + "-light"}>Light </label>
+                  <input
+                    type="radio"
+                    id={`${mozzarella.name}-normal`}
+                    name="mozzarella-density-radio-group"
+                    checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "normal"}
+                    value="normal"
+                    onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
+                  />
+                  <label htmlFor={mozzarella.name + "-normal"}>Normal </label>
+                  <input
+                    type="radio"
+                    id={`${mozzarella.name}-extra`}
+                    name="mozzarella-density-radio-group"
+                    checked={selectedIngredients.mozzarella.id === mozzarella.id && selectedIngredients.mozzarella.density === "extra"}
+                    value="extra"
+                    onChange={(e) => { onMozzarellaSelection(mozzarella.id, e.target.value) }}
+                  />
+                  <label htmlFor={mozzarella.name + "-extra"}>Extra </label>
+                </fieldset>
+              )}
             </li>
           )
         }
@@ -380,39 +390,49 @@ function SauceList({ ingredients, selectedIngredients, onSauceSelection }: { ing
           return (
             <li key={sauce.name}>
               <br />
-              {/*TODO Work on the logic for choosing the sauce itself like you did with the densities. */}
-              <input type="radio" id={sauce.name + " id"} name="sauce-selection-radio-group"></input>
+
+              <input
+                type="radio"
+                id={sauce.name + " id"}
+                name="sauce-selection-radio-group"
+                checked={selectedIngredients.sauce.id === sauce.id}
+                value="normal"
+                onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
+              ></input>
               <label htmlFor={sauce.name + " id"}>{sauce.name}</label>
               <br />
-              <fieldset className="border">
-                <input
-                  type="radio"
-                  id={sauce.name + "-light"}
-                  name={`sauce-${sauce.name}-density-radio-group`}
-                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "light"}
-                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
-                  value="light"
-                />
-                <label htmlFor={sauce.name + "-light"}>Light </label>
-                <input
-                  type="radio"
-                  id={sauce.name + "-normal"}
-                  name={`sauce-${sauce.name}density-radio-group`}
-                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "normal"}
-                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
-                  value="normal"
-                />
-                <label htmlFor={sauce.name + "-normal"}>Normal </label>
-                <input
-                  type="radio"
-                  id={sauce.name + "-extra"}
-                  name={`sauce-${sauce.name}density-radio-group`}
-                  checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "extra"}
-                  onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
-                  value="extra"
-                />
-                <label htmlFor={sauce.name + "-extra"}>Extra </label>
-              </fieldset>
+
+              {(selectedIngredients.sauce.id === sauce.id && sauce.name !== "No Sauce") && (
+                <fieldset className="border">
+                  <input
+                    type="radio"
+                    id={sauce.name + "-light"}
+                    name={`sauce-density-radio-group`}
+                    checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "light"}
+                    onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
+                    value="light"
+                  />
+                  <label htmlFor={sauce.name + "-light"}>Light </label>
+                  <input
+                    type="radio"
+                    id={sauce.name + "-normal"}
+                    name={`sauce-density-radio-group`}
+                    checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "normal"}
+                    onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
+                    value="normal"
+                  />
+                  <label htmlFor={sauce.name + "-normal"}>Normal </label>
+                  <input
+                    type="radio"
+                    id={sauce.name + "-extra"}
+                    name={`sauce-density-radio-group`}
+                    checked={selectedIngredients.sauce.id === sauce.id && selectedIngredients.sauce.density === "extra"}
+                    onChange={(e) => { onSauceSelection(sauce.id, e.target.value) }}
+                    value="extra"
+                  />
+                  <label htmlFor={sauce.name + "-extra"}>Extra </label>
+                </fieldset>
+              )}
             </li>
           )
         }
