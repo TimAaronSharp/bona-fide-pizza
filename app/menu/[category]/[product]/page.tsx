@@ -187,7 +187,7 @@ export default async function ProductPage({ params }: { params: { product: strin
         <p>{item.product.description}</p>
         <EditProduct productProp={item.product} />
         <Image {...imageData} />
-        <Customizer ingredients={ingredients} productIngredients={productIngredients} initialState={initialState} />
+        <Customizer ingredients={ingredients} initialState={initialState} />
       </section>
     </main>
   )

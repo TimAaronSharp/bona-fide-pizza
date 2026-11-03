@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 /*What each product type would need in a customizer:
 
 BUILD YOUR OWN PIZZA:
@@ -81,10 +81,18 @@ ALL:
 */
 
 // NOTE Individual components below in this file. Didn't want to scroll to the bottom to look at the main component.
-export function Customizer({ ingredients, productIngredients, initialState }: { ingredients: Ingredient[], productIngredients: ProductIngredient[], initialState: CustomizedProductStateType }) {
+export function Customizer({ ingredients, initialState }: { ingredients: Ingredient[], initialState: CustomizedProductStateType }) {
   const [selectedIngredients, setSelectedIngredients] = useState<CustomizedProductStateType>(initialState);
 
+  /*NOTE basePizzaState is used to compare the customized state (selectedIngredients) to when determining if entries in the
+  `cart_item_modifier` table (modifications to the base product, ie add/remove toppings, change density, etc) needs to
+  be made. structuredClone() creates a clone of what is passed to it with a completely new memory address so you can
+  compare it with React state (selectedIngredients), and useRef takes it outside of the re-rendering cycle so it
+  won't be reinitialized with every re-render of the component.*/
+  const basePizzaState = useRef(structuredClone(initialState));
+
   console.log("selectedIngredients is", selectedIngredients);
+  console.log("basePizzaState.current is", basePizzaState.current);
 
   function handleDensityValidation(density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
@@ -105,7 +113,6 @@ export function Customizer({ ingredients, productIngredients, initialState }: { 
     const newQty = selectedIngredients.qty + 1;
 
     setSelectedIngredients((prevState) => {
-      console.log("prevState is", prevState);
       return {
         ...prevState,
         qty: newQty
