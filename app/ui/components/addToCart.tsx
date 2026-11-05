@@ -11,3 +11,11 @@ export function AddToCart(productId: number) {
     </>
   )
 }
+
+export function AddToCartCardButton() {
+  return (
+    <>
+      <button>+</button>
+    </>
+  )
+}

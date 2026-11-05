@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
+import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, Mozzarella, ProductCategoryEnumType, ProductIngredient, Sauce } from "@/app/lib/definitions";
 import { ChangeEvent, useRef, useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -84,15 +84,15 @@ ALL:
 export function Customizer({ ingredients, initialState }: { ingredients: Ingredient[], initialState: CustomizedProductStateType }) {
   const [selectedIngredients, setSelectedIngredients] = useState<CustomizedProductStateType>(initialState);
 
-  /*NOTE basePizzaState is used to compare the customized state (selectedIngredients) to when determining if entries in the
+  /*NOTE baseProductState is used to compare the customized state (selectedIngredients) to when determining if entries in the
   `cart_item_modifier` table (modifications to the base product, ie add/remove toppings, change density, etc) needs to
   be made. structuredClone() creates a clone of what is passed to it with a completely new memory address so you can
   compare it with React state (selectedIngredients), and useRef takes it outside of the re-rendering cycle so it
   won't be reinitialized with every re-render of the component.*/
-  const basePizzaState = useRef(structuredClone(initialState));
+  const baseProductState = useRef(structuredClone(initialState));
 
   console.log("selectedIngredients is", selectedIngredients);
-  console.log("basePizzaState.current is", basePizzaState.current);
+  console.log("baseProductState.current is", baseProductState.current);
 
   function handleDensityValidation(density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
@@ -107,6 +107,11 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     }
   }
 
+  /*TODO I want to limit orders to certain amounts to try and simulate real business conditions where if you have a
+  large order that you need to contact the store directly to arrange it (not sure how common that is but it feels
+  like it is something that would be a reasonable business policy). Will need to figure out how to do it beyond
+  10 of an individual item, but don't want to have people have to "contact to store" if they are ordering 12 ranch
+  dippings cups or something small like that. Will think on it. */
   function handleQtyIncrease() {
     if (selectedIngredients.qty >= 10) return
 
@@ -150,15 +155,6 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
       };
     });
   }
-
-  // function handleIngredientSelection(ingredientId: number, stateKey: IngredientCategoryEnumType, value: Density) {
-  //   setSelectedIngredients((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       [stateKey]: value
-  //     };
-  //   });
-  // }
 
   function handleMozzarellaSelection(id: number, densityString: string) {
     /*TODO Figure some way to validate that the id of the mozzarella is a valid id of the mozzarella category. */
@@ -217,13 +213,33 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     });
   }
 
+  type CustomerValue = number | Density | Mozzarella | Sauce | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
+
+  function handleCustomizationComparison() {
+
+  }
+
+  function diffCheck(customValue: CustomerValue, baseValue: CustomerValue) {
+    const customChanges: Record<string, CustomerValue> = {};
+    for (const [key, customValue] of Object.entries(selectedIngredients)) {
+      const customStateValue: CustomerValue = (selectedIngredients as Record<string, CustomerValue>)[key];
+      const baseStateValue: CustomerValue = (baseProductState.current as Record<string, CustomerValue>)[key];
+
+      if (typeof baseStateValue === 'object' && baseStateValue !== null && !Array.isArray(baseStateValue)) {
+        // console.log(`typeof baseStateValue is ${typeof baseStateValue}`, baseStateValue);
+        handleCustomizationComparison()
+      } else if (typeof baseStateValue === 'string' || typeof baseStateValue === 'number') {
+        // console.log(`typeof baseStateValue is ${typeof baseStateValue}`, baseStateValue);
+        if (customStateValue !== baseStateValue) {
+          customChanges[baseStateValue] = baseStateValue
+        }
+      }
+      // console.log("baseStateValue is", baseStateValue)
+    }
+  }
+
   return (
     <section>
-      {/* {Object.entries(selectedIngredients).map(([key, value]) => (
-        <p key={key}>{key} {value ?? "Not Selected"}</p>
-      ))
-      } */}
-
       <QtySelect selectedIngredients={selectedIngredients} onQtyIncrease={handleQtyIncrease} onQtyDecrease={handleQtyDecrease} />
       {["custom_pizza", "specialty"].includes(selectedIngredients.category) && (
         <div>
@@ -268,6 +284,8 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
           <AddonCheeseList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onDensitySelection={handleDensitySelection} />
           <p>-----</p>
           <br />
+
+          <button onClick={handleCustomizationComparison}>ADD</button>
         </div>
       )}
     </section>

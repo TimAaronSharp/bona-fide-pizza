@@ -409,6 +409,16 @@ export const ProductAndImageQueryPropSchema = z.object({
 
 export const DensityEnum = z.enum(["light", "normal", "extra"]);
 
+export const MozzarellaSchema = z.object({
+  id: z.number(),
+  density: DensityEnum
+});
+
+export const SauceSchema = z.object({
+  id: z.number(),
+  density: DensityEnum
+});
+
 export const BaseProduct = z.object({
   productId: z.number(),
   qty: z.number(),
@@ -420,14 +430,8 @@ export const CustomPizzaSchema = BaseProduct.extend({
   // size field?
   crust: z.number(),
   crustSeasoning: z.number(),
-  mozzarella: z.object({
-    id: z.number(),
-    density: DensityEnum
-  }),
-  sauce: z.object({
-    id: z.number(),
-    density: DensityEnum
-  })
+  mozzarella: MozzarellaSchema,
+  sauce: SauceSchema
 })
 
 export const SpecialtyPizzaSchema = BaseProduct.extend({
@@ -435,14 +439,8 @@ export const SpecialtyPizzaSchema = BaseProduct.extend({
   // size field?
   crust: z.number(),
   crustSeasoning: z.number(),
-  mozzarella: z.object({
-    id: z.number(),
-    density: DensityEnum
-  }),
-  sauce: z.object({
-    id: z.number(),
-    density: DensityEnum
-  })
+  mozzarella: MozzarellaSchema,
+  sauce: SauceSchema
 });
 
 export const BreadSchema = BaseProduct.extend({
@@ -459,10 +457,7 @@ export const PastaSchema = BaseProduct.extend({
 
 export const SandwichSchema = BaseProduct.extend({
   category: z.literal("sandwich"),
-  sauce: z.object({
-    id: z.number(),
-    density: DensityEnum
-  })
+  sauce: SauceSchema
 });
 
 export const SaladSchema = BaseProduct.extend({
@@ -516,6 +511,10 @@ export type CustomizedProductStateType = z.infer<typeof CustomizedProductStateSc
 export type ProductCategoryEnumType = z.infer<typeof ProductCategoryEnum>;
 
 export type IngredientCategoryEnumType = z.infer<typeof IngredientCategoryEnum>;
+
+export type Mozzarella = z.infer<typeof MozzarellaSchema>;
+
+export type Sauce = z.infer<typeof SauceSchema>;
 
 // #endregion
 
