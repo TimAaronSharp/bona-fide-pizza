@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, varchar, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, timestamp, primaryKey, boolean, varchar, pgEnum, uuid } from "drizzle-orm/pg-core";
 import { user } from "@/app/db/auth-schema.db";
 // Database schemas
 /* ...getProductColumns returns an object with all of the column definitions and spreads them out for the 
@@ -112,7 +112,7 @@ export const order = pgTable("order", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
-
+/*TODO Could probably remove id and make the primary key a composite of orderId + productId. May look into this later. */
 export const orderItem = pgTable("order_item", {
   id: serial().primaryKey(),
   orderId: integer("order_id").references(() => order.id, { onDelete: "cascade" }).notNull(),
@@ -134,15 +134,16 @@ export const orderItemModifier = pgTable("order_item_modifier", {
 }, (table) => [
   primaryKey({ columns: [table.orderItemId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
-
+/*TODO Could maybe get away with just making the userId the primary key for this table since cart entries will be
+deleted after the order has been placed? Look into this. */
 export const cart = pgTable("cart", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id),
-  sessionId: varchar("session_id", { length: 36 }),
+  sessionId: uuid("session_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
-
+/*TODO Could probably remove id and make the primary key a composite of cartId + productId. May look into this later. */
 export const cartItem = pgTable("cart_item", {
   id: serial().primaryKey(),
   cartId: integer().references(() => cart.id, { onDelete: "cascade" }).notNull(),

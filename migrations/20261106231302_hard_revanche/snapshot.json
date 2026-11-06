@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "872c8f53-c7bf-49cf-b06b-45745f480676",
+  "id": "2b8ca239-f51f-4749-9ba0-49d492c52903",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -22,7 +22,7 @@
     },
     {
       "values": [
-        "pizza",
+        "custom_pizza",
         "specialty",
         "bread",
         "chicken",
@@ -835,7 +835,7 @@
       "table": "cart"
     },
     {
-      "type": "varchar(36)",
+      "type": "uuid",
       "typeSchema": null,
       "notNull": false,
       "dimensions": 0,

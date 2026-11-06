@@ -1,5 +1,5 @@
 CREATE TYPE "ingredient_category_enum" AS ENUM('crust', 'crust_seasoning', 'sauce', 'mozzarella', 'meat', 'veggies_n_more', 'cheese');--> statement-breakpoint
-CREATE TYPE "product_category_enum" AS ENUM('pizza', 'specialty', 'bread', 'chicken', 'pasta', 'sandwich', 'salad', 'dessert', 'drinks');--> statement-breakpoint
+CREATE TYPE "product_category_enum" AS ENUM('custom_pizza', 'specialty', 'bread', 'chicken', 'pasta', 'sandwich', 'salad', 'dessert', 'drinks');--> statement-breakpoint
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY,
 	"account_id" text NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE "address" (
 CREATE TABLE "cart" (
 	"id" serial PRIMARY KEY,
 	"user_id" text,
-	"session_id" varchar(36),
+	"session_id" uuid,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
