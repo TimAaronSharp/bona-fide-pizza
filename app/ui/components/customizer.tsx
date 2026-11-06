@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, Mozzarella, ProductCategoryEnumType, ProductIngredient, Sauce } from "@/app/lib/definitions";
+import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, MozzarellaAndSauce, ProductCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
 import { ChangeEvent, useRef, useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -213,29 +213,37 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     });
   }
 
-  type CustomerValue = number | Density | Mozzarella | Sauce | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
+  type CustomerValue = number | Density | MozzarellaAndSauce | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
 
   function handleCustomizationComparison() {
-
+    const finalChanges = diffCheck(selectedIngredients as Record<string, CustomerValue>, baseProductState.current as Record<string, CustomerValue>);
+    console.log("finalChanges ends up as", finalChanges);
   }
 
-  function diffCheck(customValue: CustomerValue, baseValue: CustomerValue) {
+  function diffCheck(activeStateObj: Record<string, CustomerValue>, baseStateObj: Record<string, CustomerValue>) {
     const customChanges: Record<string, CustomerValue> = {};
-    for (const [key, customValue] of Object.entries(selectedIngredients)) {
-      const customStateValue: CustomerValue = (selectedIngredients as Record<string, CustomerValue>)[key];
-      const baseStateValue: CustomerValue = (baseProductState.current as Record<string, CustomerValue>)[key];
 
-      if (typeof baseStateValue === 'object' && baseStateValue !== null && !Array.isArray(baseStateValue)) {
+    for (const [key, activeStateValue] of Object.entries(activeStateObj)) {
+      const baseStateValue = (baseStateObj as Record<string, CustomerValue>)[key];
+
+      if (baseStateValue === undefined) {
+        customChanges[key] = activeStateValue;
+      }
+      else if (typeof baseStateValue === 'object' && baseStateValue !== null && !Array.isArray(baseStateValue)) {
         // console.log(`typeof baseStateValue is ${typeof baseStateValue}`, baseStateValue);
-        handleCustomizationComparison()
+        const nestedChanges = diffCheck(activeStateValue as Record<string, CustomerValue>, baseStateValue as Record<string, CustomerValue>) as CustomerValue;
+
+        if (Object.keys(nestedChanges).length > 0) {
+          customChanges[key] = nestedChanges as CustomerValue;
+        }
       } else if (typeof baseStateValue === 'string' || typeof baseStateValue === 'number') {
         // console.log(`typeof baseStateValue is ${typeof baseStateValue}`, baseStateValue);
-        if (customStateValue !== baseStateValue) {
-          customChanges[baseStateValue] = baseStateValue
+        if (activeStateValue !== baseStateValue) {
+          customChanges[key] = activeStateValue
         }
       }
-      // console.log("baseStateValue is", baseStateValue)
     }
+    return customChanges;
   }
 
   return (
