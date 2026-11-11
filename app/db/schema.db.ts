@@ -103,7 +103,8 @@ export const productIngredient = pgTable("product_ingredient", {
 }, (table) => [
   primaryKey({ columns: [table.productId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
-
+/*TODO Make userId nullable and add a sessionId field to accommodate guest user orders, when you get around to
+adding guest user ordering.*/
 export const order = pgTable("order", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id).notNull(),
@@ -135,7 +136,11 @@ export const orderItemModifier = pgTable("order_item_modifier", {
   primaryKey({ columns: [table.orderItemId, table.ingredientId] }) // Sets composite key as primary key.
 ]);
 /*TODO Could maybe get away with just making the userId the primary key for this table since cart entries will be
-deleted after the order has been placed? Look into this. */
+deleted after the order has been placed? Look into this. (Probably not, considering guest users will only have a
+sessionId, but leaving this here to contemplate).
+
+Also, I decided to not support guest users at this time, but fully plan on looking into implementing this later.
+Leaving sessionId in cart schema for this later.*/
 export const cart = pgTable("cart", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id),

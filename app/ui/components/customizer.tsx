@@ -217,12 +217,13 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
 
   function handleCustomizationComparison() {
     const finalChanges = diffCheck(selectedIngredients as Record<string, CustomerValue>, baseProductState.current as Record<string, CustomerValue>);
+
     console.log("finalChanges ends up as", finalChanges);
   }
 
   function diffCheck(activeStateObj: Record<string, CustomerValue>, baseStateObj: Record<string, CustomerValue>) {
     const customChanges: Record<string, CustomerValue> = {};
-
+    // debugger
     for (const [key, activeStateValue] of Object.entries(activeStateObj)) {
       const baseStateValue = (baseStateObj as Record<string, CustomerValue>)[key];
 
@@ -234,16 +235,37 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
         const nestedChanges = diffCheck(activeStateValue as Record<string, CustomerValue>, baseStateValue as Record<string, CustomerValue>) as CustomerValue;
 
         if (Object.keys(nestedChanges).length > 0) {
-          customChanges[key] = nestedChanges as CustomerValue;
+          /*This `key === 'mozzarella' || key === 'sauce'` check is to safely assign both the id and density for
+          mozzarella and sauce if only the id or the sauce is changed. With just the logic in the else statement only
+          the value you changed would be added to `finalChanges` (so if you only changed the density to extra
+          finalChanges would end up `sauce: { density: "extra" }` without the sauce id, and vice versa). I don't like
+          the hardcoded key check, but it works for now. I will investigate type guarding helper functions utilizing
+          the `in` operator later for scalability. 
+          
+          else logic still works for toppings.*/
+          if (key === 'mozzarella' || key === 'sauce') {
+            customChanges[key] = activeStateValue;
+          } else {
+            customChanges[key] = nestedChanges as CustomerValue;
+          }
         }
       } else if (typeof baseStateValue === 'string' || typeof baseStateValue === 'number') {
         // console.log(`typeof baseStateValue is ${typeof baseStateValue}`, baseStateValue);
+
         if (activeStateValue !== baseStateValue) {
-          customChanges[key] = activeStateValue
+          customChanges[key] = activeStateValue;
         }
       }
     }
     return customChanges;
+  }
+
+  function dataTransformation(data: Record<string, CustomerValue>) {
+    if (Object.keys(data).length > 0) {
+
+    } else {
+
+    }
   }
 
   return (
