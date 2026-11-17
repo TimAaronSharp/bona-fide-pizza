@@ -186,12 +186,13 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
         return nextState;
       })
     } else {
-      handleDensitySelection(id, densityString);
+      handleToppingsDensitySelection(id, densityString);
     }
   }
-  /*TODO Should this be refactored to have a separate function that is something like "createTopping()" that will also
-  call "handleDensitySelection()" for a better separation of concerns? */
-  function handleDensitySelection(id: string, densityString: string) {
+  /*TODO Think about whether or not to try and make this work for mozzarella/sauce selections as well. Currently their
+  densities are handled inside their own handle functions because their shape is different, but it might be feasible
+  to get this to work for all, but that will be a much later TODO. */
+  function handleToppingsDensitySelection(id: string, densityString: string) {
     const { density } = handleDensityValidation(densityString);
 
     setSelectedIngredients((prevState) => {
@@ -254,6 +255,9 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
 
   function dataTransformation(data: Record<string, CustomerValue>) {
     if (Object.keys(data).length > 0) {
+      const bulkInsertData: Record<string, CustomerValue>[] = [];
+
+
 
     } else {
       return
@@ -293,17 +297,17 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
           <br />
           <h2>Meat</h2>
           <p>-----</p>
-          <MeatList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onDensitySelection={handleDensitySelection} />
+          <MeatList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onToppingsDensitySelection={handleToppingsDensitySelection} />
           <p>-----</p>
           <br />
           <h2>Veggies & More</h2>
           <p>-----</p>
-          <VeggiesNMoreList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onDensitySelection={handleDensitySelection} />
+          <VeggiesNMoreList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onToppingsDensitySelection={handleToppingsDensitySelection} />
           <p>-----</p>
           <br />
           <h2>Add-on Cheeses</h2>
           <p>-----</p>
-          <AddonCheeseList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onDensitySelection={handleDensitySelection} />
+          <AddonCheeseList ingredients={ingredients} selectedIngredients={selectedIngredients} onToppingsSelection={handleToppingsSelection} onToppingsDensitySelection={handleToppingsDensitySelection} />
           <p>-----</p>
           <br />
 
@@ -502,7 +506,7 @@ function SauceList({ ingredients, selectedIngredients, onSauceSelection }: { ing
   )
 }
 
-function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onDensitySelection: (id: string, densityString: string) => void }) {
+function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onToppingsDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onToppingsDensitySelection: (id: string, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((meat) => {
@@ -532,7 +536,7 @@ function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDen
                     name={`meat-${meat.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[meatKey] === "light"}
                     value="light"
-                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(meatKey, e.target.value) }}
                   />
                   <label htmlFor={meat.name + "-light"}>Light </label>
 
@@ -542,7 +546,7 @@ function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDen
                     name={`meat-${meat.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[meatKey] === "normal"}
                     value="normal"
-                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(meatKey, e.target.value) }}
                   />
                   <label htmlFor={meat.name + "-normal"}>Normal </label>
 
@@ -552,7 +556,7 @@ function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDen
                     name={`meat-${meat.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[meatKey] === "extra"}
                     value="extra"
-                    onChange={(e) => { onDensitySelection(meatKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(meatKey, e.target.value) }}
                   />
                   <label htmlFor={meat.name + "-extra"}>Extra </label>
                 </fieldset>
@@ -565,7 +569,7 @@ function MeatList({ ingredients, selectedIngredients, onToppingsSelection, onDen
   )
 }
 
-function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelection, onDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onDensitySelection: (id: string, densityString: string) => void }) {
+function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelection, onToppingsDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onToppingsDensitySelection: (id: string, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((veg) => {
@@ -596,7 +600,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
                     name={`veg-${veg.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[vegKey] === "light"}
                     value="light"
-                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(vegKey, e.target.value) }}
                   />
                   <label htmlFor={veg.name + "-light"}>Light </label>
 
@@ -606,7 +610,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
                     name={`veg-${veg.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[vegKey] === "normal"}
                     value="normal"
-                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(vegKey, e.target.value) }}
                   />
                   <label htmlFor={veg.name + "-normal"}>Normal </label>
 
@@ -616,7 +620,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
                     name={`veg-${veg.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[vegKey] === "extra"}
                     value="extra"
-                    onChange={(e) => { onDensitySelection(vegKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(vegKey, e.target.value) }}
                   />
                   <label htmlFor={veg.name + "-extra"}>Extra </label>
                 </fieldset>
@@ -629,7 +633,7 @@ function VeggiesNMoreList({ ingredients, selectedIngredients, onToppingsSelectio
   )
 }
 
-function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection, onDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onDensitySelection: (id: string, densityString: string) => void }) {
+function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection, onToppingsDensitySelection }: { ingredients: Ingredient[], selectedIngredients: CustomizedProductStateType, onToppingsSelection: (id: string, densityString: string) => void, onToppingsDensitySelection: (id: string, densityString: string) => void }) {
   return (
     <ol>
       {ingredients.map((cheese) => {
@@ -659,7 +663,7 @@ function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection
                     name={`addonCheeses-${cheese.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[cheeseKey] === "light"}
                     value="light"
-                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(cheeseKey, e.target.value) }}
                   />
                   <label htmlFor={cheese.name + "-light"}>Light </label>
 
@@ -669,7 +673,7 @@ function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection
                     name={`addonCheeses-${cheese.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[cheeseKey] === "normal"}
                     value="normal"
-                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(cheeseKey, e.target.value) }}
                   />
                   <label htmlFor={cheese.name + "-normal"}>Normal </label>
 
@@ -679,7 +683,7 @@ function AddonCheeseList({ ingredients, selectedIngredients, onToppingsSelection
                     name={`addonCheeses-${cheese.id}-density-radio-group`}
                     checked={selectedIngredients.toppings[cheeseKey] === "extra"}
                     value="extra"
-                    onChange={(e) => { onDensitySelection(cheeseKey, e.target.value) }}
+                    onChange={(e) => { onToppingsDensitySelection(cheeseKey, e.target.value) }}
                   />
                   <label htmlFor={cheese.name + "-extra"}>Extra </label>
                 </fieldset>

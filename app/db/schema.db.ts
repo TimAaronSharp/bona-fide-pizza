@@ -114,6 +114,8 @@ export const order = pgTable("order", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 /*TODO Could probably remove id and make the primary key a composite of orderId + productId. May look into this later. */
+
+/*TODO Change "quantity" to "qty" to match elsewhere in the code? */
 export const orderItem = pgTable("order_item", {
   id: serial().primaryKey(),
   orderId: integer("order_id").references(() => order.id, { onDelete: "cascade" }).notNull(),
@@ -153,6 +155,7 @@ export const cart = pgTable("cart", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull()
 });
 /*TODO Could probably remove id and make the primary key a composite of cartId + productId. May look into this later. */
+/*TODO Change "quantity" to "qty" to match elsewhere in the code? */
 export const cartItem = pgTable("cart_item", {
   id: serial().primaryKey(),
   cartId: integer().references(() => cart.id, { onDelete: "cascade" }).notNull(),
