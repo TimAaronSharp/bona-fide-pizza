@@ -67,7 +67,6 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
   if (product.category === "custom_pizza") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       crust: 1,
       crustSeasoning: 7,
@@ -84,7 +83,6 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
   } else if (product.category === "specialty") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       crust: 1,
       crustSeasoning: 7,
@@ -101,28 +99,24 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
   } else if (product.category === "bread") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "chicken") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "pasta") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "sandwich") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       sauce: {
         id: 9,
@@ -133,21 +127,18 @@ function buildInitialState(product: Product, productIngredients: ProductIngredie
   } else if (product.category === "salad") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "dessert") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }
   } else if (product.category === "drinks") {
     return {
       category: product.category,
-      qty: 1,
       productId: product.id,
       toppings: generateDefaultToppings(productIngredients)
     }

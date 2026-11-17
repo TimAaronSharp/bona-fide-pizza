@@ -416,7 +416,6 @@ export const MozzarellaAndSauceSchema = z.object({
 
 export const BaseProduct = z.object({
   productId: z.number(),
-  qty: z.number(),
   toppings: z.record(z.string(), DensityEnum)
 });
 

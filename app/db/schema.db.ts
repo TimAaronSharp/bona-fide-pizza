@@ -141,6 +141,10 @@ sessionId, but leaving this here to contemplate).
 
 Also, I decided to not support guest users at this time, but fully plan on looking into implementing this later.
 Leaving sessionId in cart schema for this later.*/
+
+/*TODO Make userId unique so that a user can only have one cart at a time? I will have logic to check this when an
+item is added to the cart, so it shouldn't happen anyway, but it should be good to have a safeguard at the db level
+as well just in case something gets through. */
 export const cart = pgTable("cart", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id),

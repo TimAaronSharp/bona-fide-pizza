@@ -83,6 +83,7 @@ ALL:
 // NOTE Individual components below in this file. Didn't want to scroll to the bottom to look at the main component.
 export function Customizer({ ingredients, initialState }: { ingredients: Ingredient[], initialState: CustomizedProductStateType }) {
   const [selectedIngredients, setSelectedIngredients] = useState<CustomizedProductStateType>(initialState);
+  const [qty, setQty] = useState<number>(1);
 
   /*NOTE baseProductState is used to compare the customized state (selectedIngredients) to when determining if entries in the
   `cart_item_modifier` table (modifications to the base product, ie add/remove toppings, change density, etc) needs to
@@ -93,6 +94,7 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
 
   console.log("selectedIngredients is", selectedIngredients);
   console.log("baseProductState.current is", baseProductState.current);
+  console.log("qty is", qty);
 
   function handleDensityValidation(density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
@@ -113,29 +115,19 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
   10 of an individual item, but don't want to have people have to "contact to store" if they are ordering 12 ranch
   dippings cups or something small like that. Will think on it. */
   function handleQtyIncrease() {
-    if (selectedIngredients.qty >= 10) return
+    if (qty >= 10) return
 
-    const newQty = selectedIngredients.qty + 1;
+    const newQty = qty + 1;
 
-    setSelectedIngredients((prevState) => {
-      return {
-        ...prevState,
-        qty: newQty
-      };
-    });
+    setQty(newQty);
   }
 
   function handleQtyDecrease() {
-    if (selectedIngredients.qty <= 1) return
+    if (qty <= 1) return
 
-    const newQty = selectedIngredients.qty - 1;
+    const newQty = qty - 1;
 
-    setSelectedIngredients((prevState) => {
-      return {
-        ...prevState,
-        qty: newQty
-      };
-    });
+    setQty(newQty);
   }
 
   function handleCrustSelection(id: number) {
@@ -264,13 +256,13 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     if (Object.keys(data).length > 0) {
 
     } else {
-
+      return
     }
   }
 
   return (
     <section>
-      <QtySelect selectedIngredients={selectedIngredients} onQtyIncrease={handleQtyIncrease} onQtyDecrease={handleQtyDecrease} />
+      <QtySelect qty={qty} onQtyIncrease={handleQtyIncrease} onQtyDecrease={handleQtyDecrease} />
       {["custom_pizza", "specialty"].includes(selectedIngredients.category) && (
         <div>
           <br />
@@ -322,13 +314,13 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
   )
 }
 
-function QtySelect({ selectedIngredients, onQtyIncrease, onQtyDecrease }: { selectedIngredients: CustomizedProductStateType, onQtyIncrease: () => void, onQtyDecrease: () => void }) {
+function QtySelect({ qty, onQtyIncrease, onQtyDecrease }: { qty: number, onQtyIncrease: () => void, onQtyDecrease: () => void }) {
   return (
     <div>
       <label htmlFor="qty-input">Qty:</label>
       {/* <input type="number" id="qty-input" value={selectedIngredients.qty} onChange={onQtySelect} /> */}
       <button className="border p-2 m-2" onClick={onQtyDecrease}>-</button>
-      <span>{selectedIngredients.qty}</span>
+      <span>{qty}</span>
       <button className="border p-2 m-2" onClick={onQtyIncrease}>+</button>
     </div>
   )
