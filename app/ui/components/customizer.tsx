@@ -216,11 +216,17 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
 
   function diffCheck(activeStateObj: Record<string, CustomerValue>, baseStateObj: Record<string, CustomerValue>) {
     const customChanges: Record<string, CustomerValue> = {};
+    const allKeys = new Set([...Object.keys(activeStateObj), ...Object.keys(baseStateObj)])
+    // console.log("allKeys is", allKeys);
     // debugger
-    for (const [key, activeStateValue] of Object.entries(activeStateObj)) {
-      const baseStateValue = (baseStateObj as Record<string, CustomerValue>)[key];
+    for (const key of allKeys) {
+      const activeStateValue = activeStateObj[key];
+      const baseStateValue = baseStateObj[key];
 
-      if (baseStateValue === undefined) {
+      if (activeStateValue === undefined) {
+        customChanges[key] = "remove";
+      }
+      else if (baseStateValue === undefined) {
         customChanges[key] = activeStateValue;
       }
       else if (typeof baseStateValue === 'object' && baseStateValue !== null && !Array.isArray(baseStateValue)) {
@@ -250,6 +256,7 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
         }
       }
     }
+
     return customChanges;
   }
 

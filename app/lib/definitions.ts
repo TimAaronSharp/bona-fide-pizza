@@ -407,7 +407,7 @@ export const ProductAndImageQueryPropSchema = z.object({
   image: DbImageSchema
 });
 
-export const DensityEnum = z.enum(["light", "normal", "extra"]);
+export const DensityEnum = z.enum(["remove", "light", "normal", "extra"]);
 
 export const MozzarellaAndSauceSchema = z.object({
   id: z.number(),
