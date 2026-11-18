@@ -1,3 +1,5 @@
+/*NOTE Currently not in use until I decide to implement guest users being able to place order. */
+
 import { cookies } from "next/headers";
 import { randomUUID } from "crypto";
 

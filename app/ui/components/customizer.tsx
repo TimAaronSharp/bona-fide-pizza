@@ -1,5 +1,6 @@
 "use client";
 
+import { addToCartAction } from "@/app/actions/cart";
 import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, IngredientIdAndDensity, ProductCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
 import { ChangeEvent, useRef, useState } from "react";
 /*What each product type would need in a customizer:
@@ -92,9 +93,9 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
   won't be reinitialized with every re-render of the component.*/
   const baseProductState = useRef(structuredClone(initialState));
 
-  console.log("selectedIngredients is", selectedIngredients);
-  console.log("baseProductState.current is", baseProductState.current);
-  console.log("qty is", qty);
+  // console.log("selectedIngredients is", selectedIngredients);
+  // console.log("baseProductState.current is", baseProductState.current);
+  // console.log("qty is", qty);
 
   function handleDensityValidation(density: string) {
     const validatedDensity = DensityEnum.safeParse(density);
@@ -208,20 +209,23 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
 
   type CustomerValue = number | Density | IngredientIdAndDensity | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
 
-  function handleCustomizationComparison() {
+  function handleAddToCart() {
     const finalChanges = diffCheck(selectedIngredients as Record<string, CustomerValue>, baseProductState.current as Record<string, CustomerValue>);
 
     console.log("finalChanges ends up as", finalChanges);
+
     if (Object.keys(finalChanges).length > 0) {
       const transformedData = dataTransformation(finalChanges);
       console.log("transformedData is", transformedData);
+      addToCartAction(baseProductState.current.productId, transformedData)
+    } else {
+      addToCartAction(baseProductState.current.productId);
     }
-
   }
 
   function diffCheck(activeStateObj: Record<string, CustomerValue>, baseStateObj: Record<string, CustomerValue>) {
     const customChanges: Record<string, CustomerValue> = {};
-    const allKeys = new Set([...Object.keys(activeStateObj), ...Object.keys(baseStateObj)])
+    const allKeys = new Set([...Object.keys(activeStateObj), ...Object.keys(baseStateObj)]);
     // console.log("allKeys is", allKeys);
     // debugger
     for (const key of allKeys) {
@@ -268,8 +272,10 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
   /*NOTE dataTransformation() is specifically for flattening out the customized ingredient data in the "selectedIngredients"
   React state into an array of objects to be inserted into the "cart_item_modifier" table. If no customizations were
   made then it is not invoked. */
+
+  /*TODO Shouldn't need the length check in here since it is checked before the function is ran, but will leave in for
+  now just in case, and will deal with it later. */
   function dataTransformation(data: Record<string, CustomerValue>) {
-    // debugger
     if (Object.keys(data).length > 0) {
       const modifierRows: IngredientIdAndDensity[] = [];
 
@@ -290,7 +296,6 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
           });
         }
         else {
-          // const ingredientIdAndDensityObj = changeValue as IngredientIdAndDensity;
           modifierRows.push({
             id: Number(changeValue),
             density: "normal"
@@ -299,6 +304,7 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
       }
       return modifierRows;
     }
+    return [];
   }
 
   return (
@@ -348,7 +354,7 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
           <p>-----</p>
           <br />
 
-          <button onClick={handleCustomizationComparison}>ADD</button>
+          <button onClick={handleAddToCart}>ADD</button>
         </div>
       )}
     </section>
