@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, MozzarellaAndSauce, ProductCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
+import { CustomizedProductStateType, Density, DensityEnum, Ingredient, IngredientCategoryEnumType, IngredientIdAndDensity, ProductCategoryEnumType, ProductIngredient } from "@/app/lib/definitions";
 import { ChangeEvent, useRef, useState } from "react";
 /*What each product type would need in a customizer:
 
@@ -206,12 +206,17 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     });
   }
 
-  type CustomerValue = number | Density | MozzarellaAndSauce | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
+  type CustomerValue = number | Density | IngredientIdAndDensity | ProductCategoryEnumType | IngredientCategoryEnumType | Record<string, Density>;
 
   function handleCustomizationComparison() {
     const finalChanges = diffCheck(selectedIngredients as Record<string, CustomerValue>, baseProductState.current as Record<string, CustomerValue>);
 
     console.log("finalChanges ends up as", finalChanges);
+    if (Object.keys(finalChanges).length > 0) {
+      const transformedData = dataTransformation(finalChanges);
+      console.log("transformedData is", transformedData);
+    }
+
   }
 
   function diffCheck(activeStateObj: Record<string, CustomerValue>, baseStateObj: Record<string, CustomerValue>) {
@@ -260,14 +265,39 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     return customChanges;
   }
 
+  /*NOTE dataTransformation() is specifically for flattening out the customized ingredient data in the "selectedIngredients"
+  React state into an array of objects to be inserted into the "cart_item_modifier" table. If no customizations were
+  made then it is not invoked. */
   function dataTransformation(data: Record<string, CustomerValue>) {
+    // debugger
     if (Object.keys(data).length > 0) {
-      const bulkInsertData: Record<string, CustomerValue>[] = [];
+      const modifierRows: IngredientIdAndDensity[] = [];
 
-
-
-    } else {
-      return
+      for (const [key, changeValue] of Object.entries(data)) {
+        if (key === "toppings") {
+          for (const [ingredientIdStr, densityValue] of Object.entries(changeValue)) {
+            modifierRows.push({
+              id: Number(ingredientIdStr),
+              density: densityValue
+            });
+          }
+        }
+        else if (key === "mozzarella" || key === "sauce") {
+          const ingredientIdAndDensityObj = changeValue as IngredientIdAndDensity;
+          modifierRows.push({
+            id: ingredientIdAndDensityObj.id,
+            density: ingredientIdAndDensityObj.density
+          });
+        }
+        else {
+          // const ingredientIdAndDensityObj = changeValue as IngredientIdAndDensity;
+          modifierRows.push({
+            id: Number(changeValue),
+            density: "normal"
+          });
+        }
+      }
+      return modifierRows;
     }
   }
 
