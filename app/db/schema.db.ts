@@ -35,6 +35,12 @@ export const ingredientCategoryEnum = pgEnum("ingredient_category_enum", [
   "cheese"
 ]);
 
+/*TODO Think about adding "restoredAt" and "restoredBy" columns for appropriate tables that have soft deletes (like for
+ingredients or products) that could conceptually be removed from the menu and then restored later (not all soft deletes
+would be appropriate with this). This would keep the soft delete nature of the tables intact for history/receipt
+logging, and allow for recording of when and who restored a product/ingredient. It may not be something worth building
+as part of the MVP, but a stretch goal maybe? */
+
 export const image = pgTable("image", {
   id: serial().primaryKey(),
   src: varchar("src", { length: 200 }).notNull(), // Make unique() after you get unique images for everything?
