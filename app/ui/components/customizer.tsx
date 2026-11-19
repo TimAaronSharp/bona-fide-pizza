@@ -269,9 +269,9 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     return customChanges;
   }
 
-  /*NOTE dataTransformation() is specifically for flattening out the customized ingredient data in the "selectedIngredients"
-  React state into an array of objects to be inserted into the "cart_item_modifier" table. If no customizations were
-  made then it is not invoked. */
+  /*NOTE dataTransformation() is specifically for flattening out the customized ingredient data in the
+  "selectedIngredients" React state into an array of objects to be inserted into the "cart_item_modifier" table. If no
+  customizations were made then it is not invoked. */
 
   /*TODO Shouldn't need the length check in here since it is checked before the function is ran, but will leave in for
   now just in case, and will deal with it later. */

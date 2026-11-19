@@ -381,6 +381,21 @@ and then find the first argument of THAT function (the tx object itself). This a
 the tx object to send to all the seed functions so they all work in the same transaction. */
 export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
+// #region zod server schemas
+
+export const UserIdAndSessionIdSchema = z.object({
+  userId: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
+  sessionId: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
+});
+
+// #endregion
+
+// #region inferred server types
+
+export type UserIdAndSessionId = z.infer<typeof UserIdAndSessionIdSchema>;
+
+// #endregion
+
 // #region zod local schemas
 
 export const IngredientSchema = DbIngredientSchema.omit({
