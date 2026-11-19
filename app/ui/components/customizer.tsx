@@ -217,9 +217,9 @@ export function Customizer({ ingredients, initialState }: { ingredients: Ingredi
     if (Object.keys(finalChanges).length > 0) {
       const transformedData = dataTransformation(finalChanges);
       console.log("transformedData is", transformedData);
-      addToCartAction(baseProductState.current.productId, transformedData)
+      addToCartAction(baseProductState.current.productId, qty, transformedData)
     } else {
-      addToCartAction(baseProductState.current.productId);
+      addToCartAction(baseProductState.current.productId, qty);
     }
   }
 
