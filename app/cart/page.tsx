@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../db/drizzle"
 import * as schemas from "@/app/db/schema.db";
 import { getUserSession } from "../lib/session";
@@ -9,7 +9,14 @@ export default async function CartPage() {
   const cartTransaction = await db.transaction(async (tx) => {
     const [cart] = await tx.select().from(schemas.cart).where(eq(schemas.cart.userId, userSession.user.id)).limit(1);
     const cartItems = await tx.select().from(schemas.cartItem).where(eq(schemas.cartItem.cartId, cart.id));
-    const cartItemModifiers = await tx.select().from(schemas.cartItemModifier).where(eq(schemas.cartItem.cartId, cartItems[0].id));
+    const cartItemIds: number[] = [];
+    cartItems.forEach((item) => {
+      cartItemIds.push(item.id)
+    });
+    const cartItemModifiers = await tx
+      .select()
+      .from(schemas.cartItemModifier)
+      .where(inArray(schemas.cartItemModifier.cartItemId, cartItemIds));
 
     console.log("cartItems[0].id is", cartItems[0].id);
     console.log("cart is", cart);
