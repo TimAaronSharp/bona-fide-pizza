@@ -1,28 +1,17 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../db/drizzle"
 import * as schemas from "@/app/db/schema.db";
-import { getUserSession } from "../lib/session";
+import Link from "next/link";
+import { auth } from "../lib/auth/auth";
+import { headers } from "next/headers";
+import { getUserSessionForCart, queryCartEntries } from "../actions/cart";
 
 export default async function CartPage() {
-  const userSession = await getUserSession();
 
-  const cartTransaction = await db.transaction(async (tx) => {
-    const [cart] = await tx.select().from(schemas.cart).where(eq(schemas.cart.userId, userSession.user.id)).limit(1);
-    const cartItems = await tx.select().from(schemas.cartItem).where(eq(schemas.cartItem.cartId, cart.id));
-    const cartItemIds: number[] = [];
-    cartItems.forEach((item) => {
-      cartItemIds.push(item.id)
-    });
-    const cartItemModifiers = await tx
-      .select()
-      .from(schemas.cartItemModifier)
-      .where(inArray(schemas.cartItemModifier.cartItemId, cartItemIds));
+  const userSession = await getUserSessionForCart();
+  console.log("userSession is", userSession);
 
-    console.log("cartItems[0].id is", cartItems[0].id);
-    console.log("cart is", cart);
-    console.log("cartItems is", cartItems);
-    console.log("cartItemModifiers is", cartItemModifiers);
-  });
+  const cartEntries = await queryCartEntries();
 
   // const cart = await db
   //   .select()
@@ -34,7 +23,19 @@ export default async function CartPage() {
   // console.log("cart is", cart);
   return (
     <>
-      <h1>Hi!</h1>
+      {!userSession?.user.name && (
+        <h1>Please login to see your shopping cart.</h1>
+      )}
+      {userSession?.user.name && (
+        <div>
+          <h1>Hi {userSession?.user.name}</h1>
+
+        </div>
+      )}
+
+      <Link key='Checkout' href='checkout'>
+        <button>Proceed to Checkout</button>
+      </Link>
     </>
   )
 }

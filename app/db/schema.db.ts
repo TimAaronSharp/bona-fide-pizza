@@ -111,6 +111,7 @@ export const productIngredient = pgTable("product_ingredient", {
 ]);
 /*TODO Make userId nullable and add a sessionId field to accommodate guest user orders, when you get around to
 adding guest user ordering.*/
+/*TODO Make addressId nullable for carryout option? */
 export const order = pgTable("order", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id).notNull(),

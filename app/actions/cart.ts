@@ -25,6 +25,17 @@ export const getUserSession = async () => {
   console.log(`Hello user ${session.user.id}`);
   return session;
 }
+
+/*TODO Think about renaming/relocating this function based on its purpose (there are others with this same name
+elsewhere. Think about whether they can/should be merged into one or if they should remain separate). */
+export async function getUserSessionForCart() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  // console.log(`Hello user ${session.user.id}`);
+  return session;
+}
+
 /*Modifiers is optional in the event that the user did not customize the product. */
 export const addToCartAction = async (productId: number, qty: number, modifiers?: IngredientIdAndDensity[]) => {
   const userSession = await getUserSession();
@@ -169,4 +180,42 @@ const createOrUpdateCartItemModifier = async (cartItemId: number, tx: Transactio
   } catch (error) {
     console.error("❌ Could not get or create cart_item_modifier:", error);
   }
+}
+
+/*TODO Look at the changes you made to this. */
+export async function queryCartEntries() {
+  const userSession = await getUserSessionForCart();
+
+  if (userSession) {
+    const cartTransaction = await db.transaction(async (tx) => {
+      const [queriedCart] = await tx.select().from(schemas.cart).where(eq(schemas.cart.userId, userSession.user.id)).limit(1);
+
+      console.log("queriedCart is", queriedCart);
+
+      if (queriedCart) {
+        const queriedCartItemIds: number[] = [];
+
+        const queriedCartItems = await tx.select().from(schemas.cartItem).where(eq(schemas.cartItem.cartId, queriedCart.id));
+
+        console.log("cartItems is", queriedCartItems);
+
+        queriedCartItems.forEach((item) => {
+          queriedCartItemIds.push(item.id)
+        });
+
+        if (queriedCartItems.length > 0) {
+          const queriedCartItemModifiers = await tx
+            .select()
+            .from(schemas.cartItemModifier)
+            .where(inArray(schemas.cartItemModifier.cartItemId, queriedCartItemIds));
+          console.log("queriedCartItemModifiers is", queriedCartItemModifiers);
+
+          return { queriedCartItems, queriedCartItemModifiers };
+        }
+        return queriedCartItems;
+      }
+    });
+    console.log("cartTransaction is", cartTransaction)
+  }
+  return
 }
