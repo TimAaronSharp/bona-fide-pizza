@@ -1,9 +1,4 @@
-import { and, eq, inArray } from "drizzle-orm";
-import { db } from "../db/drizzle"
-import * as schemas from "@/app/db/schema.db";
 import Link from "next/link";
-import { auth } from "../lib/auth/auth";
-import { headers } from "next/headers";
 import { getUserSessionForCart, queryCartEntries } from "../actions/cart";
 
 export default async function CartPage() {

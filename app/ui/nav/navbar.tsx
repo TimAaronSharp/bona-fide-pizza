@@ -52,12 +52,12 @@ export function Navbar() {
         <div className="flex w-45/100 items-center justify-end pr-[50px]">
           {/*Defensive flex alignment "items-center" in case icons are added to links.*/}
           <div className="flex items-center">
-            <Link key='Cart' href='cart'>
+            <Link key='Cart' href='/cart'>
               <span>Cart</span>
             </Link>
           </div>
           <div className="flex items-center">
-            <Link key='Login' href='login' className={`text-2xl ${pathname === '/login' ? 'text-blue-600 font-bold' : 'text-white'}`}>Login</Link>
+            <Link key='Login' href='/login' className={`text-2xl ${pathname === '/login' ? 'text-blue-600 font-bold' : 'text-white'}`}>Login</Link>
           </div>
         </div>
       </nav>
