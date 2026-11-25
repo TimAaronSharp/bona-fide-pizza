@@ -189,6 +189,7 @@ export const cartItemModifier = pgTable("cart_item_modifier", {
 delete have it simply change "isActive" to false, and for update have it change "isActive" to false, AND insert a new
 address in the address table. This will ensure that if someone deletes/updates their address it will not affect the
 address that is linked to an order (to be able to keep an accurate order history).*/
+/*TODO Should I add a "name" or "label" to label addresses like "work" or "home"? */
 export const address = pgTable("address", {
   id: serial().primaryKey(),
   line1: varchar("line_1", { length: 200 }).notNull(),

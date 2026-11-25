@@ -398,6 +398,14 @@ export type UserIdAndSessionId = z.infer<typeof UserIdAndSessionIdSchema>;
 
 // #region zod local schemas
 
+export const AddressFormSchema = DbAddressSchema.omit({
+  userId: true,
+  isActive: true,
+  createdAt: true,
+  updatedAt: true,
+  deletedAt: true
+});
+
 export const IngredientSchema = DbIngredientSchema.omit({
   isActive: true,
   creatorId: true,
@@ -504,6 +512,8 @@ export const CustomizedProductStateSchema = z.discriminatedUnion("category", [
 I thought about this so the readability on the front end would be better but could this pattern of doing things
 be confusing at larger scales?*/
 export type Product = z.infer<typeof DbProductSchema>;
+
+export type AddressForm = z.infer<typeof AddressFormSchema>;
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
 

@@ -1,12 +1,16 @@
 import { headers } from "next/headers";
 import { auth } from "../lib/auth/auth";
 import { queryCartEntries } from "../actions/cart";
+import { AddressForm } from "@/app/ui/components/addressForm";
 
 
 export default async function CheckoutPage() {
   async function getUserSession() {
     const session = await auth.api.getSession({
-      headers: await headers()
+      headers: await headers(),
+      query: {
+        disableCookieCache: true
+      }
     });
     console.log(`Hello user ${session?.user.id}`);
     return session;
@@ -19,6 +23,7 @@ export default async function CheckoutPage() {
 
   return (
     <>
+      <AddressForm />
     </>
   )
 }
