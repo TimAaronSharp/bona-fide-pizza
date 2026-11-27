@@ -1,8 +1,8 @@
 "use client";
 
-import { AddressForm } from "@/app/lib/definitions";
+import { AddressLocal } from "@/app/lib/definitions";
 
-export function AddressSelector({ addresses }: { addresses: AddressForm[] }) {
+export function AddressSelector({ addresses }: { addresses: AddressLocal[] }) {
 
   return (
     <>

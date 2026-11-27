@@ -412,7 +412,7 @@ export type UserIdAndSessionId = z.infer<typeof UserIdAndSessionIdSchema>;
 
 // #region zod local schemas
 
-export const AddressFormSchema = DbAddressSchema.omit({
+export const AddressLocalSchema = DbAddressSchema.omit({
   userId: true,
   isActive: true,
   createdAt: true,
@@ -527,7 +527,7 @@ I thought about this so the readability on the front end would be better but cou
 be confusing at larger scales?*/
 export type Product = z.infer<typeof DbProductSchema>;
 
-export type AddressForm = z.infer<typeof AddressFormSchema>;
+export type AddressLocal = z.infer<typeof AddressLocalSchema>;
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
 
