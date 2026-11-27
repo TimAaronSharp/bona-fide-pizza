@@ -23,7 +23,8 @@ export const getUserSession = async () => {
   console.log(`Hello user ${session.user.id}`);
   return session;
 }
-
+/*TODO Look into returning the formData back with a "success: false" so that if the server action isn't completed, like
+if the zipCode is not correct, the whole form isn't blown away and the user has to enter everything in again.*/
 export async function createAddress(prevState: AddressFormState, formData: FormData): Promise<AddressFormState> {
   const userSession = await getUserSession();
   const userId = userSession.user.id;

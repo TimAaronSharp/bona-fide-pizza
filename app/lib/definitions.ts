@@ -383,6 +383,20 @@ export type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 // #region zod server schemas
 
+/*TODO Go through and change all userId and sessionId properties to these schemas where appropriate during refactor. */
+// const betterAuthIdRegex = /^[a-zA-Z0-9]{32}$/;
+
+// export const UserIdSchema = z.string().trim().regex(betterAuthIdRegex, "Invalid ID format").brand<"UserId">();
+// export const SessionIdSchema = z.string().trim().regex(betterAuthIdRegex, "Invalid ID format").brand<"SessionId">();
+
+// export type UserId = z.infer<typeof UserIdSchema>;
+// export type SessionId = z.infer<typeof SessionIdSchema>;
+
+// export const UserIdAndSessionIdSchema = z.object({
+//   userId: UserIdSchema,
+//   sessionId: SessionIdSchema,
+// });
+
 export const UserIdAndSessionIdSchema = z.object({
   userId: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),
   sessionId: z.string().trim().regex(/^[a-zA-Z0-9]{32}$/, "Invalid ID format"),

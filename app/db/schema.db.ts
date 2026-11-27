@@ -112,6 +112,7 @@ export const productIngredient = pgTable("product_ingredient", {
 /*TODO Make userId nullable and add a sessionId field to accommodate guest user orders, when you get around to
 adding guest user ordering.*/
 /*TODO Make addressId nullable for carryout option? */
+/*TODO Come back and maybe change order.id to be a randomly generated UUID for data security? */
 export const order = pgTable("order", {
   id: serial().primaryKey(),
   userId: text("user_id").references(() => user.id).notNull(),
@@ -190,6 +191,7 @@ delete have it simply change "isActive" to false, and for update have it change 
 address in the address table. This will ensure that if someone deletes/updates their address it will not affect the
 address that is linked to an order (to be able to keep an accurate order history).*/
 /*TODO Should I add a "name" or "label" to label addresses like "work" or "home"? */
+/*TODO Come back and maybe change address.id to be a randomly generated UUID for data security? */
 export const address = pgTable("address", {
   id: serial().primaryKey(),
   line1: varchar("line_1", { length: 200 }).notNull(),

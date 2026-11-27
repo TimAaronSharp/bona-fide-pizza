@@ -7,6 +7,7 @@ import { useActionState } from "react";
 /*TODO Implement optional initialData prop so this form can be used for editing address as well (though on the backend
 the address itself will not be changed. It's "isActive" field will be set to false and a new address created for
 accurate record keeping purposes).*/
+
 export function AddressForm({ initialData }: { initialData?: AddressForm }) {
   const initialState: AddressFormState = {
     error: null,
