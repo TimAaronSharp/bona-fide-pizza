@@ -7,6 +7,11 @@ import { db } from "../db/drizzle";
 import * as schemas from "@/app/db/schema.db";
 import { and, eq, inArray, sql } from "drizzle-orm";
 
+/*NOTE This will automatically type whatever is returned from the "queryCartEntries()" function. In this case, it will
+type { queriedCartItems, queriedCartItemModifiers } | null (queriedCartItemModifiers COULD be an empty [], but this is
+the shape of what is being returned).*/
+export type CartEntries = Awaited<ReturnType<typeof queryCartEntries>>;
+
 
 const DENSITY_CODE: Record<Density, string> = {
   remove: "r",
@@ -49,14 +54,14 @@ export const addToCartAction = async (productId: number, qty: number, modifiers?
   if (modifiers) {
     console.log("made it to has modifiers");
     productSignature = buildProductSignature(productId, modifiers);
-    console.log("productSignature returned", productSignature);
-    await getOrCreateCart(userIdAndSessionId, qty, productId, productSignature, modifiers);
+    // console.log("productSignature returned", productSignature);
+    await createCart(userIdAndSessionId, qty, productId, productSignature, modifiers);
   }
   else {
     console.log("made it to no modifiers");
     productSignature = buildProductSignature(productId);
-    console.log("productSignature returned", productSignature);
-    await getOrCreateCart(userIdAndSessionId, qty, productId, productSignature);
+    // console.log("productSignature returned", productSignature);
+    await createCart(userIdAndSessionId, qty, productId, productSignature);
   }
 }
 
@@ -75,15 +80,15 @@ will be tracked by a session id that will be generated (in which case, I may nee
 function to get that generated sessionId (uuid)) (may need to rethink this, because betterAuth session ids are 32-char
 strings, not uuids (36-char strings). Maybe generate a uuid and remove the -'s to make it a 32-char string? Investigate.
 */
-
-const getOrCreateCart = async (userIdAndSessionId: UserIdAndSessionId, qty: number, productId: number, customizationSignature: string, modifiers?: IngredientIdAndDensity[]) => {
-  console.log("Getting or creating cart...");
+/*TODO Likely change name to simply "createCart()". */
+const createCart = async (userIdAndSessionId: UserIdAndSessionId, qty: number, productId: number, customizationSignature: string, modifiers?: IngredientIdAndDensity[]) => {
+  console.log("creating cart...");
   try {
     await db.transaction(async (tx) => {
       const [cart] = await tx.select({ id: schemas.cart.id }).from(schemas.cart).where(eq(schemas.cart.userId, userIdAndSessionId.userId)).limit(1);
       if (!cart) {
         const [newCart] = await tx.insert(schemas.cart).values({ userId: userIdAndSessionId.userId }).returning({ id: schemas.cart.id });
-        console.log("newCart is", newCart);
+        // console.log("newCart is", newCart);
         if (modifiers) {
           getOrCreateCartItem(newCart.id, qty, productId, customizationSignature, tx, modifiers);
         } else {
@@ -110,7 +115,7 @@ const getOrCreateCartItem = async (cartId: number, qty: number, productId: numbe
   console.log("Getting or creating cart_item...");
   try {
     const [unitPrice] = await tx.select({ price: schemas.product.price }).from(schemas.product).where(eq(schemas.product.id, productId));
-    console.log("unitPrice is", unitPrice);
+    // console.log("unitPrice is", unitPrice);
     const [cartItem] = await tx.select().from(schemas.cartItem).where(and(eq(schemas.cartItem.customizationSignature, customizationSignature), eq(schemas.cartItem.cartId, cartId))).limit(1);
     if (!cartItem) {
       const [newCartItem] = await tx.insert(schemas.cartItem).values({ cartId: cartId, productId: productId, quantity: qty, unitPrice: unitPrice.price, customizationSignature: customizationSignature }).returning({ id: schemas.cartItem.id });
@@ -119,6 +124,7 @@ const getOrCreateCartItem = async (cartId: number, qty: number, productId: numbe
       }
     }
     else {
+      /*TODO Extract this to its own function like "updateQty()"? */
       const currentQty = cartItem.quantity;
       // const [currentQty] = await tx.select({ quantity: schemas.cartItem.quantity }).from(schemas.cartItem).where(and(eq(schemas.cartItem.customizationSignature, customizationSignature), eq(schemas.cartItem.cartId, cartId))).limit(1);
       const newQty = (currentQty + qty);
@@ -182,7 +188,19 @@ const createOrUpdateCartItemModifier = async (cartItemId: number, tx: Transactio
   }
 }
 
+export const getCart = async () => {
+  const userSession = await getUserSessionForCart();
+  if (userSession) {
+    const [cart] = await db.select().from(schemas.cart).where(eq(schemas.cart.userId, userSession.user.id)).limit(1);
+    return cart;
+  }
+}
+
 /*TODO Look at the changes you made to this. */
+/*TODO Think about extracting the "getUserSessionForCart()" functionality and passing in the result into
+"queryCartEntries()". This would cut down on potential queries to the user/session db tables (like in
+"addToCartAction()" I'm already querying the user/session. I could just do that once there, and pass it to this
+function). */
 export async function queryCartEntries() {
   const userSession = await getUserSessionForCart();
 
@@ -190,32 +208,37 @@ export async function queryCartEntries() {
     const cartTransaction = await db.transaction(async (tx) => {
       const [queriedCart] = await tx.select().from(schemas.cart).where(eq(schemas.cart.userId, userSession.user.id)).limit(1);
 
-      console.log("queriedCart is", queriedCart);
+      // console.log("queriedCart is", queriedCart);
 
       if (queriedCart) {
         const queriedCartItemIds: number[] = [];
 
         const queriedCartItems = await tx.select().from(schemas.cartItem).where(eq(schemas.cartItem.cartId, queriedCart.id));
 
-        console.log("cartItems is", queriedCartItems);
+        // console.log("cartItems is", queriedCartItems);
 
         queriedCartItems.forEach((item) => {
           queriedCartItemIds.push(item.id)
         });
+        /*NOTE If queriedCart returns anything then queriedCartItems.length should always be > 0, because a cart
+        shouldn't exist without at least 1 cartItem, but I'll leave this here as an insurance to avoid potential SQL
+        errors in case something happens and an empty array is sent to the inArray call.
+        
+        Assigning queriedCartItemModifiers as a ternary of either the returned query or an empty array will help
+        prevent the need to perform extra type narrowing in components that will call this function.*/
+        const queriedCartItemModifiers = queriedCartItems.length > 0 ? await tx
+          .select()
+          .from(schemas.cartItemModifier)
+          .where(inArray(schemas.cartItemModifier.cartItemId, queriedCartItemIds)) : [];
+        // console.log("queriedCartItemModifiers is", queriedCartItemModifiers);
 
-        if (queriedCartItems.length > 0) {
-          const queriedCartItemModifiers = await tx
-            .select()
-            .from(schemas.cartItemModifier)
-            .where(inArray(schemas.cartItemModifier.cartItemId, queriedCartItemIds));
-          console.log("queriedCartItemModifiers is", queriedCartItemModifiers);
-
-          return { queriedCartItems, queriedCartItemModifiers };
-        }
-        return queriedCartItems;
+        return { queriedCartItems, queriedCartItemModifiers };
       }
+      /*In case a user is found but they don't have a cart. */
+      return null;
     });
-    console.log("cartTransaction is", cartTransaction)
+    // console.log("cartTransaction is", cartTransaction)
+    return cartTransaction;
   }
-  return
+  return null;
 }

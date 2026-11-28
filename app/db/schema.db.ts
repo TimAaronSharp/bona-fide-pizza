@@ -205,3 +205,5 @@ export const address = pgTable("address", {
   updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
   deletedAt: timestamp("deleted_at") // For soft deleting an address to maintain record integrity.
 });
+
+/*TODO Make a payment_info/credit_card table? */

@@ -1,6 +1,9 @@
 import z from "zod";
 import { db } from "@/app/db/drizzle";
 
+/*TODO Reorganize schemas and types (likely schema followed by type. I thought having schemas grouped together and
+types grouped together made sense but there are so many now it is a hassle to keep things straight). */
+
 // export const DbProductSchema = z.object({
 //   link: z.object({
 //     paramName: z.string(),
@@ -568,6 +571,16 @@ export type ProductInfo = {
   name: string;
   description: string;
 }
+
+
+export type FormState = {
+  error?: string | null,
+  success?: boolean
+}
+/*TODO Look into this later. */
+// export const CheckoutFormDataSchema = z.object({
+  
+// })
 
 
 // export type TableSchemaTypeUnion = DbProductSchemaType |

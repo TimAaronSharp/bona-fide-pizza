@@ -1,7 +1,7 @@
 "use client";
 
-import { AddressFormState, createAddress } from "@/app/actions/address";
-import type { AddressLocal } from "@/app/lib/definitions";
+import { createAddress } from "@/app/actions/address";
+import type { AddressLocal, FormState } from "@/app/lib/definitions";
 import { useActionState } from "react";
 
 /*TODO Implement optional initialData prop so this form can be used for editing address as well (though on the backend
@@ -9,7 +9,7 @@ the address itself will not be changed. It's "isActive" field will be set to fal
 accurate record keeping purposes).*/
 
 export function AddressForm({ initialData }: { initialData?: AddressLocal }) {
-  const initialState: AddressFormState = {
+  const initialState: FormState = {
     error: null,
     success: false
   }

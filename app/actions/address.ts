@@ -4,11 +4,7 @@ import { auth } from "@/app/lib/auth/auth";
 import { headers } from "next/headers";
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema.db"
-
-export type AddressFormState = {
-  error?: string | null,
-  success?: boolean
-};
+import { FormState } from "@/app/lib/definitions";
 
 export const getUserSession = async () => {
   const session = await auth.api.getSession({
@@ -25,7 +21,7 @@ export const getUserSession = async () => {
 }
 /*TODO Look into returning the formData back with a "success: false" so that if the server action isn't completed, like
 if the zipCode is not correct, the whole form isn't blown away and the user has to enter everything in again.*/
-export async function createAddress(prevState: AddressFormState, formData: FormData): Promise<AddressFormState> {
+export async function createAddress(prevState: FormState, formData: FormData): Promise<FormState> {
   const userSession = await getUserSession();
   const userId = userSession.user.id;
 
@@ -50,5 +46,5 @@ export async function createAddress(prevState: AddressFormState, formData: FormD
     return { error: "Failed to save address. Please try again.", success: false };
   }
 
-  return prevState;
+  return { success: true };
 }

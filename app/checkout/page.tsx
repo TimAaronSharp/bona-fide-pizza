@@ -1,11 +1,11 @@
 import { headers } from "next/headers";
-import { auth } from "../lib/auth/auth";
-import { queryCartEntries } from "../actions/cart";
+import { auth } from "@/app/lib/auth/auth";
+import { queryCartEntries } from "@/app/actions/cart";
 import { AddressForm } from "@/app/ui/components/addressForm";
 import { db } from "@/app/db/drizzle";
 import * as schemas from "@/app/db/schema.db";
 import { and, eq } from "drizzle-orm";
-import { AddressSelector } from "@/app/ui/components/address-selector";
+import { CheckoutForm } from "@/app/ui/components/checkout-form";
 
 
 export default async function CheckoutPage() {
@@ -45,7 +45,7 @@ export default async function CheckoutPage() {
 
   return (
     <>
-      <AddressSelector addresses={userAddresses} />
+      <CheckoutForm addresses={userAddresses} />
       <AddressForm />
     </>
   )
